@@ -24,8 +24,6 @@ FROM nginx:1.18-alpine
 # copies built app from build folder
 COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
 
-# exposes port 80
-EXPOSE 80
 
 # Runs server
 CMD ["nginx", "-g", "daemon off;"]
