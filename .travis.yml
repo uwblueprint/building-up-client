@@ -1,8 +1,13 @@
 language: node_js
+services:
+  - docker
 node_js:
     - "stable"
   cache:
     directories:
     - node_modules
-  script:
-    - npm test
+
+    deploy:
+      provider: heroku
+      api_key:
+        secure: "86dc0c2c-a46f-444b-8a16-7eac55a137d1"

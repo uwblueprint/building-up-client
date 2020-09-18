@@ -1,18 +1,31 @@
-FROM node:14-alpine
+# imports node
+FROM node:14 as build-deps
 
-WORKDIR /app
-
+# enviroment variables
 ENV STAGE="dev"
 
+# sets working directory
+WORKDIR /usr/src/app
+
+# copies package.json and installs
 COPY package.json ./
 COPY package-lock.json ./
 RUN npm install --silent
 
+# copies all files to working directory
 COPY . ./
 
-# start app in development
-CMD ["npm", "start"]
+# build app
+RUN npm build
 
-# figure out staging envirments
-#how we want to host frontend in staging and prod. If using AWS/GCP we can using nginx, if he use heroku (bundles hosting)
-# we can either push directly from docker or travis. 
+# imports nginx
+FROM nginx:1.18-alpine
+
+# copies built app from build folder
+COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
+
+# exposes port 80
+EXPOSE 80
+
+# Runs server
+CMD ["nginx", "-g", "daemon off;"]
