@@ -1,3 +1,7 @@
 language: node_js
 services:
   - docker
+deploy:
+  - echo $USERNAME
+  - docker login --username=$USERNAME --password=$HEROKU_KEY registry.heroku.com
+  - heroku container: push web building-up-client
