@@ -7,4 +7,5 @@ deploy:
   provider: heroku
   app: $HEROKU_APP_NAME
   api_key: $HEROKU_KEY
-      
+  on:
+    branch: travis-fix
