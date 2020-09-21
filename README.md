@@ -1,3 +1,9 @@
+### Deployment
+
+[![Build Status](https://travis-ci.com/uwblueprint/building-up-client.svg?branch=master)](https://travis-ci.com/uwblueprint/building-up-client)
+
+The master branch of this repository is continually deployed at https://building-up-client.herokuapp.com/.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
