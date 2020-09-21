@@ -1,10 +1,12 @@
 language: node_js
-cache:
-  directories:
-    - node_modules
-services:
-  - docker
-deploy:
-  - echo $USERNAME
-  - docker login --username=$USERNAME --password=$HEROKU_KEY registry.heroku.com
-  - heroku container: push web building-up-client
+
+node_js:
+  - "12"
+
+script:
+    - npm run build
+  deploy:
+    provider: heroku
+    app: $HEROKU_APP_NAME
+    api_key: $HEROKU_KEY
+      
