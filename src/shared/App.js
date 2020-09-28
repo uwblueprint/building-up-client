@@ -1,5 +1,5 @@
 import React from 'react';
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,24 +8,34 @@ import {
 import StoreFront from '../pages/storefront'
 import Home from '../pages/home'
 
-
-const client = new ApolloClient({
-  uri: "http://localhost:4000/",
-  cache: new InMemoryCache()
-});
+const GET_TEAMS = gql`
+  query {
+    getAllTeams {
+      id
+    }
+}
+`
 
 function App() {
+  const { loading, error, data } = useQuery(GET_TEAMS)
+
+  if (loading) return 'Loading...';
+  if (error) return `Error! ${error.message}`;
+
   return (
-    <ApolloProvider client={client}>
+    <React.Fragment>
       <Router>
         <React.Fragment>
           <Switch>
-            <Route path="/store/:id" component={StoreFront}/>
+            {data.getAllTeams.map(team => {
+              console.log("The team", team)
+              return <Route exact path="/store/:id" component={StoreFront}>{team}</Route>
+            })}
             <Route path="/" component={Home} />
           </Switch>
         </React.Fragment>
       </Router>
-    </ApolloProvider>
+    </React.Fragment>
   );
 }
 

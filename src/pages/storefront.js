@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 class StoreFront extends Component {
     constructor(props) {
         super()
-        console.log(this.props)
+        console.log("These are the props", props)
     }
 
     render () {
