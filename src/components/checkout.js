@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import React from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { useApolloClient } from "@apollo/client";
 import { gql } from "@apollo/client";
