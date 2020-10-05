@@ -6,6 +6,7 @@ import {
   Route,
 } from "react-router-dom";
 import StoreFront from '../pages/storefront'
+import TeamDashboard from '../pages/teamdashboard'
 import Home from '../pages/home'
 
 const GET_TEAMS = gql`
@@ -29,8 +30,12 @@ function App() {
           <Switch>
             {data.getAllTeams.map(team => {
               console.log("The team", team)
-              return <Route exact path="/store/:id" component={StoreFront}>{team}</Route>
-            })}
+              return (
+                <React.Fragment>
+                <Route exact path="/:id/store" component={StoreFront} />
+                <Route exact path="/:id/home" component={TeamDashboard} />
+                </React.Fragment>
+            )})}
             <Route path="/" component={Home} />
           </Switch>
         </React.Fragment>
