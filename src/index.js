@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './index.css';
 import App from './shared/App';
 import * as serviceWorker from './serviceWorker';
 
@@ -8,8 +9,8 @@ import store from './data/store';
 
 ReactDOM.render(
   <Provider store={store}>
-        <App />
-    </Provider>,
+    <App />
+  </Provider>,
   document.getElementById('root')
 );
 

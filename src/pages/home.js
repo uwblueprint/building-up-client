@@ -1,16 +1,11 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react';
 
-class StoreFront extends Component {
-    constructor(props) {
-        super()
-        console.log(this.props)
-    }
+const Home = props => {
+  useEffect(() => {
+    console.log(props);
+  }, [props]);
 
-    render () {
-        return (
-            <h1>Building Up -- Home Page</h1>
-        )
-    }
-}
+  return <h1>Building Up -- Home Page</h1>;
+};
 
-export default StoreFront
+export default Home;
