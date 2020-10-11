@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Grid, Typography } from '@material-ui/core';
 import StoreItem from './StoreItem';
@@ -37,6 +38,16 @@ const ItemListing = ({ sectionTitle, storeItems }) => {
       </Grid>
     </div>
   );
+};
+
+ItemListing.propTypes = {
+  sectionTitle: PropTypes.string.isRequired,
+  storeItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      itemName: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired
+    })
+  )
 };
 
 export default ItemListing;

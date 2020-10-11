@@ -11,7 +11,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const Banner = props => {
+const Banner = () => {
   const classes = useStyles();
 
   return (

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Box } from '@material-ui/core';
 
@@ -23,6 +24,11 @@ const StoreItem = ({ itemName, price }) => {
       </div>
     </Box>
   );
+};
+
+StoreItem.propTypes = {
+  itemName: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired
 };
 
 export default StoreItem;
