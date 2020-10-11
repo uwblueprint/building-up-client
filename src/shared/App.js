@@ -5,8 +5,8 @@ import {
   Switch,
   Route
 } from 'react-router-dom'
-import StoreFront from '../pages/storefront'
-import TeamDashboard from '../pages/teamdashboard'
+import StoreFront from '../pages/Storefront/storefront'
+import TeamDashboard from '../pages/TeamDashboard/teamdashboard'
 import Home from '../pages/home'
 
 const GET_TEAMS = gql`
