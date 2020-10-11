@@ -1,16 +1,31 @@
-import React, { Component } from 'react'
+import React, { Fragment } from 'react'
+import { useQuery, gql } from '@apollo/client'
 
-class TeamDashboard extends Component {
-    constructor(props) {
-        super()
-        console.log("These are the props", props)
-    }
+const GET_TEAM_INFO = gql`
+query getTeam($id: Int!) {
+  getTeam(id: $id) {
+    name
+    organization
+    id
+  }
+}
+`
 
-    render () {
-        return (
-            <h1>This is the team home page</h1>
-        )
-    }
+const TeamDashboard = (props) => {
+  const id = Number(props.match.params.id)
+  const { loading, error, data } = useQuery(GET_TEAM_INFO, {
+    variables: { id }
+  })
+  console.log("This is the team data: ", data)
+  if (loading) return 'Loading...'
+  if (error) return `Error! ${error.message}`
+  return (
+    <Fragment>
+      <h1>This is the Team Dashboard page</h1>
+      <h2>The Team Using this has ID {id}</h2>
+      <h2>This is their data: {JSON.stringify(data.getTeam)}</h2>
+    </Fragment>
+  )
 }
 
 export default TeamDashboard
