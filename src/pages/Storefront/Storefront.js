@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, AppBar, Toolbar, Grid } from '@material-ui/core';
-import Banner from './Banner';
-import ItemListing from './ItemListing';
+import Banner from '../../components/Storefront/Banner';
+import ItemListing from '../../components/Storefront/ItemListing';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -30,22 +30,40 @@ const StoreFront = props => {
     console.log(props);
   }, [props]);
 
+  const handleHomeClick = () => {
+    console.log('Home Clicked');
+  };
+
+  const handleShopClick = () => {
+    console.log('Shop Clicked');
+  };
+
+  const handleDonateClick = () => {
+    console.log('Donate Clicked');
+  };
+
+  const handleCartClick = () => {
+    console.log('View Cart Clicked');
+  };
+
   return (
     <div className={classes.root}>
       <AppBar elevation={0} position="static" color="default">
         <Toolbar>
           <Grid justify="space-between" container spacing={24}>
             <Grid item>
-              <Button variant="outlined">RTR</Button>
+              <Button variant="outlined" onClick={handleHomeClick}>
+                RTR
+              </Button>
             </Grid>
             <Grid item>
-              <Button>Shop</Button>
+              <Button onClick={handleShopClick}>Shop</Button>
             </Grid>
             <Grid item>
-              <Button>Donate</Button>
+              <Button onClick={handleDonateClick}>Donate</Button>
             </Grid>
             <Grid item>
-              <Button>View Cart</Button>
+              <Button onClick={handleCartClick}>View Cart</Button>
             </Grid>
           </Grid>
         </Toolbar>
