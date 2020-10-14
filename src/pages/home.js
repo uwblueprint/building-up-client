@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react'
 
-const Home = props => {
-  useEffect(() => {
-    console.log(props);
-  }, [props]);
+const Home = () => {
+  return (
+    <h1>Building Up -- Home Page</h1>
+  )
+}
 
-  return <h1>Building Up -- Home Page</h1>;
-};
-
-export default Home;
+export default Home
