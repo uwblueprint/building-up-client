@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, AppBar, Toolbar, Grid } from '@material-ui/core';
 import Banner from '../../components/Storefront/Banner';
 import ItemListing from '../../components/Storefront/ItemListing';
+import StoreItemDialog from '../../components/Storefront/StoreItemDialog';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -25,6 +26,7 @@ for (let i = 0; i < 2; ++i) {
 
 const StoreFront = props => {
   const classes = useStyles();
+  const [itemDialogOpen, setItemDialogOpen] = useState(false);
 
   useEffect(() => {
     console.log(props);
@@ -44,6 +46,14 @@ const StoreFront = props => {
 
   const handleCartClick = () => {
     console.log('View Cart Clicked');
+  };
+
+  const handleItemDialogOpen = () => {
+    setItemDialogOpen(true);
+  };
+
+  const handleItemDialogClose = () => {
+    setItemDialogOpen(false);
   };
 
   return (
@@ -69,9 +79,27 @@ const StoreFront = props => {
         </Toolbar>
       </AppBar>
       <Banner />
-      <ItemListing sectionTitle="TOQUES" storeItems={toques} />
-      <ItemListing sectionTitle="CAPS" storeItems={caps} />
-      <ItemListing sectionTitle="MASKS" storeItems={masks} />
+      <ItemListing
+        handleItemDialogOpen={handleItemDialogOpen}
+        sectionTitle="TOQUES"
+        storeItems={toques}
+      />
+      <ItemListing
+        handleItemDialogOpen={handleItemDialogOpen}
+        sectionTitle="CAPS"
+        storeItems={caps}
+      />
+      <ItemListing
+        handleItemDialogOpen={handleItemDialogOpen}
+        sectionTitle="MASKS"
+        storeItems={masks}
+      />
+      <StoreItemDialog
+        itemName="Example of Toque"
+        price={10.0}
+        open={itemDialogOpen}
+        onClose={handleItemDialogClose}
+      />
     </div>
   );
 };

@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const ItemListing = ({ sectionTitle, storeItems }) => {
+const ItemListing = ({ sectionTitle, storeItems, handleItemDialogOpen }) => {
   const classes = useStyles();
 
   return (
@@ -32,7 +32,11 @@ const ItemListing = ({ sectionTitle, storeItems }) => {
       >
         {storeItems.map((storeItem, index) => (
           <Grid item key={index}>
-            <StoreItem itemName={storeItem.itemName} price={storeItem.price} />
+            <StoreItem
+              itemName={storeItem.itemName}
+              price={storeItem.price}
+              onItemClick={handleItemDialogOpen}
+            />
           </Grid>
         ))}
       </Grid>

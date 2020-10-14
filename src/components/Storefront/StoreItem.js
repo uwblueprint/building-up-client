@@ -9,19 +9,20 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const StoreItem = ({ itemName, price }) => {
+const StoreItem = ({ itemName, price, onItemClick }) => {
   const classes = useStyles();
+
   return (
-    <Box>
+    <Box onClick={onItemClick}>
       <Box height={250} width={250} bgcolor="grey.200" />
-      <div className={classes.description}>
-        <Typography gutterBottom variant="body1" component="p">
+      <Box className={classes.description}>
+        <Typography variant="body1" component="p">
           {itemName}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
           ${price.toFixed(2)}
         </Typography>
-      </div>
+      </Box>
     </Box>
   );
 };
