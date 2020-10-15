@@ -4,17 +4,6 @@ import { Button, AppBar, Toolbar, Grid } from '@material-ui/core';
 import Banner from '../../components/Storefront/Banner';
 import ItemListing from '../../components/Storefront/ItemListing';
 import StoreItemDialog from '../../components/Storefront/StoreItemDialog';
-import { useQuery, gql } from '@apollo/client';
-
-const GET_TEAM_INFO = gql`
-  query getTeam($id: Int!) {
-    getTeam(id: $id) {
-      name
-      organization
-      id
-    }
-  }
-`;
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -42,20 +31,6 @@ const StoreFront = props => {
   useEffect(() => {
     console.log(props);
   }, [props]);
-
-  const id = Number(props.match.params.id);
-  const { loading, error, data } = useQuery(GET_TEAM_INFO, {
-    variables: { id }
-  });
-  console.log('This is the team data: ', data);
-  console.log(
-    'This is their ID: ',
-    id,
-    ' and their data ',
-    JSON.stringify(data.getTeam)
-  );
-  if (loading) return 'Loading...';
-  if (error) return `Error! ${error.message}`;
 
   const handleHomeClick = () => {
     console.log('Home Clicked');
