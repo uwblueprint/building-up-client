@@ -39,6 +39,10 @@ const StoreFront = props => {
   const classes = useStyles();
   const [itemDialogOpen, setItemDialogOpen] = useState(false);
 
+  useEffect(() => {
+    console.log(props);
+  }, [props]);
+
   const id = Number(props.match.params.id);
   const { loading, error, data } = useQuery(GET_TEAM_INFO, {
     variables: { id }
@@ -52,10 +56,6 @@ const StoreFront = props => {
   );
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
-
-  useEffect(() => {
-    console.log(props);
-  }, [props]);
 
   const handleHomeClick = () => {
     console.log('Home Clicked');
