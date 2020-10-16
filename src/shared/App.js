@@ -1,7 +1,7 @@
 import React from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import StoreFront from '../pages/Storefront/storefront';
+// import StoreFront from '../pages/Storefront/storefront';
 import TeamDashboard from '../pages/TeamDashboard/teamdashboard';
 import Home from '../pages/home';
 
@@ -28,8 +28,8 @@ function App() {
               console.log('The team', team);
               return (
                 <React.Fragment key={i}>
-                  <Route exact path="/:id/store" component={StoreFront} />
-                  <Route exact path="/:id/home" component={TeamDashboard} />
+                   {/* <Route exact path="/:id/store" component={StoreFront} /> */}
+                   <Route exact path="/:id/home" component={TeamDashboard} />
                 </React.Fragment>
               );
             })}

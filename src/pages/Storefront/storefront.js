@@ -44,6 +44,7 @@ const StoreFront = props => {
   }, [props]);
 
   const id = Number(props.match.params.id);
+  console.log("This is the id", id)
   const { loading, error, data } = useQuery(GET_TEAM_INFO, {
     variables: { id }
   });
@@ -56,6 +57,7 @@ const StoreFront = props => {
   );
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
+  console.log("This is the error", error)
 
   const handleHomeClick = () => {
     console.log('Home Clicked');
