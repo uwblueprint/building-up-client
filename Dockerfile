@@ -16,14 +16,13 @@ RUN npm install --silent
 COPY . ./
 
 # build app
-RUN npm build
+RUN npm run build
 
 # imports nginx
 FROM nginx:1.18-alpine
 
 # copies built app from build folder
 COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
-
 
 # Runs server
 CMD ["nginx", "-g", "daemon off;"]
