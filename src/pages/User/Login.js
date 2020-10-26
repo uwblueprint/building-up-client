@@ -1,6 +1,4 @@
-import React, { useCallback, useState } from 'react';
-//import { useMutation, gql, useQuery } from '@apollo/client'
-import { useQuery } from '@apollo/client'
+import React, { useState } from 'react';
 import { useApolloClient } from "@apollo/client";
 import { gql } from "@apollo/client";
 
