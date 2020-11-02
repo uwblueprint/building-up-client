@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Box } from '@material-ui/core';
+// import { useShopify } from '../../data/reducers/index';
 
 const useStyles = makeStyles(() => ({
   description: {
