@@ -22,6 +22,12 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
+const LOGOUT_MUTATION = gql`
+  mutation logout{
+    logout
+  }
+`;
+
 const CURRENT_USER = gql`
   query getCurrentUser{
     getActiveUser{
@@ -47,6 +53,14 @@ const login = (email, password, client) => {
     return res;
 };
 
+const logout = (client) => {
+  const res = client.mutate({
+    mutation: LOGOUT_MUTATION
+  });
+  console.log(res);
+  return res;
+};
+
 const getCurrentUser = (client) => {
   const res = client.query({
     query: CURRENT_USER
@@ -57,5 +71,6 @@ const getCurrentUser = (client) => {
 export default {
   register,
   login,
+  logout,
   getCurrentUser
 };

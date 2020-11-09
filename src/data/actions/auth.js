@@ -3,6 +3,8 @@ import {
     REGISTER_FAIL,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
+    LOGOUT_FAIL,
+    LOGOUT_SUCCESS,
 } from "./type";
   
 import AuthService from "../services/auth.service";
@@ -55,6 +57,33 @@ export const login = (email, password, client) => (dispatch) => {
 
       dispatch({
         type: LOGIN_FAIL,
+      });
+
+      return Promise.reject();
+    }
+  );
+};
+
+export const logout = (client) => (dispatch) => {
+  return AuthService.logout(client).then(
+    (res) => {
+      if (res !== null){ 
+        dispatch({
+          type: LOGOUT_SUCCESS,
+        });
+      }else{
+        dispatch({
+          type: LOGOUT_FAIL,
+        });
+      }
+      return Promise.resolve();
+    },
+    (error) => {
+      
+      console.log(error);
+
+      dispatch({
+        type: LOGOUT_FAIL,
       });
 
       return Promise.reject();

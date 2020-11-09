@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import { useQuery, gql } from '@apollo/client'
 import { useSelector } from "react-redux";
 import { Redirect } from 'react-router-dom';
+import Logout from '../User/Logout';
 
 const GET_TEAM_INFO = gql`
 query getTeam($id: Int!) {
@@ -26,6 +27,7 @@ const TeamDashboard = (props) => {
   if (isLoggedIn){
     return (
       <Fragment>
+        <Logout/>
         <h1>This is the Team Dashboard page</h1>
         <h2>The Team Using this has ID {id}</h2>
         <h2>This is their data: {JSON.stringify(data.getTeam)}</h2>

@@ -3,6 +3,8 @@ import {
     REGISTER_FAIL,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
+    LOGOUT_FAIL,
+    LOGOUT_SUCCESS
   } from "../actions/type";
 import Cookies from 'js-cookie';
 
@@ -46,6 +48,24 @@ export default function (state = initialState, action) {
         email: null,
         id: null,
       };
+    case LOGOUT_SUCCESS:
+      return {
+        ...state,
+        isLoggedIn: false,
+        firstName: null,
+        lastName: null, 
+        email: null,
+        id: null,
+    };
+    case LOGOUT_FAIL:
+      return {
+        ...state,
+        isLoggedIn: false,
+        firstName: null,
+        lastName: null, 
+        email: null,
+        id: null,
+    };
     default:
       return state;
   }
