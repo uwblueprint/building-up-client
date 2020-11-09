@@ -48,6 +48,10 @@ const StoreFront = props => {
   const { loading, error, data } = useQuery(GET_TEAM_INFO, {
     variables: { id }
   });
+  
+  if (loading) return 'Loading...';
+  if (error) return `Error! ${error.message}`;
+  console.log("This is the error", error)
   console.log('This is the team data: ', data);
   console.log(
     'This is their ID: ',
@@ -55,10 +59,6 @@ const StoreFront = props => {
     ' and their data ',
     JSON.stringify(data.getTeam)
   );
-  if (loading) return 'Loading...';
-  if (error) return `Error! ${error.message}`;
-  console.log("This is the error", error)
-
   const handleHomeClick = () => {
     console.log('Home Clicked');
   };
@@ -85,22 +85,22 @@ const StoreFront = props => {
 
   return (
     <div className={classes.root}>
-      <AppBar elevation={0} position="static" color="default">
+      <AppBar elevation={0} position="static">
         <Toolbar>
           <Grid justify="space-between" container spacing={24}>
             <Grid item>
-              <Button variant="outlined" onClick={handleHomeClick}>
+              <Button variant="outlined" color="inherit" onClick={handleHomeClick}>
                 RTR
               </Button>
             </Grid>
             <Grid item>
-              <Button onClick={handleShopClick}>Shop</Button>
+              <Button color="inherit" onClick={handleShopClick}>Shop</Button>
             </Grid>
             <Grid item>
-              <Button onClick={handleDonateClick}>Donate</Button>
+              <Button color="inherit" onClick={handleDonateClick}>Donate</Button>
             </Grid>
             <Grid item>
-              <Button onClick={handleCartClick}>View Cart</Button>
+              <Button color="inherit" onClick={handleCartClick}>View Cart</Button>
             </Grid>
           </Grid>
         </Toolbar>

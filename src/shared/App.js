@@ -1,11 +1,14 @@
 import React from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-// import StoreFront from '../pages/Storefront/storefront';
+import { ThemeProvider } from '@material-ui/core/styles'
+
+import StoreFront from '../pages/Storefront/storefront';
 import TeamDashboard from '../pages/TeamDashboard/teamdashboard';
 import Home from '../pages/home';
 import Register from '../pages/User/Register';
 import Login from '../pages/User/Login';
+import { storeTheme, dashboardTheme } from './Themes'
 
 const GET_TEAMS = gql`
   query {
@@ -22,7 +25,6 @@ function App() {
   if (error) return `Error! ${error.message}`;
 
   return (
-    <React.Fragment>
       <Router>
         <React.Fragment>
           <Switch>
@@ -33,15 +35,20 @@ function App() {
               console.log('The team', team);
               return (
                 <React.Fragment key={i}>
-                   {/* <Route exact path="/:id/store" component={StoreFront} /> */}
+                   <ThemeProvider theme={storeTheme}>
+                   <Route exact path="/:id/store" component={StoreFront} />
+                   </ThemeProvider>
+
+                   <ThemeProvider theme={dashboardTheme}>
                    <Route exact path="/:id/home" component={TeamDashboard} />
+                   </ThemeProvider>
+
                 </React.Fragment>
               );
             })}
           </Switch>
         </React.Fragment>
       </Router>
-    </React.Fragment>
   );
 }
 

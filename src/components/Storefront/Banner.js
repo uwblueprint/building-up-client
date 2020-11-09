@@ -23,7 +23,7 @@ const Banner = () => {
       justifyContent="left"
     >
       <Typography
-        variant="h4"
+        variant="h1"
         color="textSecondary"
         component="p"
         className={classes.title}
