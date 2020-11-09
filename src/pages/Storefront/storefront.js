@@ -48,6 +48,8 @@ const StoreFront = props => {
   const { loading, error, data } = useQuery(GET_TEAM_INFO, {
     variables: { id }
   });
+  if (loading) return 'Loading...';
+  if (error) return `Error! ${error.message}`;
   console.log('This is the team data: ', data);
   console.log(
     'This is their ID: ',
@@ -55,8 +57,6 @@ const StoreFront = props => {
     ' and their data ',
     JSON.stringify(data.getTeam)
   );
-  if (loading) return 'Loading...';
-  if (error) return `Error! ${error.message}`;
   console.log("This is the error", error)
 
   const handleHomeClick = () => {
