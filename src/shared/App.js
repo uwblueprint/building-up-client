@@ -3,6 +3,7 @@ import { gql, useQuery } from '@apollo/client';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import StoreFront from '../pages/Storefront/storefront';
 import TeamDashboard from '../pages/TeamDashboard/teamdashboard';
+import Leaderboard from '../pages/leaderboard';
 import Home from '../pages/home';
 import Register from '../pages/User/Register';
 import Login from '../pages/User/Login';
@@ -28,11 +29,12 @@ function App() {
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
+            <Route exact path="/leaderboard" component={Leaderboard} />
             {data.getAllTeams.map((team, i) => {
               console.log('The team', team);
               return (
                 <React.Fragment key={i}>
-                   {<Route exact path="/:id/store" component={StoreFront} /> }
+                   <Route exact path="/:id/store" component={StoreFront} />
                    <Route exact path="/:id/home" component={TeamDashboard} />
                 </React.Fragment>
               );
