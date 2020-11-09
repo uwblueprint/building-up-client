@@ -34,7 +34,8 @@ const CURRENT_USER = gql`
       email,
       firstName
     }
-}`;
+  }
+`;
 
 const register = (firstName, lastName, email, password, client) => {
     const res = client.mutate({
