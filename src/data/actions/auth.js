@@ -23,7 +23,6 @@ export const register = (firstName, lastName, email, password, client) => (dispa
       dispatch({
         type: REGISTER_FAIL,
       });
-
       return Promise.reject();
     }
   );
@@ -58,7 +57,6 @@ export const login = (email, password, client) => (dispatch) => {
       dispatch({
         type: LOGIN_FAIL,
       });
-
       return Promise.reject();
     }
   );
@@ -79,13 +77,10 @@ export const logout = (client) => (dispatch) => {
       return Promise.resolve();
     },
     (error) => {
-      
-      console.log(error);
-
+      console.error(error);
       dispatch({
         type: LOGOUT_FAIL,
       });
-
       return Promise.reject();
     }
   );
@@ -99,10 +94,7 @@ export const currentUser = (client) => (dispatch) => {
         dispatch({
           type: LOGIN_SUCCESS,
           payload: { 
-            firstName: null,
-            lastName: null,
-            email: null,
-            id: null
+            email: res.data.getActiveUser.email,
           },
         });
       //login failed
@@ -113,16 +105,12 @@ export const currentUser = (client) => (dispatch) => {
       }
       return Promise.resolve();
     },
-    (error) => {
-      
-      console.log(error);
-
+    (error) => { 
+      console.error(error);
       dispatch({
         type: LOGIN_FAIL,
       });
-
       return Promise.reject();
     }
   );
 };
-
