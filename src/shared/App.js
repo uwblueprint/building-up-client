@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+import { ThemeProvider } from '@material-ui/core/styles'
+
 import TeamDashboard from '../pages/TeamDashboard/teamdashboard';
 import Home from '../pages/home';
 import StoreFront from '../pages/Storefront/storefront';
 import Register from '../pages/User/Register';
 import Login from '../pages/User/Login';
+import { storeTheme, dashboardTheme } from './Themes'
 import Product from '../pages/Product/product';
 import Cart from '../pages/Cart/cart';
 import { useShopify } from '../hooks/useShopify';
@@ -32,7 +36,6 @@ function App() {
   if (error) return `Error! ${error.message}`;
 
   return (
-    <React.Fragment>
       <Router>
         <React.Fragment>
           <Switch>
@@ -43,17 +46,21 @@ function App() {
               console.log('The team', team);
               return (
                 <React.Fragment key={i}>
+                  <ThemeProvider theme={storeTheme}>
                   <Route exact path="/:id/store" component={StoreFront} />
                   <Route exact path="/:id/cart" component={Cart} />
                   <Route exact path="/:id/store/:productId" component={Product} />
+                  </ThemeProvider>
+
+                  <ThemeProvider theme={dashboardTheme}>
                   <Route exact path="/:id/home" component={TeamDashboard} />
+                  </ThemeProvider>
                 </React.Fragment>
               );
             })}
           </Switch>
         </React.Fragment>
       </Router>
-    </React.Fragment>
   );
 }
 

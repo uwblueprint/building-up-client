@@ -54,6 +54,7 @@ const StoreFront = props => {
 
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
+  
   console.log('This is the team data: ', data);
   console.log('This is the error', error);
 
