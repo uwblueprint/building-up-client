@@ -3,14 +3,19 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './shared/App';
 import * as serviceWorker from './serviceWorker';
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 
 import { Provider } from 'react-redux';
 import store from './data/store';
 
-const client = new ApolloClient({
+const link = createHttpLink({
   uri: 'http://localhost:4000/graphql',
-  cache: new InMemoryCache()
+  credentials: 'include'
+}); 
+
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: link
 });
 
 ReactDOM.render(
