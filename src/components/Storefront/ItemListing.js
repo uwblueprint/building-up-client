@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const ItemListing = ({ sectionTitle, storeItems, handleItemDialogOpen }) => {
+const ItemListing = ({ sectionTitle, products, handleItemClick }) => {
   const classes = useStyles();
 
   return (
@@ -30,15 +30,16 @@ const ItemListing = ({ sectionTitle, storeItems, handleItemDialogOpen }) => {
         justify="flex-start"
         alignItems="flex-start"
       >
-        {storeItems.map((storeItem, index) => (
-          <Grid item key={index}>
-            <StoreItem
-              itemName={storeItem.itemName}
-              price={storeItem.price}
-              onItemClick={handleItemDialogOpen}
-            />
-          </Grid>
-        ))}
+        {products &&
+          products.map((product, i) => (
+            <Grid item key={i}>
+              <StoreItem
+                title={product.title}
+                price={product.variants[0].price}
+                onItemClick={() => handleItemClick(product.id)}
+              />
+            </Grid>
+          ))}
       </Grid>
     </div>
   );
@@ -46,12 +47,18 @@ const ItemListing = ({ sectionTitle, storeItems, handleItemDialogOpen }) => {
 
 ItemListing.propTypes = {
   sectionTitle: PropTypes.string.isRequired,
-  storeItems: PropTypes.arrayOf(
+  products: PropTypes.arrayOf(
     PropTypes.shape({
-      itemName: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      variants: PropTypes.arrayOf(
+        PropTypes.shape({
+          price: PropTypes.number.isRequired
+        })
+      )
     })
-  )
+  ),
+  handleItemClick: PropTypes.func.isRequired
 };
 
 export default ItemListing;

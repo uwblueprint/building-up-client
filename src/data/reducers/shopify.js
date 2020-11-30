@@ -94,21 +94,6 @@ const getProduct = id => {
   };
 };
 
-//
-// Gets a  collection based on that collection's id
-//
-// const getCollection = () => {
-// 	const collectionId = "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzIwODAyMDYwMzAzMw=="
-// 	return (dispatch) => {
-// 		client.collection.fetchWithProducts(collectionId).then((resp) => {
-// 			dispatch({
-// 				type: COLLECTION_FOUND,
-// 				payload: resp.products,
-// 			})
-// 		})
-// 	}
-// }
-
 // Creates initial checkout state from Shopify
 const checkout = () => {
   return dispatch => {
@@ -231,7 +216,6 @@ export const useShopify = () => {
   const shopDetails = useSelector(state => state.shopifyState.shop);
   const fetchProducts = () => dispatch(getProducts());
   const fetchProduct = id => dispatch(getProduct(id));
-  // const fetchCollection = () => dispatch(getCollection())
   const createCheckout = () => dispatch(checkout());
   const createShop = () => dispatch(shopInfo());
   const closeCart = () => dispatch(handleCartClose());
@@ -259,7 +243,6 @@ export const useShopify = () => {
     addVariant,
     fetchProducts,
     fetchProduct,
-    // fetchCollection,
     createCheckout,
     createShop,
     closeCart,
