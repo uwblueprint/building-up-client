@@ -28,9 +28,12 @@ const Product = props => {
 
   useEffect(() => {
     fetchProduct(id);
-  }, [id, fetchProduct]);
-
+  }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
+  
   const addToCart = (sizeId, quantity) => {
+    if (Object.keys(product).length === 0) {
+        return;
+    }
     if (sizeId === '') {
       sizeId = defaultSize;
     }
