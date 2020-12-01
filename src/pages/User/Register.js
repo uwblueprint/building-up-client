@@ -1,15 +1,7 @@
 import React, { useState } from 'react';
 import { useApolloClient } from "@apollo/client";
-import { gql } from "@apollo/client";
-
-
-const REGISTER_MUTATION = gql`
-    mutation createNewUser($firstName: String!, $lastName: String!, $email: String!,  $password: String!) {
-        register(firstName: $firstName, lastName: $lastName, email: $email, password: $password){
-            firstName
-        }
-    }
-`;
+import { useDispatch } from "react-redux";
+import { register } from '../../data/actions/auth';
 
 function Register(props) {
     
@@ -18,19 +10,11 @@ function Register(props) {
     const [password, setPassword] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
+    const dispatch = useDispatch();
   
     const handleClick = async (e) => { 
         e.preventDefault();
-      client
-        .mutate({
-          variables: { firstName: firstName, lastName: lastName, email: email, password: password },
-          mutation: REGISTER_MUTATION
-        })
-        .then(res => {
-          console.log(res);
-          props.history.push("/login");    
-        })
-        .catch(err => console.log("Error on login API call: %s", err));
+        dispatch(register(firstName, lastName, email, password, client ));
     };
 
     const onChangeFirstName = (e) => {

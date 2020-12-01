@@ -1,33 +1,21 @@
 import React, { useState } from 'react';
 import { useApolloClient } from "@apollo/client";
-import { gql } from "@apollo/client";
-
-
-const LOGIN_MUTATION = gql`
-    mutation login($email: String!,  $password: String!){
-        login(email: $email, password: $password){
-            email
-        } 
-  }
-`;
+import { login } from '../../data/actions/auth';
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from 'react-router-dom';
 
 function Login(props) {
     const client = useApolloClient();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const { isLoggedIn } = useSelector(state => state.auth);
+    console.log("hello");
+    console.log(isLoggedIn);
+    const dispatch = useDispatch();
 
     const handleClick = async (e) => {
       e.preventDefault();
-      client
-        .mutate({
-          variables: { email: email, password: password},
-          mutation: LOGIN_MUTATION
-        })
-        .then(res => {
-          console.log(res);
-          props.history.push("/");
-        })
-        .catch(err => console.log("Error on login API call: %s", err));
+      dispatch(login(email,password, client));
     };
 
     const onChangeEmail = (e) => {
@@ -36,6 +24,13 @@ function Login(props) {
 
     const onChangePass = (e) => {
         setPassword(e.target.value);
+    }
+
+    //Hardcoded for now
+    if (isLoggedIn){
+        return(
+            <Redirect to="/1/home"/>
+        )
     }
 
     return (
