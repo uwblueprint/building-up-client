@@ -1,17 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import { Box, Grid, Typography } from '@material-ui/core';
-import StoreItem from './StoreItem';
+import React from "react";
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
+import { Box, Grid, Typography } from "@material-ui/core";
+import StoreItem from "./StoreItem";
 
 const useStyles = makeStyles(() => ({
   sectionHeading: {
-    padding: '5px 10px',
+    padding: "5px 10px",
     marginBottom: 30
   },
   storeItems: {
-    maxWidth: '77vw',
-    margin: '50px auto'
+    maxWidth: "77vw",
+    margin: "50px auto"
   }
 }));
 
@@ -31,15 +31,21 @@ const ItemListing = ({ sectionTitle, products, handleItemClick }) => {
         alignItems="flex-start"
       >
         {products &&
-          products.map((product, i) => (
-            <Grid item key={i}>
-              <StoreItem
-                title={product.title}
-                price={product.variants[0].price}
-                onItemClick={() => handleItemClick(product.id)}
-              />
-            </Grid>
-          ))}
+          products.map((product, i) => {
+            console.log("product is: ");
+            console.log(product);
+            const images = product.images;
+            return (
+              <Grid item key={i}>
+                <StoreItem
+                  title={product.title}
+                  price={product.variants[0].price}
+                  onItemClick={() => handleItemClick(product.id)}
+                  images={images}
+                />
+              </Grid>
+            );
+          })}
       </Grid>
     </div>
   );

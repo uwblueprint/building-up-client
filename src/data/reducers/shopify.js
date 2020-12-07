@@ -1,33 +1,25 @@
-import { useSelector, useDispatch } from 'react-redux';
-import Client from 'shopify-buy';
+import { useSelector, useDispatch } from "react-redux";
+import Client from "shopify-buy";
 
 // Creates the client with Shopify-Buy and store info
 //
 const client = Client.buildClient({
-  storefrontAccessToken: 'your-storefront-access-token',
-  domain: 'your-shop-name.myshopify.com'
+  storefrontAccessToken: process.env.STOREFRONTACCESSTOKEN,
+  domain: "raising-the-roof-chez-toit.myshopify.com"
 });
 
-//
-// Example Storefront
-//
-// const client = Client.buildClient({
-// 	storefrontAccessToken: "dd4d4dc146542ba7763305d71d1b3d38",
-// 	domain: "graphql.myshopify.com",
-// })
-
-const PRODUCTS_FOUND = 'shopify/PRODUCTS_FOUND';
-const PRODUCT_FOUND = 'shopify/PRODUCT_FOUND';
-const COLLECTION_FOUND = 'shopify/COLLECTION_FOUND';
-const CHECKOUT_FOUND = 'shopify/CHECKOUT_FOUND';
-const SHOP_FOUND = 'shopify/SHOP_FOUND';
-const UPDATE_CART_ATTRIBUTE = 'shopify/UPDATE_CART_ATTRIBUTE';
-const ADD_VARIANT_TO_CART = 'shopify/ADD_VARIANT_TO_CART';
-const UPDATE_QUANTITY_IN_CART = 'shopify/UPDATE_QUANTITY_IN_CART';
-const REMOVE_LINE_ITEM_IN_CART = 'shopify/REMOVE_LINE_ITEM_IN_CART';
-const OPEN_CART = 'shopify/OPEN_CART';
-const CLOSE_CART = 'shopify/CLOSE_CART';
-const CART_COUNT = 'shopify/CART_COUNT';
+const PRODUCTS_FOUND = "shopify/PRODUCTS_FOUND";
+const PRODUCT_FOUND = "shopify/PRODUCT_FOUND";
+const COLLECTION_FOUND = "shopify/COLLECTION_FOUND";
+const CHECKOUT_FOUND = "shopify/CHECKOUT_FOUND";
+const SHOP_FOUND = "shopify/SHOP_FOUND";
+const UPDATE_CART_ATTRIBUTE = "shopify/UPDATE_CART_ATTRIBUTE";
+const ADD_VARIANT_TO_CART = "shopify/ADD_VARIANT_TO_CART";
+const UPDATE_QUANTITY_IN_CART = "shopify/UPDATE_QUANTITY_IN_CART";
+const REMOVE_LINE_ITEM_IN_CART = "shopify/REMOVE_LINE_ITEM_IN_CART";
+const OPEN_CART = "shopify/OPEN_CART";
+const CLOSE_CART = "shopify/CLOSE_CART";
+const CART_COUNT = "shopify/CART_COUNT";
 
 const initialState = {
   isCartOpen: false,
