@@ -24,12 +24,12 @@ const GET_TEAMS = gql`
 
 function App() {
   const { loading, error, data } = useQuery(GET_TEAMS);
-  const { createShop, /*createCheckout,*/ fetchProducts } = useShopify();
+  const { createShop, createCheckout, fetchProducts } = useShopify();
 
   useEffect(() => {
     createShop();
     fetchProducts();
-    // createCheckout();
+    createCheckout();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) return "Loading...";
