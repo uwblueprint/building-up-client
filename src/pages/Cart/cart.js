@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, shallowEqual } from "react-redux";
 import { selectors as teamSelectors } from "../../data/reducers/team";
@@ -18,15 +18,16 @@ const Cart = () => {
   const { checkoutState, updateCartAttributes } = useShopify();
   const team = useSelector(teamSelectors.selectTeam, shallowEqual);
 
-  const openCheckout = () => {
-    const checkoutId = checkoutState.id;
+  useEffect(() => {
+    updateCartAttributes(checkoutState.id, [
+      { key: 'teamId', value: team.id.toString() },
+      { key: 'teamName', value: team.name }
+    ]);
+  }, [checkoutState.id, team.id, team.name]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const openCheckout = () => {
     if (checkoutState.webUrl) {
-      console.log("webUrl exists");
-      updateCartAttributes(checkoutId, [
-        { key: "teamId", value: team.id },
-        { key: "teamName", value: team.name }
-      ]);
+      console.log('webUrl exists');
     }
     // window.open(checkoutState.webUrl) // opens checkout in a new window
     window.location.replace(checkoutState.webUrl); // opens checkout in same window
