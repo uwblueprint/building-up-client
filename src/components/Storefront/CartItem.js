@@ -33,7 +33,7 @@ const CartItem = ({ lineItem }) => {
 
   return (
     <Box display="flex" flexDirection="row" alignItems="center">
-      <Box height={100} width={100} bgcolor="grey.200" />
+      {<img height={250} width={250} src={lineItem.variant.image.src} />}
       <Box className={classes.buttons}>
         <IconButton onClick={incrementQuantity}>
           <Add />

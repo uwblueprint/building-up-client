@@ -1,18 +1,18 @@
-import React, { useEffect } from "react";
-import { gql, useQuery } from "@apollo/client";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { gql, useQuery } from '@apollo/client';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import { ThemeProvider } from "@material-ui/core/styles";
+import { ThemeProvider } from '@material-ui/core/styles';
 
-import TeamDashboard from "../pages/TeamDashboard/teamdashboard";
-import Home from "../pages/home";
-import StoreFront from "../pages/Storefront/storefront";
-import Register from "../pages/User/Register";
-import Login from "../pages/User/Login";
-import { storeTheme, dashboardTheme } from "./Themes";
-import Product from "../pages/Product/product";
-import Cart from "../pages/Cart/cart";
-import { useShopify } from "../hooks/useShopify";
+import TeamDashboard from '../pages/TeamDashboard/teamdashboard';
+import Home from '../pages/home';
+import StoreFront from '../pages/Storefront/storefront';
+import Register from '../pages/User/Register';
+import Login from '../pages/User/Login';
+import { storeTheme, dashboardTheme } from './Themes';
+import Product from '../pages/Product/product';
+import Cart from '../pages/Cart/cart';
+import { useShopify } from '../hooks/useShopify';
 
 const GET_TEAMS = gql`
   query {
@@ -32,7 +32,7 @@ function App() {
     createCheckout();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (loading) return "Loading...";
+  if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
 
   return (
@@ -43,7 +43,7 @@ function App() {
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           {data.getAllTeams.map((team, i) => {
-            console.log("The team", team);
+            console.log('The team', team);
             return (
               <React.Fragment key={i}>
                 <ThemeProvider theme={storeTheme}>

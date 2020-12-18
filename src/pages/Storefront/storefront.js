@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Header from "../../components/Storefront/Header";
-import Banner from "../../components/Storefront/Banner";
-import ItemListing from "../../components/Storefront/ItemListing";
-import { useQuery, gql } from "@apollo/client";
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { useShopify } from "../../hooks/useShopify";
-import { actions as teamActions } from "../../data/reducers/team";
+import React, { useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Header from '../../components/Storefront/Header';
+import Banner from '../../components/Storefront/Banner';
+import ItemListing from '../../components/Storefront/ItemListing';
+import { useQuery, gql } from '@apollo/client';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { useShopify } from '../../hooks/useShopify';
+import { actions as teamActions } from '../../data/reducers/team';
 
 const GET_TEAM_INFO = gql`
   query getTeam($id: Int!) {
@@ -27,7 +27,7 @@ const useStyles = makeStyles(() => ({
 
 const toques = [];
 for (let i = 0; i < 7; ++i) {
-  toques.push({ title: "Example of Toque", variants: [{ price: 15.0 }] });
+  toques.push({ title: 'Example of Toque', variants: [{ price: 15.0 }] });
 }
 
 const StoreFront = props => {
@@ -41,7 +41,7 @@ const StoreFront = props => {
   }, [props]);
 
   const id = Number(props.match.params.id);
-  console.log("This is the id", id);
+  console.log('This is the id', id);
   const { loading, error, data } = useQuery(GET_TEAM_INFO, {
     variables: { id }
   });
@@ -52,11 +52,11 @@ const StoreFront = props => {
     }
   }, [data, dispatch]);
 
-  if (loading) return "Loading...";
+  if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
 
-  console.log("This is the team data: ", data);
-  console.log("This is the error", error);
+  console.log('This is the team data: ', data);
+  console.log('This is the error', error);
 
   const handleItemClick = productId => {
     fetchProduct(productId).then(res => {
@@ -68,11 +68,6 @@ const StoreFront = props => {
     <div className={classes.root}>
       <Header teamId={id} />
       <Banner />
-      <ItemListing
-        sectionTitle="PLACEHOLDER TOQUES"
-        products={toques}
-        handleItemClick={handleItemClick}
-      />
       <ItemListing
         sectionTitle="ACTUAL PRODUCTS"
         products={products}

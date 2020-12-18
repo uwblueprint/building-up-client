@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { useSelector, shallowEqual } from "react-redux";
-import { selectors as teamSelectors } from "../../data/reducers/team";
-import { useShopify } from "../../hooks/useShopify";
-import { Button, Box, Typography } from "@material-ui/core";
-import Header from "../../components/Storefront/Header";
-import CartItem from "../../components/Storefront/CartItem";
+import React, { useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { useSelector, shallowEqual } from 'react-redux';
+import { selectors as teamSelectors } from '../../data/reducers/team';
+import { useShopify } from '../../hooks/useShopify';
+import { Button, Box, Typography } from '@material-ui/core';
+import Header from '../../components/Storefront/Header';
+import CartItem from '../../components/Storefront/CartItem';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -19,8 +19,10 @@ const Cart = () => {
   const team = useSelector(teamSelectors.selectTeam, shallowEqual);
 
   useEffect(() => {
+    const userID = sessionStorage.getItem('userID');
     updateCartAttributes(checkoutState.id, [
-      { key: 'teamId', value: team.id.toString() },
+      { key: 'userID', value: userID.toString() },
+      { key: 'teamID', value: team.id.toString() },
       { key: 'teamName', value: team.name }
     ]);
   }, [checkoutState.id, team.id, team.name]); // eslint-disable-line react-hooks/exhaustive-deps

@@ -25,15 +25,13 @@ const ItemListing = ({ sectionTitle, products, handleItemClick }) => {
       </Box>
       <Grid
         container
-        spacing={3}
+        spacing={10}
         direction="row"
         justify="flex-start"
         alignItems="flex-start"
       >
         {products &&
           products.map((product, i) => {
-            console.log("product is: ");
-            console.log(product);
             const images = product.images;
             return (
               <Grid item key={i}>

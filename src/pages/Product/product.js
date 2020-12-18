@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Button, Box, Typography } from "@material-ui/core";
-import { useShopify } from "../../hooks/useShopify";
-import Header from "../../components/Storefront/Header";
+import React, { useState, useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { Button, Box, Typography } from '@material-ui/core';
+import { useShopify } from '../../hooks/useShopify';
+import Header from '../../components/Storefront/Header';
 
 const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1
   },
   description: {
-    margin: "0 30px"
+    margin: '0 30px'
   },
   item: {
     padding: 60
@@ -27,29 +27,26 @@ const Product = props => {
   } = useShopify();
   const id = props.match.params.productId;
   const defaultSize = product.variants && product.variants[0].id.toString();
-  const [size, setSize] = useState("");
+  const [size, setSize] = useState('');
   const [quantity, setQuantity] = useState(1);
 
-  const description = product.description && product.description.split(".");
+  const description = product.description && product.description.split('.');
 
   useEffect(() => {
     fetchProduct(id);
   }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const addToCart = (sizeId, quantity) => {
-    openCart();
     if (Object.keys(product).length === 0) {
       return;
     }
-    if (sizeId === "") {
+    if (sizeId === '') {
       sizeId = defaultSize;
     }
     const lineItemsToAdd = [
       { variantId: sizeId, quantity: parseInt(quantity) }
     ];
     const checkoutId = checkoutState.id;
-    console.log(checkoutState);
-    console.log("adding variant...");
     addVariant(checkoutId, lineItemsToAdd);
   };
 
@@ -64,35 +61,55 @@ const Product = props => {
           flexGrow={1}
         >
           <Box display="flex">
-            <Box height={250} width={250} bgcolor="grey.200" />
+            {/* <Box height={250} width={250} bgcolor="grey.200" /> */}
+            <div className="Images">
+              {product.images &&
+                product.images.map((image, i) => {
+                  return (
+                    <img
+                      height={250}
+                      width={250}
+                      key={image.id + i}
+                      src={image.src}
+                      alt={`${product.title} product shot`}
+                      display="flex"
+                      alignItems="center"
+                      flexGrow={1}
+                    />
+                  );
+                })}
+            </div>
             <Box
               display="flex"
               flexDirection="column"
               className={classes.description}
             >
-              <div className="Images">
-                {product.images &&
-                  product.images.map((image, i) => {
-                    return (
-                      <img
-                        key={image.id + i}
-                        src={image.src}
-                        alt={`${product.title} product shot`}
-                      />
-                    );
-                  })}
-              </div>
               <Typography variant="body1" component="p">
-                This is the product with id: {id} and title: {product.title}
+                {product.title}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                ${"10.00"}
+                {/* fix this to get the actual price here */}${'15.00'}
               </Typography>
               <Typography variant="body1" component="p">
                 This is the description: {description}
               </Typography>
-              <Button onClick={() => setSize("")}>Set Size</Button>
+              <Typography variant="body1" component="p">
+                {'Set Size'}
+              </Typography>
+              <input
+                className="size"
+                type="string"
+                min={''}
+                value={size}
+                onChange={e => {
+                  setSize(e.target.value);
+                }}
+              ></input>
+              {/* <Button onClick={() => setSize('')}>Set Size</Button> */}
               {/* <Button onClick={() => setQuantity(1)}>Set Quantity</Button> */}
+              <Typography variant="body1" component="p">
+                {'Set Quantity'}
+              </Typography>
               <input
                 className="quantity"
                 type="number"
