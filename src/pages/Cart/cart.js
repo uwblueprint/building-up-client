@@ -21,7 +21,7 @@ const Cart = () => {
   useEffect(() => {
     const userID = sessionStorage.getItem('userID');
     updateCartAttributes(checkoutState.id, [
-      { key: 'userID', value: userID.toString() },
+      { key: 'userID', value: userID ? userID.toString() : '1' }, //Temporary, so that page doesn't crash
       { key: 'teamID', value: team.id.toString() },
       { key: 'teamName', value: team.name }
     ]);
@@ -40,7 +40,7 @@ const Cart = () => {
       <Header />
       <Box display="flex" flexDirection="column" alignItems="center">
         <Typography variant="h2">Cart</Typography>
-        <Box display="flex" alignItems="center" flexGrow={1}>
+        <Box display="flex" flexDirection="column" alignItems="center" flexGrow={1}>
           {checkoutState.lineItems &&
             checkoutState.lineItems.map((lineItem, i) => (
               <CartItem key={i} lineItem={lineItem} />

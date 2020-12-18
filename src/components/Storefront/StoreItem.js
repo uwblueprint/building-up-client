@@ -6,6 +6,11 @@ import { Typography, Box } from "@material-ui/core";
 const useStyles = makeStyles(() => ({
   description: {
     paddingTop: 10
+  },
+  clickable: {
+    '&:hover': {
+        cursor: "pointer"
+    }
   }
 }));
 
@@ -13,15 +18,15 @@ const StoreItem = ({ title, price, onItemClick, images }) => {
   const classes = useStyles();
 
   return (
-    <Box onClick={onItemClick}>
+    <Box onClick={onItemClick} className={classes.clickable}>
       {/* <Box height={250} width={250} bgcolor="grey.200" /> */}
-      {images ? <img height={250} width={250} src={images[0].src} /> : null}
-      <Box className={classes.description}>
-        <Typography variant="body1" component="p">
+      {images ? <img height={250} width={250} src={images[0].src} border={1}/> : null}
+      <Box className={classes.description} display="flex" flexDirection="column" alignItems="center">
+        <Typography variant="body2" component="p">
           {title}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-          ${Math.round(price * 100) / 100}
+          ${price}
         </Typography>
       </Box>
     </Box>

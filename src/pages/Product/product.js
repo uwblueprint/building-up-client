@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Box, Typography } from '@material-ui/core';
+import { Button, Box, Grid, Typography } from '@material-ui/core';
 import { useShopify } from '../../hooks/useShopify';
 import Header from '../../components/Storefront/Header';
+import QuantityPicker from '../../components/Storefront/QuantityPicker';
 
 const useStyles = makeStyles(() => ({
-  root: {
-    flexGrow: 1
-  },
   description: {
     margin: '0 30px'
   },
@@ -23,14 +21,15 @@ const Product = props => {
     fetchProduct,
     checkoutState,
     addVariant,
-    openCart
+    updateCartCount,
+    cartCount
   } = useShopify();
   const id = props.match.params.productId;
   const defaultSize = product.variants && product.variants[0].id.toString();
   const [size, setSize] = useState('');
   const [quantity, setQuantity] = useState(1);
 
-  const description = product.description && product.description.split('.');
+  const description = product.description;
 
   useEffect(() => {
     fetchProduct(id);
@@ -48,17 +47,27 @@ const Product = props => {
     ];
     const checkoutId = checkoutState.id;
     addVariant(checkoutId, lineItemsToAdd);
+    updateCartCount(cartCount + parseInt(quantity));
   };
 
+  const incrementQuantity = () => {
+      setQuantity(quantity + 1);
+  }
+
+  const decrementQuantity = () => {
+      if (quantity > 1) {
+          setQuantity(quantity - 1);
+      }
+  }
+
   return (
-    <div className={classes.root}>
+    <div>
       <Header />
       <Box display="flex" flexDirection="column" alignItems="center">
         <Box
           className={classes.item}
           display="flex"
           alignItems="center"
-          flexGrow={1}
         >
           <Box display="flex">
             {/* <Box height={250} width={250} bgcolor="grey.200" /> */}
@@ -67,36 +76,36 @@ const Product = props => {
                 product.images.map((image, i) => {
                   return (
                     <img
-                      height={250}
-                      width={250}
+                      height={400}
+                      width={400}
                       key={image.id + i}
                       src={image.src}
                       alt={`${product.title} product shot`}
                       display="flex"
-                      alignItems="center"
-                      flexGrow={1}
+                      border={1}
                     />
                   );
                 })}
             </div>
-            <Box
-              display="flex"
-              flexDirection="column"
+            <Grid
+              container
+              justify="space-between"
+              direction="column"
               className={classes.description}
             >
-              <Typography variant="body1" component="p">
+              <Typography variant="h3">
                 {product.title}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                {/* fix this to get the actual price here */}${'15.00'}
+              <Typography variant="h3" color="secondary" component="p">
+                ${15.00}
               </Typography>
               <Typography variant="body1" component="p">
-                This is the description: {description}
+                {description}
               </Typography>
-              <Typography variant="body1" component="p">
-                {'Set Size'}
-              </Typography>
-              <input
+              <Button variant="contained" disabled>
+                One Size Only
+              </Button>
+              {/* <input
                 className="size"
                 type="string"
                 min={''}
@@ -104,28 +113,20 @@ const Product = props => {
                 onChange={e => {
                   setSize(e.target.value);
                 }}
-              ></input>
-              {/* <Button onClick={() => setSize('')}>Set Size</Button> */}
-              {/* <Button onClick={() => setQuantity(1)}>Set Quantity</Button> */}
-              <Typography variant="body1" component="p">
-                {'Set Quantity'}
-              </Typography>
-              <input
-                className="quantity"
-                type="number"
-                min={1}
-                value={quantity}
-                onChange={e => {
-                  setQuantity(e.target.value);
-                }}
-              ></input>
+              ></input> */}
+              <QuantityPicker
+                quantity={quantity}
+                incrementQuantity={incrementQuantity}
+                decrementQuantity={decrementQuantity}
+              />
               <Button
-                variant="outlined"
+                variant="contained"
+                color="primary"
                 onClick={() => addToCart(size, quantity)}
               >
                 Add to Cart
               </Button>
-            </Box>
+            </Grid>
           </Box>
         </Box>
       </Box>

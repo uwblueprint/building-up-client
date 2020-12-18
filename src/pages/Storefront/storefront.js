@@ -69,7 +69,7 @@ const StoreFront = props => {
       <Header teamId={id} />
       <Banner />
       <ItemListing
-        sectionTitle="ACTUAL PRODUCTS"
+        sectionTitle="PRODUCTS"
         products={products}
         handleItemClick={handleItemClick}
       />

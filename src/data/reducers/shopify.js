@@ -129,6 +129,15 @@ const updateCartCustomAttributes = (checkoutId, attributes) => {
   };
 };
 
+const updateCartItemCount = (amount) => {
+    return async dispatch => {
+        dispatch({
+            type: CART_COUNT,
+            payload: amount
+        })
+    }
+}
+
 // Adds variants to cart/checkout
 const addVariantToCart = (checkoutId, lineItemsToAdd) => {
   return async dispatch => {
@@ -214,6 +223,7 @@ export const useShopify = () => {
   const openCart = () => dispatch(handleCartOpen());
   const setCount = count => dispatch(handleSetCount(count));
 
+  const updateCartCount = (amount) => dispatch(updateCartItemCount(amount));
   const updateCartAttributes = (checkoutId, attributes) =>
     dispatch(updateCartCustomAttributes(checkoutId, attributes));
   const addVariant = (checkoutId, lineItemsToAdd) =>
@@ -231,6 +241,7 @@ export const useShopify = () => {
     checkoutState,
     cartCount,
     shopDetails,
+    updateCartCount,
     updateCartAttributes,
     addVariant,
     fetchProducts,
