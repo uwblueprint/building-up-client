@@ -13,6 +13,10 @@ const useStyles = makeStyles(() => ({
   },
   cartHeading: {
     padding: 30
+  },
+  checkoutButton: {
+    minWidth: 400,
+    maxWidth: 400
   }
 }));
 
@@ -51,8 +55,8 @@ const Cart = () => {
               <CartItem key={i} lineItem={lineItem} />
             ))}
         </Box>
-        <Button variant="outlined" onClick={openCheckout}>
-          Open Checkout
+        <Button variant="contained" color="primary" onClick={openCheckout} className={classes.checkoutButton}>
+            Proceed to Checkout
         </Button>
       </Box>
     </div>
