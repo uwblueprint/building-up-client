@@ -10,6 +10,9 @@ import CartItem from '../../components/Storefront/CartItem';
 const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1
+  },
+  cartHeading: {
+    padding: 30
   }
 }));
 
@@ -39,7 +42,9 @@ const Cart = () => {
     <div className={classes.root}>
       <Header />
       <Box display="flex" flexDirection="column" alignItems="center">
-        <Typography variant="h2">Cart</Typography>
+        <Typography variant="h2" className={classes.cartHeading}>
+            Cart
+        </Typography>
         <Box display="flex" flexDirection="column" alignItems="center" flexGrow={1}>
           {checkoutState.lineItems &&
             checkoutState.lineItems.map((lineItem, i) => (
