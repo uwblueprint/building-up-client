@@ -97,7 +97,7 @@ const Product = props => {
                 {product.title}
               </Typography>
               <Typography variant="h3" color="secondary" component="p">
-                ${15.00}
+                ${product.variants[0].price}
               </Typography>
               <Typography variant="body1" component="p">
                 {description}
