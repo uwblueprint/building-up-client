@@ -8,6 +8,8 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useShopify } from '../../hooks/useShopify';
 import { actions as teamActions } from '../../data/reducers/team';
+import { useSelector } from "react-redux";
+import { Redirect } from 'react-router-dom';
 
 const GET_TEAM_INFO = gql`
   query getTeam($id: Int!) {
@@ -38,6 +40,7 @@ const StoreFront = props => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { products, fetchProduct } = useShopify();
+  const { isLoggedIn } = useSelector(state => state.auth);
 
   useEffect(() => {
     console.log(props);
@@ -67,17 +70,23 @@ const StoreFront = props => {
     });
   };
 
-  return (
-    <div className={classes.root}>
-      <Header teamId={id} />
-      <Banner />
-      <ItemListing
-        sectionTitle="PRODUCTS"
-        products={products}
-        handleItemClick={handleItemClick}
-      />
-    </div>
-  );
+  if (isLoggedIn){
+    return (
+        <div className={classes.root}>
+        <Header teamId={id} />
+        <Banner />
+        <ItemListing
+            sectionTitle="PRODUCTS"
+            products={products}
+            handleItemClick={handleItemClick}
+        />
+        </div>
+    );
+  } else {
+    return(
+      <Redirect to="/login"/>
+    );
+  }
 };
 
 export default StoreFront;
