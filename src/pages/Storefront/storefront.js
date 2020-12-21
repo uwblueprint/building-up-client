@@ -30,6 +30,9 @@ for (let i = 0; i < 7; ++i) {
   toques.push({ title: 'Example of Toque', variants: [{ price: 15.0 }] });
 }
 
+// Storefront page that displays all the products in the store
+// Contains ItemListings which then contain StoreItems
+
 const StoreFront = props => {
   const classes = useStyles();
   const dispatch = useDispatch();

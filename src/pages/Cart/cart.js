@@ -20,6 +20,8 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
+// Cart page that shows the user the items in their cart, allows them to change quantity, and proceed to checkout
+
 const Cart = () => {
   const classes = useStyles();
   const { checkoutState, updateCartAttributes } = useShopify();
@@ -28,7 +30,8 @@ const Cart = () => {
   useEffect(() => {
     const userID = sessionStorage.getItem('userID');
     updateCartAttributes(checkoutState.id, [
-      { key: 'userID', value: userID ? userID.toString() : '1' }, //Temporary, so that page doesn't crash
+      { key: 'userID', value: userID ? userID.toString() : '1' }, // Temporary, so that page doesn't crash
+                                                                  // Remove once user info is added to redux
       { key: 'teamID', value: team.id.toString() },
       { key: 'teamName', value: team.name }
     ]);

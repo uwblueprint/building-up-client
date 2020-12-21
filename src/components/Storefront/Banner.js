@@ -11,6 +11,8 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
+// Promotional banner component for the storefront page
+
 const Banner = () => {
   const classes = useStyles();
 

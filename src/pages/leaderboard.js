@@ -12,6 +12,7 @@ query getGlobalLeaderboard($first: Int!, $offset: Int!) {
   }
 }
 `
+// Base leaderboard page
 
 const Leaderboard = () => {
   const { loading, error, data } = useQuery(GET_GLOBAL_LEADERBOARD, {

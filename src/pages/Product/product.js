@@ -14,6 +14,10 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
+// Product page that displays all the details of a single product
+// Allows users to change quantity and size, as well as adding to cart
+// TODO: Allow user to select different sizes/colours if there are different variants of the product
+
 const Product = props => {
   const classes = useStyles();
   const {

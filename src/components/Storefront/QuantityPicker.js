@@ -27,6 +27,8 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
+// Component that allows users to add/subtract quantities of items on the product page and the cart page
+
 const QuantityPicker = ({ quantity, incrementQuantity, decrementQuantity }) => {
   const classes = useStyles();
 

@@ -15,6 +15,10 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
+// A single section on the storefront that contains products in the same category
+// Eg. best sellers
+// Contains the StoreItems
+
 const ItemListing = ({ sectionTitle, products, handleItemClick }) => {
   const classes = useStyles();
 

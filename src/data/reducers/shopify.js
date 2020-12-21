@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import Client from "shopify-buy";
 
+// Actions/reducers/selectors for shopify related data in the store
 // Creates the client with Shopify-Buy and store info
 //
 const client = Client.buildClient({
@@ -22,13 +23,13 @@ const CLOSE_CART = "shopify/CLOSE_CART";
 const CART_COUNT = "shopify/CART_COUNT";
 
 const initialState = {
-  isCartOpen: false,
-  cartCount: 0,
-  checkout: {},
-  products: [],
-  featured: [],
-  product: {},
-  shop: {}
+  isCartOpen: false,    // whether the cart popover is visible or not (currently unused)
+  cartCount: 0,         // the number of items in the cart
+  checkout: {},         // the checkout object that Shopify creates
+  products: [],         // the checkout object that Shopify creates
+  featured: [],         // the list of featured products pulled from Shopify (currently unused)
+  product: {},          // the product that the user is currently viewing
+  shop: {}              // the shop object that Shopify creates
 };
 
 export default (state = initialState, action) => {
@@ -110,7 +111,7 @@ const shopInfo = () => {
   };
 };
 
-// Updates cart attributes
+// Updates custom cart attributes
 const updateCartCustomAttributes = (checkoutId, attributes) => {
   const customAttributes = {
     customAttributes: attributes
@@ -129,6 +130,8 @@ const updateCartCustomAttributes = (checkoutId, attributes) => {
   };
 };
 
+
+// Updates the cart popover count
 const updateCartItemCount = (amount) => {
     return async dispatch => {
         dispatch({
@@ -191,7 +194,7 @@ const handleCartClose = () => {
   };
 };
 
-// To open the cart
+// To make the cart visible
 const handleCartOpen = () => {
   return {
     type: OPEN_CART

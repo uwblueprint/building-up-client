@@ -17,6 +17,8 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
+// A single item in the cart on the cart page
+
 const CartItem = ({ lineItem }) => {
   const classes = useStyles();
   const {
@@ -49,7 +51,7 @@ const CartItem = ({ lineItem }) => {
 
   return (
     <Box display="flex" flexDirection="row" alignItems="center" className={classes.root}>
-      {<img height={100} width={100} src={lineItem.variant.image.src} border={1}/>}
+      {<img height={100} width={100} src={lineItem.variant.image.src} alt={`${lineItem.title} product shot`} border={1}/>}
       <Box
         width={200}
         display="flex"

@@ -5,6 +5,9 @@ import { useSelector, shallowEqual } from 'react-redux';
 import { selectors as teamSelectors } from '../../data/reducers/team';
 import { useShopify } from '../../hooks/useShopify';
 
+// Header that appears on every storefront page
+// Allows users to navigate to home, storefront, donation page (not added), and cart
+
 const Header = () => {
   const history = useHistory();
   const team = useSelector(teamSelectors.selectTeam, shallowEqual);
