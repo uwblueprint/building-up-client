@@ -54,6 +54,10 @@ const storeTheme = createMuiTheme({
         secondary: {
             light: "#CD1000",
             main: "#B20E00"
+        },
+        action: {
+            disabled: "black",
+            disabledBackground: "E8E8E8"
         }
     },
     typography: {
@@ -90,6 +94,11 @@ const storeTheme = createMuiTheme({
         },
         body1: {
             fontSize: 16
+        },
+        body2: {
+            fontSize: 14,
+            fontWeight: 700,
+            textTransform: "uppercase"
         },
         button: {
             fontSize: 16,

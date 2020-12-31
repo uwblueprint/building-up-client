@@ -1,67 +1,69 @@
 import React, { useState } from 'react';
-import { useApolloClient } from "@apollo/client";
-import { login } from '../../data/actions/auth';
-import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from 'react-router-dom';
+import { useApolloClient } from '@apollo/client';
+import { gql } from '@apollo/client';
+
+const LOGIN_MUTATION = gql`
+  mutation login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      id
+      email
+    }
+  }
+`;
 
 function Login(props) {
-    const client = useApolloClient();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const { isLoggedIn } = useSelector(state => state.auth);
-    console.log("hello");
-    console.log(isLoggedIn);
-    const dispatch = useDispatch();
+  const client = useApolloClient();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-    const handleClick = async (e) => {
-      e.preventDefault();
-      dispatch(login(email,password, client));
-    };
+  const handleClick = async e => {
+    e.preventDefault();
+    client
+      .mutate({
+        variables: { email: email, password: password },
+        mutation: LOGIN_MUTATION
+      })
+      .then(res => {
+        sessionStorage.setItem('userID', res.data.login.id);
+        console.log(sessionStorage.getItem('userID'));
+        props.history.push('/');
+      })
+      .catch(err => console.log('Error on login API call: %s', err));
+  };
 
-    const onChangeEmail = (e) => {
-        setEmail(e.target.value);
-    };
+  const onChangeEmail = e => {
+    setEmail(e.target.value);
+  };
 
-    const onChangePass = (e) => {
-        setPassword(e.target.value);
-    }
+  const onChangePass = e => {
+    setPassword(e.target.value);
+  };
 
-    //Hardcoded for now
-    if (isLoggedIn){
-        return(
-            <Redirect to="/1/home"/>
-        )
-    }
-
-    return (
+  return (
+    <div>
+      <h1>Login Page</h1>
+      <form onSubmit={handleClick}>
         <div>
-        <h1>Login Page</h1>
-        <form onSubmit={handleClick}>
-            <div>
-                <input
-                    name="email"
-                    placeholder="email"
-                    value={email}
-                    onChange={onChangeEmail}
-                />
-            </div>
-            <div>
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="password"
-                    value={password}
-                    onChange={onChangePass}           
-                />
-            </div>
-            <button role="link">
-                Login
-            </button>
-        </form>
-    </div> 
+          <input
+            name="email"
+            placeholder="email"
+            value={email}
+            onChange={onChangeEmail}
+          />
+        </div>
+        <div>
+          <input
+            type="password"
+            name="password"
+            placeholder="password"
+            value={password}
+            onChange={onChangePass}
+          />
+        </div>
+        <button role="link">Login</button>
+      </form>
+    </div>
+  );
+}
 
-    );
-  }
-  
 export default Login;
-

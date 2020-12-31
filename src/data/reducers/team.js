@@ -1,8 +1,10 @@
+// Actions/reducers/selectors for team data in the store
+
 const SET_TEAM = 'team/ADD_TEAM';
 const RESET_TEAM = 'team/RESET_TEAM';
 
 const initialState = {
-  team: {}
+  team: {}  // stores team object consisting of id and team name for the current team
 };
 
 export default (state = initialState, action) => {

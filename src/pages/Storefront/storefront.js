@@ -5,7 +5,7 @@ import Banner from '../../components/Storefront/Banner';
 import ItemListing from '../../components/Storefront/ItemListing';
 import { useQuery, gql } from '@apollo/client';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 import { useShopify } from '../../hooks/useShopify';
 import { actions as teamActions } from '../../data/reducers/team';
 import { useSelector } from "react-redux";
@@ -32,6 +32,9 @@ for (let i = 0; i < 7; ++i) {
   toques.push({ title: 'Example of Toque', variants: [{ price: 15.0 }] });
 }
 
+// Storefront page that displays all the products in the store
+// Contains ItemListings which then contain StoreItems
+
 const StoreFront = props => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -50,14 +53,14 @@ const StoreFront = props => {
   });
 
   useEffect(() => {
-      if (data) {
-        dispatch(teamActions.setTeam(data.getTeam));
-      }
+    if (data) {
+      dispatch(teamActions.setTeam(data.getTeam));
+    }
   }, [data, dispatch]);
 
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
-  
+
   console.log('This is the team data: ', data);
   console.log('This is the error', error);
 
@@ -66,24 +69,20 @@ const StoreFront = props => {
       history.push(`/${id}/store/${res.id}`);
     });
   };
+
   if (isLoggedIn){
     return (
-      <div className={classes.root}>
-        <Header teamId={id}/>
+        <div className={classes.root}>
+        <Header teamId={id} />
         <Banner />
         <ItemListing
-          sectionTitle="PLACEHOLDER TOQUES"
-          products={toques}
-          handleItemClick={handleItemClick}
+            sectionTitle="PRODUCTS"
+            products={products}
+            handleItemClick={handleItemClick}
         />
-        <ItemListing
-          sectionTitle="ACTUAL PRODUCTS"
-          products={products}
-          handleItemClick={handleItemClick}
-        />
-      </div>
+        </div>
     );
-  }else {
+  } else {
     return(
       <Redirect to="/login"/>
     );

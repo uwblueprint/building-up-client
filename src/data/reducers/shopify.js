@@ -1,42 +1,35 @@
-import { useSelector, useDispatch } from 'react-redux';
-import Client from 'shopify-buy';
+import { useSelector, useDispatch } from "react-redux";
+import Client from "shopify-buy";
 
+// Actions/reducers/selectors for shopify related data in the store
 // Creates the client with Shopify-Buy and store info
 //
 const client = Client.buildClient({
-  storefrontAccessToken: 'your-storefront-access-token',
-  domain: 'your-shop-name.myshopify.com'
+  storefrontAccessToken: process.env.STOREFRONTACCESSTOKEN,
+  domain: "raising-the-roof-chez-toit.myshopify.com"
 });
 
-//
-// Example Storefront
-//
-// const client = Client.buildClient({
-// 	storefrontAccessToken: "dd4d4dc146542ba7763305d71d1b3d38",
-// 	domain: "graphql.myshopify.com",
-// })
-
-const PRODUCTS_FOUND = 'shopify/PRODUCTS_FOUND';
-const PRODUCT_FOUND = 'shopify/PRODUCT_FOUND';
-const COLLECTION_FOUND = 'shopify/COLLECTION_FOUND';
-const CHECKOUT_FOUND = 'shopify/CHECKOUT_FOUND';
-const SHOP_FOUND = 'shopify/SHOP_FOUND';
-const UPDATE_CART_ATTRIBUTE = 'shopify/UPDATE_CART_ATTRIBUTE';
-const ADD_VARIANT_TO_CART = 'shopify/ADD_VARIANT_TO_CART';
-const UPDATE_QUANTITY_IN_CART = 'shopify/UPDATE_QUANTITY_IN_CART';
-const REMOVE_LINE_ITEM_IN_CART = 'shopify/REMOVE_LINE_ITEM_IN_CART';
-const OPEN_CART = 'shopify/OPEN_CART';
-const CLOSE_CART = 'shopify/CLOSE_CART';
-const CART_COUNT = 'shopify/CART_COUNT';
+const PRODUCTS_FOUND = "shopify/PRODUCTS_FOUND";
+const PRODUCT_FOUND = "shopify/PRODUCT_FOUND";
+const COLLECTION_FOUND = "shopify/COLLECTION_FOUND";
+const CHECKOUT_FOUND = "shopify/CHECKOUT_FOUND";
+const SHOP_FOUND = "shopify/SHOP_FOUND";
+const UPDATE_CART_ATTRIBUTE = "shopify/UPDATE_CART_ATTRIBUTE";
+const ADD_VARIANT_TO_CART = "shopify/ADD_VARIANT_TO_CART";
+const UPDATE_QUANTITY_IN_CART = "shopify/UPDATE_QUANTITY_IN_CART";
+const REMOVE_LINE_ITEM_IN_CART = "shopify/REMOVE_LINE_ITEM_IN_CART";
+const OPEN_CART = "shopify/OPEN_CART";
+const CLOSE_CART = "shopify/CLOSE_CART";
+const CART_COUNT = "shopify/CART_COUNT";
 
 const initialState = {
-  isCartOpen: false,
-  cartCount: 0,
-  checkout: {},
-  products: [],
-  featured: [],
-  product: {},
-  shop: {}
+  isCartOpen: false,    // whether the cart popover is visible or not (currently unused)
+  cartCount: 0,         // the number of items in the cart
+  checkout: {},         // the checkout object that Shopify creates
+  products: [],         // the checkout object that Shopify creates
+  featured: [],         // the list of featured products pulled from Shopify (currently unused)
+  product: {},          // the product that the user is currently viewing
+  shop: {}              // the shop object that Shopify creates
 };
 
 export default (state = initialState, action) => {
@@ -118,7 +111,7 @@ const shopInfo = () => {
   };
 };
 
-// Updates cart attributes
+// Updates custom cart attributes
 const updateCartCustomAttributes = (checkoutId, attributes) => {
   const customAttributes = {
     customAttributes: attributes
@@ -136,6 +129,17 @@ const updateCartCustomAttributes = (checkoutId, attributes) => {
     return response;
   };
 };
+
+
+// Updates the cart popover count
+const updateCartItemCount = (amount) => {
+    return async dispatch => {
+        dispatch({
+            type: CART_COUNT,
+            payload: amount
+        })
+    }
+}
 
 // Adds variants to cart/checkout
 const addVariantToCart = (checkoutId, lineItemsToAdd) => {
@@ -190,7 +194,7 @@ const handleCartClose = () => {
   };
 };
 
-// To open the cart
+// To make the cart visible
 const handleCartOpen = () => {
   return {
     type: OPEN_CART
@@ -222,6 +226,7 @@ export const useShopify = () => {
   const openCart = () => dispatch(handleCartOpen());
   const setCount = count => dispatch(handleSetCount(count));
 
+  const updateCartCount = (amount) => dispatch(updateCartItemCount(amount));
   const updateCartAttributes = (checkoutId, attributes) =>
     dispatch(updateCartCustomAttributes(checkoutId, attributes));
   const addVariant = (checkoutId, lineItemsToAdd) =>
@@ -239,6 +244,7 @@ export const useShopify = () => {
     checkoutState,
     cartCount,
     shopDetails,
+    updateCartCount,
     updateCartAttributes,
     addVariant,
     fetchProducts,
