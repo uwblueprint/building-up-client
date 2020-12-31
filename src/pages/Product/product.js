@@ -30,7 +30,7 @@ const Product = props => {
   } = useShopify();
   const id = props.match.params.productId;
   const defaultSize = product.variants && product.variants[0].id.toString();
-  const [size, setSize] = useState('');
+//   const [size, setSize] = useState('');
   const [quantity, setQuantity] = useState(1);
 
   const description = product.description;
@@ -126,7 +126,7 @@ const Product = props => {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={() => addToCart(size, quantity)}
+                onClick={() => addToCart('', quantity)}
               >
                 Add to Cart
               </Button>
