@@ -21,7 +21,7 @@ function Login(props) {
     client
       .mutate({
         variables: { email: email, password: password },
-        mutation: LOGIN_MUTATION
+        mutation: LOGIN_MUTATION,
       })
       .then(res => {
         sessionStorage.setItem('userID', res.data.login.id);
@@ -44,21 +44,10 @@ function Login(props) {
       <h1>Login Page</h1>
       <form onSubmit={handleClick}>
         <div>
-          <input
-            name="email"
-            placeholder="email"
-            value={email}
-            onChange={onChangeEmail}
-          />
+          <input name="email" placeholder="email" value={email} onChange={onChangeEmail} />
         </div>
         <div>
-          <input
-            type="password"
-            name="password"
-            placeholder="password"
-            value={password}
-            onChange={onChangePass}
-          />
+          <input type="password" name="password" placeholder="password" value={password} onChange={onChangePass} />
         </div>
         <button role="link">Login</button>
       </form>

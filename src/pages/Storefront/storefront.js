@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useShopify } from '../../hooks/useShopify';
 import { actions as teamActions } from '../../data/reducers/team';
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 const GET_TEAM_INFO = gql`
@@ -23,8 +23,8 @@ const GET_TEAM_INFO = gql`
 
 const useStyles = makeStyles(() => ({
   root: {
-    flexGrow: 1
-  }
+    flexGrow: 1,
+  },
 }));
 
 const toques = [];
@@ -49,7 +49,7 @@ const StoreFront = props => {
   const id = Number(props.match.params.id);
   console.log('This is the id', id);
   const { loading, error, data } = useQuery(GET_TEAM_INFO, {
-    variables: { id }
+    variables: { id },
   });
 
   useEffect(() => {
@@ -70,22 +70,16 @@ const StoreFront = props => {
     });
   };
 
-  if (isLoggedIn){
+  if (isLoggedIn) {
     return (
-        <div className={classes.root}>
+      <div className={classes.root}>
         <Header teamId={id} />
         <Banner />
-        <ItemListing
-            sectionTitle="PRODUCTS"
-            products={products}
-            handleItemClick={handleItemClick}
-        />
-        </div>
+        <ItemListing sectionTitle="PRODUCTS" products={products} handleItemClick={handleItemClick} />
+      </div>
     );
   } else {
-    return(
-      <Redirect to="/login"/>
-    );
+    return <Redirect to="/login" />;
   }
 };
 

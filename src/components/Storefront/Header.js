@@ -46,13 +46,19 @@ const Header = () => {
             </Button>
           </Grid>
           <Grid item>
-            <Button variant="contained" color="primary" onClick={handleShopClick}>Shop</Button>
+            <Button variant="contained" color="primary" onClick={handleShopClick}>
+              Shop
+            </Button>
           </Grid>
           <Grid item>
-            <Button variant="contained" color="primary" onClick={handleDonateClick}>Donate</Button>
+            <Button variant="contained" color="primary" onClick={handleDonateClick}>
+              Donate
+            </Button>
           </Grid>
           <Grid item>
-            <Button variant="contained" color="primary" onClick={handleCartClick}>View Cart ({cartCount})</Button>
+            <Button variant="contained" color="primary" onClick={handleCartClick}>
+              View Cart ({cartCount})
+            </Button>
           </Grid>
         </Grid>
       </Toolbar>

@@ -1,11 +1,11 @@
 import {
-    REGISTER_SUCCESS,
-    REGISTER_FAIL,
-    LOGIN_SUCCESS,
-    LOGIN_FAIL,
-    LOGOUT_FAIL,
-    LOGOUT_SUCCESS
-  } from "../actions/type";
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  LOGOUT_FAIL,
+  LOGOUT_SUCCESS,
+} from '../actions/type';
 import Cookies from 'js-cookie';
 
 //TODO: figure out a way to get user details into the state, this only checks if cookie is there and makes
@@ -13,8 +13,8 @@ import Cookies from 'js-cookie';
 const user = Cookies.get('access-token');
 
 const initialState = user
-  ? { isLoggedIn: true, firstName:null, lastName:null, email:null, id:null }
-  : { isLoggedIn: false, firstName: null, lastName: null, email: null, id: null};
+  ? { isLoggedIn: true, firstName: null, lastName: null, email: null, id: null }
+  : { isLoggedIn: false, firstName: null, lastName: null, email: null, id: null };
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
@@ -35,7 +35,7 @@ export default function (state = initialState, action) {
         ...state,
         isLoggedIn: true,
         firstName: payload.firstName,
-        lastName: payload.lastName, 
+        lastName: payload.lastName,
         email: payload.email,
         id: payload.id,
       };
@@ -44,7 +44,7 @@ export default function (state = initialState, action) {
         ...state,
         isLoggedIn: false,
         firstName: null,
-        lastName: null, 
+        lastName: null,
         email: null,
         id: null,
       };
@@ -53,19 +53,19 @@ export default function (state = initialState, action) {
         ...state,
         isLoggedIn: false,
         firstName: null,
-        lastName: null, 
+        lastName: null,
         email: null,
         id: null,
-    };
+      };
     case LOGOUT_FAIL:
       return {
         ...state,
         isLoggedIn: false,
         firstName: null,
-        lastName: null, 
+        lastName: null,
         email: null,
         id: null,
-    };
+      };
     default:
       return state;
   }

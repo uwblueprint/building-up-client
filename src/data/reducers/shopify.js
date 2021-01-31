@@ -1,35 +1,35 @@
-import { useSelector, useDispatch } from "react-redux";
-import Client from "shopify-buy";
+import { useSelector, useDispatch } from 'react-redux';
+import Client from 'shopify-buy';
 
 // Actions/reducers/selectors for shopify related data in the store
 // Creates the client with Shopify-Buy and store info
 //
 const client = Client.buildClient({
   storefrontAccessToken: process.env.STOREFRONTACCESSTOKEN,
-  domain: "raising-the-roof-chez-toit.myshopify.com"
+  domain: 'raising-the-roof-chez-toit.myshopify.com',
 });
 
-const PRODUCTS_FOUND = "shopify/PRODUCTS_FOUND";
-const PRODUCT_FOUND = "shopify/PRODUCT_FOUND";
-const COLLECTION_FOUND = "shopify/COLLECTION_FOUND";
-const CHECKOUT_FOUND = "shopify/CHECKOUT_FOUND";
-const SHOP_FOUND = "shopify/SHOP_FOUND";
-const UPDATE_CART_ATTRIBUTE = "shopify/UPDATE_CART_ATTRIBUTE";
-const ADD_VARIANT_TO_CART = "shopify/ADD_VARIANT_TO_CART";
-const UPDATE_QUANTITY_IN_CART = "shopify/UPDATE_QUANTITY_IN_CART";
-const REMOVE_LINE_ITEM_IN_CART = "shopify/REMOVE_LINE_ITEM_IN_CART";
-const OPEN_CART = "shopify/OPEN_CART";
-const CLOSE_CART = "shopify/CLOSE_CART";
-const CART_COUNT = "shopify/CART_COUNT";
+const PRODUCTS_FOUND = 'shopify/PRODUCTS_FOUND';
+const PRODUCT_FOUND = 'shopify/PRODUCT_FOUND';
+const COLLECTION_FOUND = 'shopify/COLLECTION_FOUND';
+const CHECKOUT_FOUND = 'shopify/CHECKOUT_FOUND';
+const SHOP_FOUND = 'shopify/SHOP_FOUND';
+const UPDATE_CART_ATTRIBUTE = 'shopify/UPDATE_CART_ATTRIBUTE';
+const ADD_VARIANT_TO_CART = 'shopify/ADD_VARIANT_TO_CART';
+const UPDATE_QUANTITY_IN_CART = 'shopify/UPDATE_QUANTITY_IN_CART';
+const REMOVE_LINE_ITEM_IN_CART = 'shopify/REMOVE_LINE_ITEM_IN_CART';
+const OPEN_CART = 'shopify/OPEN_CART';
+const CLOSE_CART = 'shopify/CLOSE_CART';
+const CART_COUNT = 'shopify/CART_COUNT';
 
 const initialState = {
-  isCartOpen: false,    // whether the cart popover is visible or not (currently unused)
-  cartCount: 0,         // the number of items in the cart
-  checkout: {},         // the checkout object that Shopify creates
-  products: [],         // the checkout object that Shopify creates
-  featured: [],         // the list of featured products pulled from Shopify (currently unused)
-  product: {},          // the product that the user is currently viewing
-  shop: {}              // the shop object that Shopify creates
+  isCartOpen: false, // whether the cart popover is visible or not (currently unused)
+  cartCount: 0, // the number of items in the cart
+  checkout: {}, // the checkout object that Shopify creates
+  products: [], // the checkout object that Shopify creates
+  featured: [], // the list of featured products pulled from Shopify (currently unused)
+  product: {}, // the product that the user is currently viewing
+  shop: {}, // the shop object that Shopify creates
 };
 
 export default (state = initialState, action) => {
@@ -69,7 +69,7 @@ const getProducts = () => {
     client.product.fetchAll().then(resp => {
       dispatch({
         type: PRODUCTS_FOUND,
-        payload: resp
+        payload: resp,
       });
     });
   };
@@ -81,7 +81,7 @@ const getProduct = id => {
     const resp = await client.product.fetch(id);
     dispatch({
       type: PRODUCT_FOUND,
-      payload: resp
+      payload: resp,
     });
     return resp;
   };
@@ -93,7 +93,7 @@ const checkout = () => {
     client.checkout.create().then(resp => {
       dispatch({
         type: CHECKOUT_FOUND,
-        payload: resp
+        payload: resp,
       });
     });
   };
@@ -105,7 +105,7 @@ const shopInfo = () => {
     client.shop.fetchInfo().then(resp => {
       dispatch({
         type: SHOP_FOUND,
-        payload: resp
+        payload: resp,
       });
     });
   };
@@ -114,43 +114,36 @@ const shopInfo = () => {
 // Updates custom cart attributes
 const updateCartCustomAttributes = (checkoutId, attributes) => {
   const customAttributes = {
-    customAttributes: attributes
+    customAttributes: attributes,
   };
 
   return async dispatch => {
-    const response = await client.checkout.updateAttributes(
-      checkoutId,
-      customAttributes
-    );
+    const response = await client.checkout.updateAttributes(checkoutId, customAttributes);
     dispatch({
       type: UPDATE_CART_ATTRIBUTE,
-      payload: response
+      payload: response,
     });
     return response;
   };
 };
 
-
 // Updates the cart popover count
-const updateCartItemCount = (amount) => {
-    return async dispatch => {
-        dispatch({
-            type: CART_COUNT,
-            payload: amount
-        })
-    }
-}
+const updateCartItemCount = amount => {
+  return async dispatch => {
+    dispatch({
+      type: CART_COUNT,
+      payload: amount,
+    });
+  };
+};
 
 // Adds variants to cart/checkout
 const addVariantToCart = (checkoutId, lineItemsToAdd) => {
   return async dispatch => {
-    const response = await client.checkout.addLineItems(
-      checkoutId,
-      lineItemsToAdd
-    );
+    const response = await client.checkout.addLineItems(checkoutId, lineItemsToAdd);
     dispatch({
       type: ADD_VARIANT_TO_CART,
-      payload: response
+      payload: response,
     });
     return response;
   };
@@ -158,18 +151,13 @@ const addVariantToCart = (checkoutId, lineItemsToAdd) => {
 
 // Updates quantity of line items in cart and in checkout state
 const updateQuantityInCart = (lineItemId, quantity, checkoutId) => {
-  const lineItemsToUpdate = [
-    { id: lineItemId, quantity: parseInt(quantity, 10) }
-  ];
+  const lineItemsToUpdate = [{ id: lineItemId, quantity: parseInt(quantity, 10) }];
 
   return async dispatch => {
-    const resp = await client.checkout.updateLineItems(
-      checkoutId,
-      lineItemsToUpdate
-    );
+    const resp = await client.checkout.updateLineItems(checkoutId, lineItemsToUpdate);
     dispatch({
       type: UPDATE_QUANTITY_IN_CART,
-      payload: resp
+      payload: resp,
     });
     return resp;
   };
@@ -181,7 +169,7 @@ const removeLineItemInCart = (checkoutId, lineItemId) => {
     client.checkout.removeLineItems(checkoutId, [lineItemId]).then(resp => {
       dispatch({
         type: REMOVE_LINE_ITEM_IN_CART,
-        payload: resp
+        payload: resp,
       });
     });
   };
@@ -190,14 +178,14 @@ const removeLineItemInCart = (checkoutId, lineItemId) => {
 // To close the cart
 const handleCartClose = () => {
   return {
-    type: CLOSE_CART
+    type: CLOSE_CART,
   };
 };
 
 // To make the cart visible
 const handleCartOpen = () => {
   return {
-    type: OPEN_CART
+    type: OPEN_CART,
   };
 };
 
@@ -205,7 +193,7 @@ const handleCartOpen = () => {
 const handleSetCount = count => {
   return {
     type: CART_COUNT,
-    payload: count
+    payload: count,
   };
 };
 
@@ -226,15 +214,12 @@ export const useShopify = () => {
   const openCart = () => dispatch(handleCartOpen());
   const setCount = count => dispatch(handleSetCount(count));
 
-  const updateCartCount = (amount) => dispatch(updateCartItemCount(amount));
-  const updateCartAttributes = (checkoutId, attributes) =>
-    dispatch(updateCartCustomAttributes(checkoutId, attributes));
-  const addVariant = (checkoutId, lineItemsToAdd) =>
-    dispatch(addVariantToCart(checkoutId, lineItemsToAdd));
+  const updateCartCount = amount => dispatch(updateCartItemCount(amount));
+  const updateCartAttributes = (checkoutId, attributes) => dispatch(updateCartCustomAttributes(checkoutId, attributes));
+  const addVariant = (checkoutId, lineItemsToAdd) => dispatch(addVariantToCart(checkoutId, lineItemsToAdd));
   const updateQuantity = (lineItemId, quantity, checkoutID) =>
     dispatch(updateQuantityInCart(lineItemId, quantity, checkoutID));
-  const removeLineItem = (checkoutId, lineItemId) =>
-    dispatch(removeLineItemInCart(checkoutId, lineItemId));
+  const removeLineItem = (checkoutId, lineItemId) => dispatch(removeLineItemInCart(checkoutId, lineItemId));
 
   return {
     products,
@@ -255,6 +240,6 @@ export const useShopify = () => {
     openCart,
     updateQuantity,
     removeLineItem,
-    setCount
+    setCount,
   };
 };

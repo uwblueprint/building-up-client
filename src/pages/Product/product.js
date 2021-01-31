@@ -7,11 +7,11 @@ import QuantityPicker from '../../components/Storefront/QuantityPicker';
 
 const useStyles = makeStyles(() => ({
   description: {
-    margin: '0 30px'
+    margin: '0 30px',
   },
   item: {
-    padding: 60
-  }
+    padding: 60,
+  },
 }));
 
 // Product page that displays all the details of a single product
@@ -20,17 +20,10 @@ const useStyles = makeStyles(() => ({
 
 const Product = props => {
   const classes = useStyles();
-  const {
-    product,
-    fetchProduct,
-    checkoutState,
-    addVariant,
-    updateCartCount,
-    cartCount
-  } = useShopify();
+  const { product, fetchProduct, checkoutState, addVariant, updateCartCount, cartCount } = useShopify();
   const id = props.match.params.productId;
   const defaultSize = product.variants && product.variants[0].id.toString();
-//   const [size, setSize] = useState('');
+  //   const [size, setSize] = useState('');
   const [quantity, setQuantity] = useState(1);
 
   const description = product.description;
@@ -46,33 +39,27 @@ const Product = props => {
     if (sizeId === '') {
       sizeId = defaultSize;
     }
-    const lineItemsToAdd = [
-      { variantId: sizeId, quantity: parseInt(quantity) }
-    ];
+    const lineItemsToAdd = [{ variantId: sizeId, quantity: parseInt(quantity) }];
     const checkoutId = checkoutState.id;
     addVariant(checkoutId, lineItemsToAdd);
     updateCartCount(cartCount + parseInt(quantity));
   };
 
   const incrementQuantity = () => {
-      setQuantity(quantity + 1);
-  }
+    setQuantity(quantity + 1);
+  };
 
   const decrementQuantity = () => {
-      if (quantity > 1) {
-          setQuantity(quantity - 1);
-      }
-  }
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
 
   return (
     <div>
       <Header />
       <Box display="flex" flexDirection="column" alignItems="center">
-        <Box
-          className={classes.item}
-          display="flex"
-          alignItems="center"
-        >
+        <Box className={classes.item} display="flex" alignItems="center">
           <Box display="flex">
             {/* <Box height={250} width={250} bgcolor="grey.200" /> */}
             <div className="Images">
@@ -91,15 +78,8 @@ const Product = props => {
                   );
                 })}
             </div>
-            <Grid
-              container
-              justify="space-between"
-              direction="column"
-              className={classes.description}
-            >
-              <Typography variant="h3">
-                {product.title}
-              </Typography>
+            <Grid container justify="space-between" direction="column" className={classes.description}>
+              <Typography variant="h3">{product.title}</Typography>
               <Typography variant="h3" color="secondary" component="p">
                 ${product.variants[0].price}
               </Typography>
@@ -123,11 +103,7 @@ const Product = props => {
                 incrementQuantity={incrementQuantity}
                 decrementQuantity={decrementQuantity}
               />
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => addToCart('', quantity)}
-              >
+              <Button variant="contained" color="primary" onClick={() => addToCart('', quantity)}>
                 Add to Cart
               </Button>
             </Grid>

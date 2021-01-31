@@ -10,12 +10,12 @@ import store from './data/store';
 
 const link = createHttpLink({
   uri: 'http://localhost:4000/graphql',
-  credentials: 'include'
-}); 
+  credentials: 'include',
+});
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: link
+  link: link,
 });
 
 ReactDOM.render(
@@ -24,7 +24,7 @@ ReactDOM.render(
       <App />
     </ApolloProvider>
   </Provider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 // If you want your app to work offline and load faster, you can change

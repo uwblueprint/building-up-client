@@ -7,27 +7,21 @@ import QuantityPicker from '../../components/Storefront/QuantityPicker';
 
 const useStyles = makeStyles(() => ({
   root: {
-    marginBottom: '30px'
+    marginBottom: '30px',
   },
   details: {
-    margin: '0 30px'
+    margin: '0 30px',
   },
   clearButton: {
-    marginLeft: '20px'
-  }
+    marginLeft: '20px',
+  },
 }));
 
 // A single item in the cart on the cart page
 
 const CartItem = ({ lineItem }) => {
   const classes = useStyles();
-  const {
-    checkoutState,
-    updateQuantity,
-    removeLineItem,
-    updateCartCount,
-    cartCount
-  } = useShopify();
+  const { checkoutState, updateQuantity, removeLineItem, updateCartCount, cartCount } = useShopify();
 
   const incrementQuantity = () => {
     const checkoutId = checkoutState.id;
@@ -51,16 +45,17 @@ const CartItem = ({ lineItem }) => {
 
   return (
     <Box display="flex" flexDirection="row" alignItems="center" className={classes.root}>
-      {<img height={100} width={100} src={lineItem.variant.image.src} alt={`${lineItem.title} product shot`} border={1}/>}
-      <Box
-        width={200}
-        display="flex"
-        flexDirection="column"
-        className={classes.details}
-      >
-        <Typography variant="body2">
-          {lineItem.title}
-        </Typography>
+      {
+        <img
+          height={100}
+          width={100}
+          src={lineItem.variant.image.src}
+          alt={`${lineItem.title} product shot`}
+          border={1}
+        />
+      }
+      <Box width={200} display="flex" flexDirection="column" className={classes.details}>
+        <Typography variant="body2">{lineItem.title}</Typography>
         <Typography variant="body2" component="p">
           ${lineItem.variant.price}
         </Typography>
