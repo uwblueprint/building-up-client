@@ -26,11 +26,11 @@ function App() {
   const { loading, error, data } = useQuery(GET_TEAMS);
   const { createShop, createCheckout, fetchProducts } = useShopify();
 
-  //useEffect(() => {
-  //  createShop();
-  //  fetchProducts();
-  //  createCheckout();
-  //}, []); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    createShop();
+    fetchProducts();
+    createCheckout();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
