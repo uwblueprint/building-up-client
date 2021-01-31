@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
 import { ThemeProvider } from '@material-ui/core/styles';
 
 import TeamDashboard from '../pages/TeamDashboard/teamdashboard';
@@ -13,6 +12,7 @@ import { storeTheme, dashboardTheme } from './Themes';
 import Product from '../pages/Product/product';
 import Cart from '../pages/Cart/cart';
 import { useShopify } from '../hooks/useShopify';
+import ProtectedRoute from '../components/common/dashboard/ProtectedRoute';
 
 const GET_TEAMS = gql`
   query {
@@ -26,11 +26,11 @@ function App() {
   const { loading, error, data } = useQuery(GET_TEAMS);
   const { createShop, createCheckout, fetchProducts } = useShopify();
 
-  useEffect(() => {
-    createShop();
-    fetchProducts();
-    createCheckout();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  //useEffect(() => {
+  //  createShop();
+  //  fetchProducts();
+  //  createCheckout();
+  //}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
@@ -39,7 +39,7 @@ function App() {
     <Router>
       <React.Fragment>
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={ProtectedRoute} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           {data.getAllTeams.map((team, i) => {
@@ -49,11 +49,7 @@ function App() {
                 <ThemeProvider theme={storeTheme}>
                   <Route exact path="/:id/store" component={StoreFront} />
                   <Route exact path="/:id/cart" component={Cart} />
-                  <Route
-                    exact
-                    path="/:id/store/:productId"
-                    component={Product}
-                  />
+                  <Route exact path="/:id/store/:productId" component={Product} />
                 </ThemeProvider>
 
                 <ThemeProvider theme={dashboardTheme}>
