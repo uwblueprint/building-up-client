@@ -1,7 +1,7 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import Login from '../../../pages/User/Login';
-import Logout from '../../../pages/User/Logout';
+import { useSelector } from "react-redux";
+import Login from './User/Login';
+import Logout from './User/Logout';
 
 const ProtectedRoute = () => {
   const { isLoggedIn } = useSelector(state => state.auth);
