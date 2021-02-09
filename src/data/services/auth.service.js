@@ -17,7 +17,8 @@ const LOGIN_MUTATION = gql`
             firstName,
             lastName,
             email,
-            id
+            id,
+            teamId,
         } 
   }
 `;
@@ -32,7 +33,10 @@ const CURRENT_USER = gql`
   query getCurrentUser{
     getActiveUser{
       email,
-      firstName
+      firstName,
+      lastName,
+      id,
+      teamId,
     }
   }
 `;

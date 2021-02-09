@@ -39,7 +39,8 @@ export const login = (email, password, client) => (dispatch) => {
             firstName: res.data.login.firstName,
             lastName: res.data.login.lastName,
             email: res.data.login.email,
-            id: res.data.login.id,    
+            userId: res.data.login.id,
+            teamId: res.data.login.teamId,
           },
         });
       //login failed
@@ -88,11 +89,15 @@ export const currentUser = (client) => (dispatch) => {
   return AuthService.getCurrentUser(client).then(
     (res) => {
       //login successful
-      if (res.data.getActiveUser !== null){ 
+      if (res.data.getActiveUser !== null){
         dispatch({
           type: LOGIN_SUCCESS,
           payload: { 
+            firstName: res.data.getActiveUser.firstName,
+            lastName: res.data.getActiveUser.lastName,
             email: res.data.getActiveUser.email,
+            userId: res.data.getActiveUser.id,
+            teamId: res.data.getActiveUser.teamId,
           },
         });
       //login failed
