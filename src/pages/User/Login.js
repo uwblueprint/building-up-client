@@ -1,34 +1,17 @@
 import React, { useState } from 'react';
 import { useApolloClient } from '@apollo/client';
-import { gql } from '@apollo/client';
+import { useDispatch } from "react-redux";
+import { login } from '../../data/actions/auth';
 
-const LOGIN_MUTATION = gql`
-  mutation login($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      id
-      email
-    }
-  }
-`;
-
-function Login(props) {
+function Login() {
   const client = useApolloClient();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
 
   const handleClick = async e => {
     e.preventDefault();
-    client
-      .mutate({
-        variables: { email: email, password: password },
-        mutation: LOGIN_MUTATION
-      })
-      .then(res => {
-        sessionStorage.setItem('userID', res.data.login.id);
-        console.log(sessionStorage.getItem('userID'));
-        props.history.push('/');
-      })
-      .catch(err => console.log('Error on login API call: %s', err));
+    dispatch(login(email, password, client));
   };
 
   const onChangeEmail = e => {
