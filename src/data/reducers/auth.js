@@ -24,11 +24,21 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoggedIn: false,
+        firstName: null,
+        lastName: null, 
+        email: null,
+        userId: null,
+        teamId: null,
       };
     case REGISTER_FAIL:
       return {
         ...state,
         isLoggedIn: false,
+        firstName: null,
+        lastName: null, 
+        email: null,
+        userId: null,
+        teamId: null,
       };
     case LOGIN_SUCCESS:
       return {
@@ -48,6 +58,7 @@ export default function (state = initialState, action) {
         lastName: null, 
         email: null,
         userId: null,
+        teamId: null,
       };
     case LOGOUT_SUCCESS:
       return {
@@ -57,6 +68,7 @@ export default function (state = initialState, action) {
         lastName: null, 
         email: null,
         userId: null,
+        teamId: null,
     };
     case LOGOUT_FAIL:
       return {
@@ -66,6 +78,7 @@ export default function (state = initialState, action) {
         lastName: null, 
         email: null,
         userId: null,
+        teamId: null,
     };
     default:
       return state;
