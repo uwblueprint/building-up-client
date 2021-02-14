@@ -32,15 +32,16 @@ export const login = (email, password, client) => (dispatch) => {
   return AuthService.login(email, password, client).then(
     (res) => {
       //login successful
-      if (res.data.login !== null){ 
+      if (res.data.login !== null){
+        const { firstName, lastName, email, id, teamId } = res.data.login
         dispatch({
           type: LOGIN_SUCCESS,
           payload: { 
-            firstName: res.data.login.firstName,
-            lastName: res.data.login.lastName,
-            email: res.data.login.email,
-            userId: res.data.login.id,
-            teamId: res.data.login.teamId,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            userId: id,
+            teamId: teamId,
           },
         });
       //login failed
@@ -90,14 +91,15 @@ export const currentUser = (client) => (dispatch) => {
     (res) => {
       //login successful
       if (res.data.getActiveUser !== null){
+        const { firstName, lastName, email, id, teamId } = res.data.getActiveUser
         dispatch({
           type: LOGIN_SUCCESS,
           payload: { 
-            firstName: res.data.getActiveUser.firstName,
-            lastName: res.data.getActiveUser.lastName,
-            email: res.data.getActiveUser.email,
-            userId: res.data.getActiveUser.id,
-            teamId: res.data.getActiveUser.teamId,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            userId: id,
+            teamId: teamId,
           },
         });
       //login failed
