@@ -1,30 +1,26 @@
 const Button = {
-  // The styles all button have in common
+  // The styles all buttons have in common
   baseStyle: {
     fontWeight: 'bold',
-    textTransform: 'uppercase',
+    textTransform: 'capitalize',
   },
-  // Two sizes: sm and md
-  sizes: {
-    sm: {
-      fontSize: '12px',
-      padding: '16px',
-    },
-    md: {
-      fontSize: '16px',
-      padding: '24px',
-    },
-  },
-  // Two variants: outline and solid
+  // We can override sizes here, if we want to
+  sizes: {},
+  // The default variant is solid, so we must override colors here
   variants: {
-    outline: {
-      border: '2px solid',
-      borderColor: 'black.500',
+    solid: {
+      bg: 'brand.50',
+      _hover: {
+        bg: 'brand.100',
+      },
+      _active: {
+        bg: 'brand.200',
+      },
     },
   },
-  // The default size and variant values
+  // The default button prop values
   defaultProps: {
-    bg: 'brand.primary',
+    size: 'lg',
   },
 };
 

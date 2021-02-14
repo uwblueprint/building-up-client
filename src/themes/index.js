@@ -9,16 +9,27 @@ const storeTheme = extendTheme({
     },
   },
 });
+
 const dashboardTheme = extendTheme({
   colors: {
     brand: {
-      primary: '#FBEBEB',
+      50: '#fbebeb',
+      100: '#edc1c1',
+      200: '#e39898',
+      300: '#da6f6e',
+      400: '#d24845',
+      500: '#b9302b',
+      600: '#902622',
+      700: '#661b18',
+      800: '#3d100f',
+      900: '#150404',
     },
     background: {
       primary: '#FAFAFA',
       secondary: '#262626',
     },
   },
+
   components: {
     Button,
   },
