@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { gql, useQuery } from '@apollo/client';
+import { gql, useQuery, useApolloClient } from '@apollo/client';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import TeamDashboard from '../pages/TeamDashboard/teamdashboard';
-import Home from '../pages/home';
 import StoreFront from '../pages/Storefront/storefront';
 import Register from '../pages/User/Register';
 import Login from '../pages/User/Login';
@@ -13,6 +13,8 @@ import Product from '../pages/Product/product';
 import Cart from '../pages/Cart/cart';
 import { useShopify } from '../hooks/useShopify';
 import { ChakraProvider } from '@chakra-ui/react';
+import ProtectedRoute from '../pages/protectedroute';
+import { currentUser } from '../data/actions/auth';
 
 const GET_TEAMS = gql`
   query {
@@ -26,6 +28,9 @@ function App() {
   const { loading, error, data } = useQuery(GET_TEAMS);
   const { createShop, createCheckout, fetchProducts } = useShopify();
 
+  const dispatch = useDispatch();
+  const client = useApolloClient();
+
   useEffect(() => {
     createShop();
     fetchProducts();
@@ -35,11 +40,13 @@ function App() {
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
 
+  dispatch(currentUser(client)); // Fetch user data for Redux (if logged in)
+
   return (
     <Router>
       <React.Fragment>
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={ProtectedRoute} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           {data.getAllTeams.map((team, i) => {
