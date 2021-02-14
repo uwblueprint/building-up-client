@@ -2,17 +2,16 @@ import React, { useEffect } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import { ThemeProvider } from '@material-ui/core/styles';
-
 import TeamDashboard from '../pages/TeamDashboard/teamdashboard';
 import Home from '../pages/home';
 import StoreFront from '../pages/Storefront/storefront';
 import Register from '../pages/User/Register';
 import Login from '../pages/User/Login';
-import { storeTheme, dashboardTheme } from './Themes';
+import { storeTheme, dashboardTheme } from '../themes';
 import Product from '../pages/Product/product';
 import Cart from '../pages/Cart/cart';
 import { useShopify } from '../hooks/useShopify';
+import { ChakraProvider } from '@chakra-ui/react';
 
 const GET_TEAMS = gql`
   query {
@@ -24,13 +23,13 @@ const GET_TEAMS = gql`
 
 function App() {
   const { loading, error, data } = useQuery(GET_TEAMS);
-  const { createShop, createCheckout, fetchProducts } = useShopify();
+  // const { createShop, createCheckout, fetchProducts } = useShopify();
 
-  useEffect(() => {
-    createShop();
-    fetchProducts();
-    createCheckout();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // useEffect(() => {
+  //   createShop();
+  //   fetchProducts();
+  //   createCheckout();
+  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
@@ -46,19 +45,15 @@ function App() {
             console.log('The team', team);
             return (
               <React.Fragment key={i}>
-                <ThemeProvider theme={storeTheme}>
+                <ChakraProvider theme={storeTheme}>
                   <Route exact path="/:id/store" component={StoreFront} />
                   <Route exact path="/:id/cart" component={Cart} />
-                  <Route
-                    exact
-                    path="/:id/store/:productId"
-                    component={Product}
-                  />
-                </ThemeProvider>
+                  <Route exact path="/:id/store/:productId" component={Product} />
+                </ChakraProvider>
 
-                <ThemeProvider theme={dashboardTheme}>
+                <ChakraProvider theme={dashboardTheme}>
                   <Route exact path="/:id/home" component={TeamDashboard} />
-                </ThemeProvider>
+                </ChakraProvider>
               </React.Fragment>
             );
           })}
