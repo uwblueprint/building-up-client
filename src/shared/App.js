@@ -7,7 +7,8 @@ import Home from '../pages/home';
 import StoreFront from '../pages/Storefront/storefront';
 import Register from '../pages/User/Register';
 import Login from '../pages/User/Login';
-import { storeTheme, dashboardTheme } from '../themes';
+import dashboardTheme from '../themes/dashboard';
+import storeTheme from '../themes/store';
 import Product from '../pages/Product/product';
 import Cart from '../pages/Cart/cart';
 import { useShopify } from '../hooks/useShopify';
@@ -23,13 +24,13 @@ const GET_TEAMS = gql`
 
 function App() {
   const { loading, error, data } = useQuery(GET_TEAMS);
-  // const { createShop, createCheckout, fetchProducts } = useShopify();
+  const { createShop, createCheckout, fetchProducts } = useShopify();
 
-  // useEffect(() => {
-  //   createShop();
-  //   fetchProducts();
-  //   createCheckout();
-  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    createShop();
+    fetchProducts();
+    createCheckout();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
