@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react';
 import { gql, useQuery, useApolloClient } from '@apollo/client';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { ThemeProvider } from '@material-ui/core/styles';
-import { useDispatch } from "react-redux";
+import { useDispatch } from 'react-redux';
 
 import TeamDashboard from '../pages/TeamDashboard/teamdashboard';
 import StoreFront from '../pages/Storefront/storefront';
 import Register from '../pages/User/Register';
 import Login from '../pages/User/Login';
-import { storeTheme, dashboardTheme } from './Themes';
+import dashboardTheme from '../themes/dashboard';
+import storeTheme from '../themes/store';
 import Product from '../pages/Product/product';
 import Cart from '../pages/Cart/cart';
 import { useShopify } from '../hooks/useShopify';
+import { ChakraProvider } from '@chakra-ui/react';
 import ProtectedRoute from '../pages/protectedroute';
 import { currentUser } from '../data/actions/auth';
 
@@ -52,15 +53,15 @@ function App() {
             console.log('The team', team);
             return (
               <React.Fragment key={i}>
-                <ThemeProvider theme={storeTheme}>
+                <ChakraProvider theme={storeTheme}>
                   <Route exact path="/:id/store" component={StoreFront} />
                   <Route exact path="/:id/cart" component={Cart} />
                   <Route exact path="/:id/store/:productId" component={Product} />
-                </ThemeProvider>
+                </ChakraProvider>
 
-                <ThemeProvider theme={dashboardTheme}>
+                <ChakraProvider theme={dashboardTheme}>
                   <Route exact path="/:id/home" component={TeamDashboard} />
-                </ThemeProvider>
+                </ChakraProvider>
               </React.Fragment>
             );
           })}
