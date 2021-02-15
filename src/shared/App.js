@@ -1,80 +1,108 @@
 import React, { useEffect } from 'react';
-import { gql, useQuery, useApolloClient } from '@apollo/client';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useApolloClient } from '@apollo/client';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Box, ChakraProvider, Flex, Grid, Spinner } from '@chakra-ui/react';
 
-import TeamDashboard from '../pages/TeamDashboard/teamdashboard';
-import StoreFront from '../pages/Storefront/storefront';
+import Dashboard from '../pages/Dashboard/Dashboard';
 import Register from '../pages/User/Register';
 import Login from '../pages/User/Login';
 import dashboardTheme from '../themes/dashboard';
-import storeTheme from '../themes/store';
-import Product from '../pages/Product/product';
-import Cart from '../pages/Cart/cart';
-import { useShopify } from '../hooks/useShopify';
-import { ChakraProvider } from '@chakra-ui/react';
-import ProtectedRoute from '../pages/protectedroute';
+
+import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
 import { currentUser } from '../data/actions/auth';
 
-const GET_TEAMS = gql`
-  query {
-    getAllTeams {
-      id
-    }
-  }
-`;
+// const GET_TEAMS = gql`
+//   query {
+//     getAllTeams {
+//       id
+//     }
+//   }
+// `;
 
 function App() {
-  const { loading, error, data } = useQuery(GET_TEAMS);
-  const { createShop, createCheckout, fetchProducts } = useShopify();
-
   const dispatch = useDispatch();
   const client = useApolloClient();
 
+  const { authenticating, user } = useSelector(state => state.auth);
+
   useEffect(() => {
-    createShop();
-    fetchProducts();
-    createCheckout();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  if (loading) return 'Loading...';
-  if (error) return `Error! ${error.message}`;
-
-  dispatch(currentUser(client)); // Fetch user data for Redux (if logged in)
+    // Component on mount (i.e. app init): Try to fetch user data (Apollo client internally uses a cookie)
+    dispatch(currentUser(client));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <Router>
-      <React.Fragment>
-        <Switch>
-          <Route exact path="/" component={ProtectedRoute} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/register" component={Register} />
-          {/* Temporary way to demo the login with Chakra theming without causing a million merge conflicts w/ my other branch */}
-          <Route exact path="/loginChakra">
-            <ChakraProvider theme={dashboardTheme}>
-              <Login />
-            </ChakraProvider>
-          </Route>
-          {data.getAllTeams.map((team, i) => {
-            console.log('The team', team);
-            return (
-              <React.Fragment key={i}>
-                <ChakraProvider theme={storeTheme}>
-                  <Route exact path="/:id/store" component={StoreFront} />
-                  <Route exact path="/:id/cart" component={Cart} />
-                  <Route exact path="/:id/store/:productId" component={Product} />
-                </ChakraProvider>
+    <ChakraProvider theme={dashboardTheme}>
+      {authenticating ? (
+        <Flex direction="column" alignItems="center">
+          <div>Authenticating... </div>
+          <Spinner size="xl" />
+        </Flex>
+      ) : (
+        <Router>
+          <Switch>
+            {/* TODO: The login and register should be combined to a single path as per the design */}
+            <Route exact path="/login">
+              {user ? <Redirect to="/" /> : <Login />}
+            </Route>
+            <Route exact path="/register">
+              <Register />
+            </Route>
+            <ProtectedRoute path="/">
+              <Grid templateColumns="280px 1fr" h="100vh">
+                {/* All styles here are temporary */}
+                <Box borderRight="2px solid black" w="100%" h="100%">
+                  Navbar Goes Here
+                </Box>
 
-                <ChakraProvider theme={dashboardTheme}>
-                  <Route exact path="/:id/home" component={TeamDashboard} />
-                </ChakraProvider>
-              </React.Fragment>
-            );
-          })}
-        </Switch>
-      </React.Fragment>
-    </Router>
+                <Flex w="100%" h="100%" m="72px">
+                  <Switch>
+                    <ProtectedRoute exact path="/home">
+                      <Dashboard />
+                    </ProtectedRoute>
+                    <ProtectedRoute exact path="/leaderboard">
+                      Leaderboard page
+                    </ProtectedRoute>
+                    <ProtectedRoute exact path="/team">
+                      Team page
+                    </ProtectedRoute>
+                    {/* All other paths are redirected to /home */}
+                    <ProtectedRoute path="/">
+                      <Redirect to="/home" />
+                    </ProtectedRoute>
+                  </Switch>
+                </Flex>
+              </Grid>
+            </ProtectedRoute>
+          </Switch>
+        </Router>
+      )}
+    </ChakraProvider>
   );
+
+  /* Old code
+  
+  We can think about how to structure the storefront in the future (as a separate app, or in a top-level Route path="/store")
+  */
+
+  /* {data.getAllTeams.map((team, i) => {
+          console.log('The team', team);
+          return (
+            <React.Fragment key={i}>
+              <ChakraProvider theme={storeTheme}>
+                <Route exact path="/:id/store" component={StoreFront} />
+                <Route exact path="/:id/cart" component={Cart} />
+                <Route exact path="/:id/store/:productId" component={Product} />
+              </ChakraProvider>
+
+              <ChakraProvider theme={dashboardTheme}>
+                <Route exact path="/:id/home" component={TeamDashboard} />
+              </ChakraProvider>
+            </React.Fragment>
+          );
+        })} 
+  */
 }
 
 export default App;
