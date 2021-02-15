@@ -56,7 +56,7 @@ function App() {
                   Navbar Goes Here
                 </Box>
 
-                <Flex w="100%" h="100%" m="72px">
+                <Flex w="100%" h="100%" p="72px">
                   <Switch>
                     <ProtectedRoute exact path="/home">
                       <Dashboard />
