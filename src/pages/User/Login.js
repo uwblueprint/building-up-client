@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useApolloClient } from '@apollo/client';
-import { useDispatch } from "react-redux";
+import { useDispatch } from 'react-redux';
+import { Box, Button, Input } from '@chakra-ui/react';
 import { login } from '../../data/actions/auth';
 
 function Login() {
@@ -25,26 +26,17 @@ function Login() {
   return (
     <div>
       <h1>Login Page</h1>
-      <form onSubmit={handleClick}>
-        <div>
-          <input
-            name="email"
-            placeholder="email"
-            value={email}
-            onChange={onChangeEmail}
-          />
-        </div>
-        <div>
-          <input
-            type="password"
-            name="password"
-            placeholder="password"
-            value={password}
-            onChange={onChangePass}
-          />
-        </div>
-        <button role="link">Login</button>
-      </form>
+      <Box w="50%">
+        <form onSubmit={handleClick}>
+          <div>
+            <Input type="email" name="email" placeholder="Email" value={email} onChange={onChangeEmail} />
+          </div>
+          <div>
+            <Input type="password" name="password" placeholder="Password" value={password} onChange={onChangePass} />
+          </div>
+          <Button role="link">Login</Button>
+        </form>
+      </Box>
     </div>
   );
 }

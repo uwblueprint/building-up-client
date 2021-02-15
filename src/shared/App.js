@@ -49,6 +49,12 @@ function App() {
           <Route exact path="/" component={ProtectedRoute} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
+          {/* Temporary way to demo the login with Chakra theming without causing a million merge conflicts w/ my other branch */}
+          <Route exact path="/loginChakra">
+            <ChakraProvider theme={dashboardTheme}>
+              <Login />
+            </ChakraProvider>
+          </Route>
           {data.getAllTeams.map((team, i) => {
             console.log('The team', team);
             return (
