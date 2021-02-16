@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useApolloClient } from '@apollo/client';
 import { useDispatch } from 'react-redux';
-import { Box, Button, Input } from '@chakra-ui/react';
+import { Box, Button, Heading, Input } from '@chakra-ui/react';
 import { login } from '../../data/actions/auth';
 
 function Login() {
@@ -25,7 +25,7 @@ function Login() {
 
   return (
     <div>
-      <h1>Login Page</h1>
+      <Heading as="h1">Login Page</Heading>
       <Box w="50%">
         <form onSubmit={handleClick}>
           <div>

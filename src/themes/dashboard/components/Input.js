@@ -1,3 +1,9 @@
+/* 
+  Useful references:
+  * https://chakra-ui.com/docs/form/input
+  * https://github.com/chakra-ui/chakra-ui/blob/main/packages/theme/src/components/input.ts
+*/
+
 const Input = {
   parts: ['field'],
   baseStyle: {
@@ -10,6 +16,13 @@ const Input = {
       field: {
         height: '48px',
         borderRadius: '4px',
+      },
+    },
+  },
+  variants: {
+    outline: {
+      field: {
+        borderColor: 'rgba(0,0,0,0.2)',
       },
     },
   },
