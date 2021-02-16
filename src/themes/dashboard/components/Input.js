@@ -15,7 +15,6 @@ const Input = {
     md: {
       field: {
         height: '48px',
-        borderRadius: '4px',
       },
     },
   },
