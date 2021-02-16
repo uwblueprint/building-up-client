@@ -1,5 +1,6 @@
 import { extendTheme } from '@chakra-ui/react';
 import Button from './components/Button';
+import Input from './components/Input';
 
 const dashboardTheme = extendTheme({
   colors: {
@@ -23,6 +24,7 @@ const dashboardTheme = extendTheme({
 
   components: {
     Button,
+    Input,
   },
 });
 
