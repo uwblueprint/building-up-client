@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Box, Button, Grid, Heading, Input } from '@chakra-ui/react';
+import { Box, Button, Heading, Input, Stack } from '@chakra-ui/react';
 
 /* Temporary code for easily seeing Chakra stuff, will be removed later */
 const ChakraExpoDashboard = () => {
@@ -8,10 +8,12 @@ const ChakraExpoDashboard = () => {
 
   return (
     <Box p="36px">
-      <Grid autoFlow="row" gap="16px" maxW="50%" border="1px solid black" p="8px">
-        <Heading as="h1" size="h1">
-          Heading 1
-        </Heading>
+      <Stack direction="column" spacing="16px" maxW="50%" border="1px solid black" p="8px">
+        <Stack>
+          <Heading as="h1" size="h1">
+            Heading 1
+          </Heading>
+        </Stack>
         <Heading as="h2" size="h2">
           Heading 2
         </Heading>
@@ -29,7 +31,7 @@ const ChakraExpoDashboard = () => {
         <Button type="button" role="button">
           Button
         </Button>
-      </Grid>
+      </Stack>
     </Box>
   );
 };
