@@ -48,7 +48,7 @@ const StoreFront = props => {
 
   const id = Number(props.match.params.id);
   console.log('This is the id', id);
-  const { loading, error, data } = useQuery(GET_TEAM_INFO, {
+  const { loading, err, data } = useQuery(GET_TEAM_INFO, {
     variables: { id },
   });
 
@@ -59,10 +59,10 @@ const StoreFront = props => {
   }, [data, dispatch]);
 
   if (loading) return 'Loading...';
-  if (error) return `Error! ${error.message}`;
+  if (err) return `Error! ${err.message}`;
 
   console.log('This is the team data: ', data);
-  console.log('This is the error', error);
+  console.log('This is the error', err);
 
   const handleItemClick = productId => {
     fetchProduct(productId).then(res => {

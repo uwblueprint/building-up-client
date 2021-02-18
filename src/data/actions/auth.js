@@ -4,15 +4,15 @@ import AuthService from '../services/auth.service';
 
 export const register = (firstName, lastName, email, password, client) => dispatch => {
   return AuthService.register(firstName, lastName, email, password, client).then(
-    response => {
-      console.log(response);
+    res => {
+      console.log(res);
       dispatch({
         type: REGISTER_SUCCESS,
       });
       return Promise.resolve();
     },
-    error => {
-      console.log(error);
+    err => {
+      console.log(err);
       dispatch({
         type: REGISTER_FAIL,
       });
@@ -45,8 +45,8 @@ export const login = (email, password, client) => dispatch => {
       }
       return Promise.resolve();
     },
-    error => {
-      console.log(error);
+    err => {
+      console.log(err);
       dispatch({
         type: LOGIN_FAIL,
       });
@@ -69,8 +69,8 @@ export const logout = client => dispatch => {
       }
       return Promise.resolve();
     },
-    error => {
-      console.error(error);
+    err => {
+      console.error(err);
       dispatch({
         type: LOGOUT_FAIL,
       });
@@ -103,8 +103,8 @@ export const currentUser = client => dispatch => {
       }
       return Promise.resolve();
     },
-    error => {
-      console.error(error);
+    err => {
+      console.error(err);
       dispatch({
         type: LOGIN_FAIL,
       });
