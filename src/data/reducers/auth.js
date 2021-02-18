@@ -1,20 +1,16 @@
 import {
-    REGISTER_SUCCESS,
-    REGISTER_FAIL,
-    LOGIN_SUCCESS,
-    LOGIN_FAIL,
-    LOGOUT_FAIL,
-    LOGOUT_SUCCESS
-  } from "../actions/type";
-import Cookies from 'js-cookie';
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  LOGOUT_FAIL,
+  LOGOUT_SUCCESS,
+} from '../actions/type';
 
-//TODO: figure out a way to get user details into the state, this only checks if cookie is there and makes
-// isLoggedIn true, but we should userId, email etc..
-const user = Cookies.get('access-token');
-
-const initialState = user
-  ? { isLoggedIn: true, firstName:null, lastName:null, email:null, userId:null, teamId: null }
-  : { isLoggedIn: false, firstName: null, lastName: null, email: null, userId: null, teamId: null};
+const initialState = {
+  authenticating: true,
+  user: null,
+};
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
@@ -23,63 +19,45 @@ export default function (state = initialState, action) {
     case REGISTER_SUCCESS:
       return {
         ...state,
-        isLoggedIn: false,
-        firstName: null,
-        lastName: null, 
-        email: null,
-        userId: null,
-        teamId: null,
+        // TODO: email, userId, firstName, lastName, should be set here
+        user: null,
       };
     case REGISTER_FAIL:
       return {
         ...state,
-        isLoggedIn: false,
-        firstName: null,
-        lastName: null, 
-        email: null,
-        userId: null,
-        teamId: null,
+        user: null,
       };
     case LOGIN_SUCCESS:
+      const { firstName, lastName, email, userId, teamId } = payload;
       return {
         ...state,
-        isLoggedIn: true,
-        firstName: payload.firstName,
-        lastName: payload.lastName, 
-        email: payload.email,
-        userId: payload.userId,
-        teamId: payload.teamId,
+        authenticating: false,
+        user: {
+          firstName,
+          lastName,
+          email,
+          userId,
+          teamId,
+        },
       };
     case LOGIN_FAIL:
       return {
         ...state,
-        isLoggedIn: false,
-        firstName: null,
-        lastName: null, 
-        email: null,
-        userId: null,
-        teamId: null,
+        authenticating: false,
+        user: null,
       };
     case LOGOUT_SUCCESS:
       return {
         ...state,
-        isLoggedIn: false,
-        firstName: null,
-        lastName: null, 
-        email: null,
-        userId: null,
-        teamId: null,
-    };
+        authenticating: false,
+        user: null,
+      };
     case LOGOUT_FAIL:
       return {
         ...state,
-        isLoggedIn: false,
-        firstName: null,
-        lastName: null, 
-        email: null,
-        userId: null,
-        teamId: null,
-    };
+        authenticating: false,
+        user: null,
+      };
     default:
       return state;
   }
