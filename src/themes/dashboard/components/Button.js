@@ -1,9 +1,6 @@
 const Button = {
   // The styles all buttons have in common
-  baseStyle: {
-    fontWeight: 'bold',
-    textTransform: 'capitalize',
-  },
+  baseStyle: {},
   // We can override sizes here, if we want to
   sizes: {},
   // The default variant is solid, so we must override colors here
@@ -19,9 +16,7 @@ const Button = {
     },
   },
   // The default button prop values
-  defaultProps: {
-    size: 'lg',
-  },
+  defaultProps: {},
 };
 
 export default Button;

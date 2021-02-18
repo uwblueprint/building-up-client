@@ -11,6 +11,7 @@ import dashboardTheme from '../themes/dashboard';
 
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
 import { currentUser } from '../data/actions/auth';
+import ChakraExpoDashboard from '../themes/dashboard/ChakraExpoDashboard';
 
 // const GET_TEAMS = gql`
 //   query {
@@ -48,6 +49,11 @@ function App() {
             </Route>
             <Route exact path="/register">
               <Register />
+            </Route>
+            <Route exact path="/chakraExpo">
+              <ChakraProvider theme={dashboardTheme}>
+                <ChakraExpoDashboard />
+              </ChakraProvider>
             </Route>
             <ProtectedRoute path="/">
               <Grid templateColumns="280px 1fr" h="100vh">
