@@ -15,11 +15,11 @@ const GET_GLOBAL_LEADERBOARD = gql`
 // Base leaderboard page
 
 const Leaderboard = () => {
-  const { loading, err, data } = useQuery(GET_GLOBAL_LEADERBOARD, {
+  const { loading, error, data } = useQuery(GET_GLOBAL_LEADERBOARD, {
     variables: { first: 0, offset: 10 },
   });
   if (loading) return 'Loading...';
-  if (err) return `Error! ${err.message}`;
+  if (error) return `Error! ${error.message}`;
   return (
     <Fragment>
       <h1>This is the Leaderboard page</h1>

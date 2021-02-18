@@ -11,8 +11,8 @@ export const register = (firstName, lastName, email, password, client) => dispat
       });
       return Promise.resolve();
     },
-    err => {
-      console.log(err);
+    error => {
+      console.log(error);
       dispatch({
         type: REGISTER_FAIL,
       });
@@ -45,8 +45,8 @@ export const login = (email, password, client) => dispatch => {
       }
       return Promise.resolve();
     },
-    err => {
-      console.log(err);
+    error => {
+      console.log(error);
       dispatch({
         type: LOGIN_FAIL,
       });
@@ -69,8 +69,8 @@ export const logout = client => dispatch => {
       }
       return Promise.resolve();
     },
-    err => {
-      console.error(err);
+    error => {
+      console.error(error);
       dispatch({
         type: LOGOUT_FAIL,
       });
@@ -103,8 +103,8 @@ export const currentUser = client => dispatch => {
       }
       return Promise.resolve();
     },
-    err => {
-      console.error(err);
+    error => {
+      console.error(error);
       dispatch({
         type: LOGIN_FAIL,
       });

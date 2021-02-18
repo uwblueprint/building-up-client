@@ -29,7 +29,7 @@ const Dashboard = () => {
 
 // This should probably be abstracted into a separate component
 const TeamOverview = ({ teamId }) => {
-  const { loading, err, data } = useQuery(GET_TEAM_INFO, {
+  const { loading, error, data } = useQuery(GET_TEAM_INFO, {
     variables: { id: teamId },
   });
 
@@ -37,8 +37,8 @@ const TeamOverview = ({ teamId }) => {
 
   return loading ? (
     'Loading...'
-  ) : err ? (
-    `Error! ${err.message}`
+  ) : error ? (
+    `Error! ${error.message}`
   ) : (
     <h2>{`Team data: ${JSON.stringify(data.getTeam)}`}</h2>
   );
