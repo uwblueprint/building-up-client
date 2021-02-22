@@ -34,7 +34,9 @@ function Login() {
           <div>
             <Input type="password" name="password" placeholder="Password" value={password} onChange={onChangePass} />
           </div>
-          <Button role="link">Login</Button>
+          <Button role="link" onClick={handleClick}>
+            Login
+          </Button>
         </form>
       </Box>
     </div>
