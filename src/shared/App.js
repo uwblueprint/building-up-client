@@ -12,6 +12,7 @@ import dashboardTheme from '../themes/dashboard';
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
 import { currentUser } from '../data/actions/auth';
 import ChakraExpoDashboard from '../themes/dashboard/ChakraExpoDashboard';
+import Navbar from '../components/common/dashboard/Navbar';
 
 // const GET_TEAMS = gql`
 //   query {
@@ -59,7 +60,7 @@ function App() {
               <Grid templateColumns="280px 1fr" h="100vh">
                 {/* All styles here are temporary */}
                 <Box borderRight="2px solid black" w="100%" h="100%">
-                  Navbar Goes Here
+                  <Navbar />
                 </Box>
 
                 <Flex w="100%" h="100%" p="72px">
