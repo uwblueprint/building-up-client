@@ -41,7 +41,7 @@ const Navbar = props => (
         team
       </NavItem>
       <Button color="black" w="100%">
-        Share Leaderboard
+        Share Storefront
       </Button>
     </VStack>
     <Link as={RouterLink} to="/logout">
