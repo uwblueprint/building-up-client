@@ -14,6 +14,10 @@ const GET_TEAM_INFO = gql`
   }
 `;
 
+const StorefrontButton = () => {
+  return <Button w="199px">Share Storefront</Button>;
+};
+
 const SalesInfo = props => {
   return (
     <Box mr="100px">
@@ -25,8 +29,19 @@ const SalesInfo = props => {
   );
 };
 
-const StorefrontButton = () => {
-  return <Button w="199px">Share Storefront</Button>;
+const NoSales = () => {
+  return (
+    <Box w="100%" h="300px" bg="background.primary">
+      <Center w="100%">
+        <Heading fontSize="20px" mt="69px" mb="24px">
+          You don’t have sales yet. Share your storelink to get started!
+        </Heading>
+      </Center>
+      <Center w="100%">
+        <StorefrontButton />
+      </Center>
+    </Box>
+  );
 };
 
 const TeamOverview = ({ teamId }) => {
@@ -58,18 +73,7 @@ const TeamOverview = ({ teamId }) => {
       <Heading fontSize="24px" mb="21px">
         Sales Log
       </Heading>
-      {data.getTeam.itemsSold === 0 ? (
-        <Box w="100%" h="300px" bg="background.primary">
-          <Center w="100%">
-            <Heading fontSize="20px" mt="69px" mb="24px">
-              You don’t have sales yet. Share your storelink to get started!
-            </Heading>
-          </Center>
-          <Center w="100%">
-            <StorefrontButton />
-          </Center>
-        </Box>
-      ) : null}
+      {data.getTeam.itemsSold === 0 ? <NoSales /> : null}
     </Box>
   );
 };
