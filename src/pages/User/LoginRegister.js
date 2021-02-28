@@ -8,8 +8,8 @@ function LoginRegister() {
   const [loginRegister, setLoginRegister] = useState('login');
 
   return (
-    <Flex h="100vh" w="100vw" justify="center" bg="background.login">
-      <Box minW="35%">
+    <Flex minHeight="100vh" h="100%" w="100vw" justify="center" bg="background.login">
+      <Box minW="35%" marginBottom="50px">
         <Flex justify="center" marginTop="36px" marginBottom="36px">
           <Image src={logo} w="350px"/>
         </Flex>
