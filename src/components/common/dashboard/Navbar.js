@@ -6,7 +6,7 @@ import { Link as RouterLink, NavLink } from 'react-router-dom';
 import Logo from '../../../assets/logoWhite.png';
 
 const NavItem = props => (
-  <Link as={NavLink} to={props.to} _activeLink={{ color: 'white' }}>
+  <Link as={NavLink} to={props.to} _activeLink={{ color: 'white' }} _hover={{ color: 'white' }} textDecoration="none">
     <Heading size="h4" as="span">
       <Flex>
         <Icon as={props.icon} mr={2} />
