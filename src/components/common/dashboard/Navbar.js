@@ -32,13 +32,13 @@ const Navbar = props => (
     <VStack color="gray.400" spacing={10} align="flex-start">
       <Image src={Logo} alt="Raising The Roof Logo" w="100%" />
       <NavItem to="/home" icon={IoHomeOutline}>
-        home
+        Home
       </NavItem>
       <NavItem to="/leaderboard" icon={IoPodiumOutline}>
-        leaderboard
+        Leaderboard
       </NavItem>
       <NavItem to="/team" icon={FiUsers}>
-        team
+        Team
       </NavItem>
       <Button color="black" w="100%">
         Share Storefront
@@ -46,7 +46,7 @@ const Navbar = props => (
     </VStack>
     <Link as={RouterLink} to="/logout">
       <Heading as="span" color="white" size="h4">
-        log out
+        Log Out
       </Heading>
     </Link>
   </Flex>
