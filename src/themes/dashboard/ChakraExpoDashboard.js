@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
 import { Box, Button, Heading, Input, Stack } from '@chakra-ui/react';
-import DataTable from '../../components/common/dashboard/Table';
+import SampleChakraTable from './SampleChakraTable';
+import SampleReactTable from './SampleReactTable';
 /* Temporary code for easily seeing Chakra stuff, will be removed later */
 const ChakraExpoDashboard = () => {
   const [value, setValue] = useState('');
@@ -41,17 +42,10 @@ const ChakraExpoDashboard = () => {
         </Stack>
       </Box>
       <Box p="36px">
-        <DataTable
-          headers={['Name', 'Email', '']}
-          data={[
-            { name: 'FirstName LastName', email: 'example@email.com', action: 'Remove' },
-            { name: 'FirstName LastName', email: 'example@email.com', action: 'Remove' },
-            { name: 'FirstName LastName', email: 'example@email.com', action: 'Remove' },
-            { name: 'FirstName LastName', email: 'example@email.com', action: 'Remove' },
-            { name: 'FirstName LastName', email: 'example@email.com', action: 'Remove' },
-            { name: 'FirstName LastName', email: 'example@email.com', action: 'Remove' },
-          ]}
-        />
+        <SampleChakraTable />
+      </Box>
+      <Box p="36px">
+        <SampleReactTable />
       </Box>
     </Box>
   );
