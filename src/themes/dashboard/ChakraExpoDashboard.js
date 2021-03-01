@@ -41,10 +41,10 @@ const ChakraExpoDashboard = () => {
           </Button>
         </Stack>
       </Box>
-      <Box p="36px">
+      <Box border="1px solid black">
         <SampleChakraTable />
       </Box>
-      <Box p="36px">
+      <Box border="1px solid black">
         <SampleReactTable />
       </Box>
     </Box>
