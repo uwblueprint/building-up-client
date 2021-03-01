@@ -41,7 +41,6 @@ function App() {
       ) : (
         <Router>
           <Switch>
-            {/* TODO: The login and register should be combined to a single path as per the design */}
             <Route exact path="/login">
               {user ? <Redirect to="/" /> : <LoginRegister />}
             </Route>
