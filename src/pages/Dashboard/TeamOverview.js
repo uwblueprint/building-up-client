@@ -3,7 +3,7 @@ import { useQuery, gql } from '@apollo/client';
 import { Box, Button, Center, Flex, Heading, Spacer } from '@chakra-ui/react';
 
 const GET_TEAM_INFO = gql`
-  query getTeam($id: Int!) {
+  query getTeam($id: String!) {
     getTeam(id: $id) {
       name
       organization
