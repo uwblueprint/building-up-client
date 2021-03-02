@@ -1,6 +1,7 @@
 import React from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { useSelector } from 'react-redux';
+import NoTeamRegistration from './NoTeamRegistration';
 
 const GET_TEAM_INFO = gql`
   query getTeam($id: Int!) {
@@ -14,17 +15,10 @@ const GET_TEAM_INFO = gql`
 
 const Dashboard = () => {
   const {
-    user: { teamId },
+    user: { userId, teamId },
   } = useSelector(state => state.auth);
 
-  return teamId ? (
-    <TeamOverview teamId={teamId} />
-  ) : (
-    <div>
-      <h1>Welcome</h1>
-      {'User is not part of a team (todo: implement this view)'}
-    </div>
-  );
+  return teamId ? <TeamOverview teamId={teamId} /> : <NoTeamRegistration userId={userId} />;
 };
 
 // This should probably be abstracted into a separate component
