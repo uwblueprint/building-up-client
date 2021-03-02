@@ -21,10 +21,12 @@ const StorefrontButton = () => {
 const SalesInfo = props => {
   return (
     <Box mr="100px">
-      <Heading textTransform="uppercase" size="subtitle" color="gray.500" mb="8px">
+      <Heading textTransform="uppercase" as="subtitle" size="subtitle" color="gray.500" mb="8px">
         {props.description}
       </Heading>
-      <Heading size="h2">{props.amount}</Heading>
+      <Heading as="h2" size="h2">
+        {props.amount}
+      </Heading>
     </Box>
   );
 };
@@ -33,7 +35,7 @@ const NoSales = () => {
   return (
     <Box w="100%" h="300px" bg="background.primary">
       <Center w="100%">
-        <Heading size="h4" mt="69px" mb="24px">
+        <Heading as="h4" size="h4" mt="69px" mb="24px">
           You don’t have sales yet. Share your storelink to get started!
         </Heading>
       </Center>
@@ -55,22 +57,24 @@ const TeamOverview = ({ teamId }) => {
     `Error! ${error.message}`
   ) : (
     <Box w="100%">
-      <Heading textTransform="uppercase" size="subtitle" color="gray.500" mb="8px">
+      <Heading textTransform="uppercase" as="subtitle" size="subtitle" color="gray.500" mb="8px">
         Team {data.getTeam.name}
       </Heading>
       <Flex mb="40px">
-        <Heading size="h1">Dashboard</Heading>
+        <Heading as="h1" size="h1">
+          Dashboard
+        </Heading>
         <Spacer />
         {data.getTeam.itemsSold !== 0 ? <StorefrontButton /> : null}
       </Flex>
-      <Heading size="h3" mb="23px">
+      <Heading as="h3" size="h3" mb="23px">
         Overview
       </Heading>
       <Flex mb="72px">
         <SalesInfo description="Total Items Sold" amount={data.getTeam.itemsSold} />
         <SalesInfo description="Total Capital Raised" amount={'$' + data.getTeam.amountRaised} />
       </Flex>
-      <Heading size="h3" mb="21px">
+      <Heading as="h3" size="h3" mb="21px">
         Sales Log
       </Heading>
       {data.getTeam.itemsSold === 0 ? <NoSales /> : null}
