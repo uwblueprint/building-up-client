@@ -62,7 +62,6 @@ const InitialNoTeamPage = props => {
             fontSize="md"
             onClick={props.incrementPage}
             fontWeight="semibold"
-            _hover={{ transform: 'scale(1.1)' }}
             _focus={{ boxShadow: '#FAFAFA' }}
             _active={{ boxShadow: '#FAFAFA' }}
           >
@@ -103,7 +102,7 @@ const CreateTeamForm = props => {
         onClick={props.decrementPage}
         _focus={{ boxShadow: '#FFFFFF' }}
         _active={{ bg: '#FFFFFF', boxShadow: '#FFFFFF' }}
-        _hover={{ bg: '#FFFFFF', transform: 'scale(1.1)' }}
+        _hover={{ bg: '#FFFFFF' }}
       >
         <Text color="black"> &lt; Back </Text>
       </Button>
@@ -169,12 +168,7 @@ const CreateTeamForm = props => {
             </Box>
           </Box>
           <Box display="flex" flexDirection="row" justifyContent="flex-end" marginRight={20} marginTop={4}>
-            <Button
-              _hover={{ transform: 'scale(1.1)' }}
-              _focus={{ boxShadow: '#FAFAFA' }}
-              _active={{ boxShadow: '#FAFAFA' }}
-              type="submit"
-            >
+            <Button _focus={{ boxShadow: '#FAFAFA' }} _active={{ boxShadow: '#FAFAFA' }} type="submit">
               Next
             </Button>
           </Box>
@@ -194,13 +188,9 @@ const ConfirmTeamCreation = props => {
   `;
 
   const ADD_USER_TO_TEAM = gql`
-    mutation updateUser($id: String!, $teamId: String) {
+    mutation updateUser($id: ID!, $teamId: String) {
       updateUser(id: $id, teamId: $teamId) {
         id
-        firstName
-        lastName
-        email
-        password
       }
     }
   `;
@@ -214,11 +204,9 @@ const ConfirmTeamCreation = props => {
     })
       .then(data => {
         let teamId = data.data.createTeam.id;
-        console.log(props.userId, teamId);
         addUser({
           variables: { id: props.userId, teamId: teamId },
-        });
-        window.location.reload(false);
+        }).then(window.location.reload());
       })
       .catch(e => {
         console.log(e);
@@ -236,7 +224,7 @@ const ConfirmTeamCreation = props => {
         onClick={props.decrementPage}
         _focus={{ boxShadow: '#FFFFFF' }}
         _active={{ bg: '#FFFFFF', boxShadow: '#FFFFFF' }}
-        _hover={{ bg: '#FFFFFF', transform: 'scale(1.1)' }}
+        _hover={{ bg: '#FFFFFF' }}
       >
         <Text color="black"> &lt; Back </Text>
       </Button>
@@ -298,12 +286,7 @@ const ConfirmTeamCreation = props => {
           </Box>
         </Box>
         <Box display="flex" flexDirection="row" justifyContent="flex-end" marginRight={20} marginTop={4}>
-          <Button
-            _hover={{ transform: 'scale(1.1)' }}
-            _focus={{ boxShadow: '#FAFAFA' }}
-            _active={{ boxShadow: '#FAFAFA' }}
-            onClick={executeQuery}
-          >
+          <Button _focus={{ boxShadow: '#FAFAFA' }} _active={{ boxShadow: '#FAFAFA' }} onClick={executeQuery}>
             Next
           </Button>
         </Box>
