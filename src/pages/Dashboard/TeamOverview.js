@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery, gql } from '@apollo/client';
-import { Box, Button, Center, Flex, Heading, Spacer } from '@chakra-ui/react';
+import { Box, Button, Center, Flex, Heading, HStack, Spacer } from '@chakra-ui/react';
 
 const GET_TEAM_INFO = gql`
   query getTeam($id: String!) {
@@ -20,8 +20,8 @@ const StorefrontButton = () => {
 
 const SalesInfo = props => {
   return (
-    <Box mr="100px">
-      <Heading textTransform="uppercase" as="subtitle" size="subtitle" color="gray.500" mb="8px">
+    <Box>
+      <Heading textTransform="uppercase" as="p" size="subtitle" color="gray.500" mb="8px">
         {props.description}
       </Heading>
       <Heading as="h2" size="h2">
@@ -57,7 +57,7 @@ const TeamOverview = ({ teamId }) => {
     `Error! ${error.message}`
   ) : (
     <Box w="100%">
-      <Heading textTransform="uppercase" as="subtitle" size="subtitle" color="gray.500" mb="8px">
+      <Heading textTransform="uppercase" as="p" size="subtitle" color="gray.500" mb="8px">
         Team {data.getTeam.name}
       </Heading>
       <Flex mb="40px">
@@ -70,10 +70,10 @@ const TeamOverview = ({ teamId }) => {
       <Heading as="h3" size="h3" mb="23px">
         Overview
       </Heading>
-      <Flex mb="72px">
+      <HStack mb="72px" spacing="100px">
         <SalesInfo description="Total Items Sold" amount={data.getTeam.itemsSold} />
         <SalesInfo description="Total Capital Raised" amount={'$' + data.getTeam.amountRaised} />
-      </Flex>
+      </HStack>
       <Heading as="h3" size="h3" mb="21px">
         Sales Log
       </Heading>
