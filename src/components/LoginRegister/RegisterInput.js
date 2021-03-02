@@ -18,12 +18,7 @@ const RegisterInput = () => {
     e.preventDefault();
     dispatch(register(firstName, lastName, email, password, client)).then(
       registered => {
-        if (!registered) {
-          setSubmitState('FAIL');
-        } else {
-          // Redirect to home page after registering
-          return <Redirect to={{ pathname: '/home' }} />;
-        }
+        if (!registered) setSubmitState('FAIL');
       },
       error => {
         setSubmitState('FAIL');
@@ -53,10 +48,23 @@ const RegisterInput = () => {
         <Flex w="100%" justify="left">
           <Heading as="h1">Create an account</Heading>
         </Flex>
-        <Input name="firstName" placeholder="First Name" value={firstName} onChange={onChangeFirstName} />
-        <Input name="lastName" placeholder="Last Name" value={lastName} onChange={onChangeLastName} />
-        <Input name="email" placeholder="Email" value={email} onChange={onChangeEmail} />
-        <Input type="password" name="password" placeholder="Password" value={password} onChange={onChangePass} />
+        <Input
+          name="firstName"
+          placeholder="First Name"
+          value={firstName}
+          onChange={onChangeFirstName}
+          isRequired={true}
+        />
+        <Input name="lastName" placeholder="Last Name" value={lastName} onChange={onChangeLastName} isRequired={true} />
+        <Input type="email" name="email" placeholder="Email" value={email} onChange={onChangeEmail} isRequired={true} />
+        <Input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={password}
+          onChange={onChangePass}
+          isRequired={true}
+        />
         {submitState === 'FAIL' && (
           <Flex w="100%" justify="left">
             <p as="subtitle" size="subtitle">

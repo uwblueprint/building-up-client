@@ -37,7 +37,7 @@ const LoginInput = () => {
         <Flex w="100%" justify="left">
           <Heading as="h1">Welcome</Heading>
         </Flex>
-        <Input type="email" name="email" placeholder="Email" value={email} onChange={onChangeEmail} />
+        <Input type="email" name="email" placeholder="Email" value={email} onChange={onChangeEmail} isRequired={true} />
         <Input
           type="password"
           name="password"
@@ -45,6 +45,7 @@ const LoginInput = () => {
           value={password}
           onChange={onChangePass}
           mb="8px"
+          isRequired={true}
         />
       </VStack>
       <Link>Forgot Password?</Link>
