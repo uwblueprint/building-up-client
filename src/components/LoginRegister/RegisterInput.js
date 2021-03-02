@@ -3,7 +3,6 @@ import { useApolloClient } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import { Flex, Input, Button, Heading, VStack } from '@chakra-ui/react';
 import { register } from '../../data/actions/auth';
-import { Redirect } from 'react-router-dom';
 
 const RegisterInput = () => {
   const client = useApolloClient();
