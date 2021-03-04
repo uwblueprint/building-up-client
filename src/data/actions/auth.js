@@ -5,18 +5,26 @@ import AuthService from '../services/auth.service';
 export const register = (firstName, lastName, email, password, client) => dispatch => {
   return AuthService.register(firstName, lastName, email, password, client).then(
     res => {
+      const { firstName, lastName, email, id, teamId } = res.data.register;
       console.log(res);
       dispatch({
         type: REGISTER_SUCCESS,
+        payload: {
+          firstName,
+          lastName,
+          email,
+          userId: id,
+          teamId,
+        },
       });
-      return Promise.resolve();
+      return Promise.resolve(true);
     },
     error => {
       console.log(error);
       dispatch({
         type: REGISTER_FAIL,
       });
-      return Promise.reject();
+      return Promise.reject(error);
     },
   );
 };
@@ -37,20 +45,21 @@ export const login = (email, password, client) => dispatch => {
             teamId,
           },
         });
+        return Promise.resolve(true);
         //login failed
       } else {
         dispatch({
           type: LOGIN_FAIL,
         });
+        return Promise.resolve(false);
       }
-      return Promise.resolve();
     },
     error => {
       console.log(error);
       dispatch({
         type: LOGIN_FAIL,
       });
-      return Promise.reject();
+      return Promise.reject(error);
     },
   );
 };

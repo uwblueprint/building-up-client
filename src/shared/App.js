@@ -5,8 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Box, ChakraProvider, Flex, Grid, Spinner } from '@chakra-ui/react';
 
 import Dashboard from '../pages/Dashboard/Dashboard';
-import Register from '../pages/User/Register';
-import Login from '../pages/User/Login';
+import LoginRegister from '../pages/User/LoginRegister';
 import dashboardTheme from '../themes/dashboard';
 
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
@@ -24,7 +23,6 @@ import ChakraExpoDashboard from '../themes/dashboard/ChakraExpoDashboard';
 function App() {
   const dispatch = useDispatch();
   const client = useApolloClient();
-
   const { authenticating, user } = useSelector(state => state.auth);
 
   useEffect(() => {
@@ -43,12 +41,8 @@ function App() {
       ) : (
         <Router>
           <Switch>
-            {/* TODO: The login and register should be combined to a single path as per the design */}
             <Route exact path="/login">
-              {user ? <Redirect to="/" /> : <Login />}
-            </Route>
-            <Route exact path="/register">
-              <Register />
+              {user ? <Redirect to="/" /> : <LoginRegister />}
             </Route>
             <Route exact path="/chakraExpo">
               <ChakraProvider theme={dashboardTheme}>
