@@ -14,21 +14,12 @@ const initialState = {
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
-  let firstName, lastName, email, userId, teamId;
 
   switch (type) {
     case REGISTER_SUCCESS:
-      ({ firstName, lastName, email, userId, teamId } = payload);
       return {
         ...state,
-        // TODO: email, userId, firstName, lastName, should be set here
-        user: {
-          payload,
-          lastName,
-          email,
-          userId,
-          teamId,
-        },
+        user: payload
       };
     case REGISTER_FAIL:
       return {
@@ -36,17 +27,10 @@ export default function (state = initialState, action) {
         user: null,
       };
     case LOGIN_SUCCESS:
-      ({ firstName, lastName, email, userId, teamId } = payload);
       return {
         ...state,
         authenticating: false,
-        user: {
-          firstName,
-          lastName,
-          email,
-          userId,
-          teamId,
-        },
+        user: payload
       };
     case LOGIN_FAIL:
       return {

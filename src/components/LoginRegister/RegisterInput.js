@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useApolloClient } from '@apollo/client';
 import { useDispatch } from 'react-redux';
-import { Flex, Input, Button, Heading, VStack } from '@chakra-ui/react';
+import { Text, Input, Button, Heading, VStack } from '@chakra-ui/react';
 import { register } from '../../data/actions/auth';
 
 const RegisterInput = () => {
@@ -44,33 +44,21 @@ const RegisterInput = () => {
   return (
     <form onSubmit={e => handleClick(e)}>
       <VStack spacing="24px">
-        <Flex w="100%" justify="left">
-          <Heading as="h1">Create an account</Heading>
-        </Flex>
-        <Input
-          name="firstName"
-          placeholder="First Name"
-          value={firstName}
-          onChange={onChangeFirstName}
-          isRequired={true}
-        />
-        <Input name="lastName" placeholder="Last Name" value={lastName} onChange={onChangeLastName} isRequired={true} />
-        <Input type="email" name="email" placeholder="Email" value={email} onChange={onChangeEmail} isRequired={true} />
+        <Heading size="h1" as="h1" alignSelf="flex-start">
+          Create an account
+        </Heading>
+        <Input name="firstName" placeholder="First Name" value={firstName} onChange={onChangeFirstName} isRequired />
+        <Input name="lastName" placeholder="Last Name" value={lastName} onChange={onChangeLastName} isRequired />
+        <Input type="email" name="email" placeholder="Email" value={email} onChange={onChangeEmail} isRequired />
         <Input
           type="password"
           name="password"
           placeholder="Password"
           value={password}
           onChange={onChangePass}
-          isRequired={true}
+          isRequired
         />
-        {submitState === 'FAIL' && (
-          <Flex w="100%" justify="left">
-            <p as="subtitle" size="subtitle">
-              Unable to register, please try again.
-            </p>
-          </Flex>
-        )}
+        {submitState === 'FAIL' && <Text alignSelf="flex-start">Unable to register, please try again.</Text>}
         <Button role="link" width="131px" height="43px" type="submit">
           Create Account
         </Button>
