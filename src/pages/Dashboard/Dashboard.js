@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import TeamOverview from './TeamOverview';
+import TeamOverview from './DashboardTeam/DashboardTeam';
 
 const Dashboard = () => {
   const {
