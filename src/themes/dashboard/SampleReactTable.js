@@ -4,7 +4,7 @@ import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import { useTable, useSortBy } from 'react-table';
 
 const SampleReactTable = () => {
-  const data = React.useMemo(
+  const data = useMemo(
     () => [
       {
         name: '1st Name',
@@ -54,6 +54,7 @@ const SampleReactTable = () => {
       {
         id: 'action',
         accessor: 'action',
+        disableSortBy: true,
         Cell: props => (
           <Text fontWeight="semibold" color="#C70E0E">
             {props.value}

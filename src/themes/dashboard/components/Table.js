@@ -3,11 +3,16 @@ const Table = {
   baseStyle: {
     th: {
       bg: 'background.primary',
+      _notLast: {
+        _hover: {
+          bg: '#eaeaea',
+        },
+      },
     },
     tr: {
       bg: 'background.primary',
       _hover: {
-        bg: '#f2f2f2',
+        bg: '#eaeaea',
       },
     },
   },
