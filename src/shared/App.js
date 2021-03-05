@@ -12,14 +12,7 @@ import dashboardTheme from '../themes/dashboard';
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
 import { currentUser } from '../data/actions/auth';
 import ChakraExpoDashboard from '../themes/dashboard/ChakraExpoDashboard';
-
-// const GET_TEAMS = gql`
-//   query {
-//     getAllTeams {
-//       id
-//     }
-//   }
-// `;
+import Store from '../pages/Storefront/store';
 
 function App() {
   const dispatch = useDispatch();
@@ -72,6 +65,9 @@ function App() {
                     </ProtectedRoute>
                     <ProtectedRoute exact path="/team">
                       Team page
+                    </ProtectedRoute>
+                    <ProtectedRoute exact path="/store">
+                      <Store />
                     </ProtectedRoute>
                     {/* All other paths are redirected to /home */}
                     <ProtectedRoute path="/">

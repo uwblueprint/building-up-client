@@ -11,6 +11,8 @@ import { actions as teamActions } from '../../data/reducers/team';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
+// TODO: reference this but re-implement the storefront UI
+
 const GET_TEAM_INFO = gql`
   query getTeam($id: Int!) {
     getTeam(id: $id) {
