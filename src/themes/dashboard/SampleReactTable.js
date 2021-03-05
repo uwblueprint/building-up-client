@@ -83,12 +83,18 @@ const SampleReactTable = () => {
       <Thead>
         {headerGroups.map(headerGroup => (
           <Tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
-              <Th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                {column.render('Header')}
-                <chakra.span pl="4">{renderSortIcon(column)}</chakra.span>
-              </Th>
-            ))}
+            {headerGroup.headers.map(column => {
+              const sortByToggleProps = column.getSortByToggleProps();
+              return (
+                <Th
+                  {...column.getHeaderProps(sortByToggleProps)}
+                  _hover={sortByToggleProps.onClick ? { bg: '#eaeaea' } : {}}
+                >
+                  {column.render('Header')}
+                  <chakra.span pl="4">{renderSortIcon(column)}</chakra.span>
+                </Th>
+              );
+            })}
           </Tr>
         ))}
       </Thead>
