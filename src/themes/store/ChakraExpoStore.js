@@ -25,17 +25,18 @@ const ChakraExpoStore = () => {
         <Heading size="lightCaption">Light Caption</Heading>
         <div>Here is some body text</div>
         <Button size="lg">
-          <Heading size="subtitle">LARGE BUTTON</Heading>
+          <Heading size="subtitle">Large Button</Heading>
         </Button>
         <Button size="md">
-          <Heading size="subtitle">MEDIUM BUTTON</Heading>
+          <Heading size="subtitle">Medium Button</Heading>
         </Button>
         <Button size="sm" rightIcon={<Icon as={FaChevronCircleRight} />}>
-          <Heading size="subtitle">SMALL BUTTON</Heading>
+          <Heading size="subtitle">Small Button</Heading>
         </Button>
         <Button size="sm" variant="inverted" rightIcon={<Icon as={FaChevronCircleRight} />}>
-          <Heading size="subtitle">SMALL INVERTED BUTTON</Heading>
+          <Heading size="subtitle">Small Inverted Button</Heading>
         </Button>
+        <Input placeholder="Coupon Code" />
       </Stack>
     </Box>
   );

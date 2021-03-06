@@ -2,6 +2,7 @@ const Button = {
   // The styles all buttons have in common
   baseStyle: {
     borderRadius: 'none',
+    textTransform: 'uppercase',
   },
   // We can override sizes here, if we want to
   sizes: {
