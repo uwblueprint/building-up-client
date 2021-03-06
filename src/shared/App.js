@@ -7,10 +7,12 @@ import { Box, ChakraProvider, Flex, Grid, Spinner } from '@chakra-ui/react';
 import Dashboard from '../pages/Dashboard/Dashboard';
 import LoginRegister from '../pages/User/LoginRegister';
 import dashboardTheme from '../themes/dashboard';
+import storeTheme from '../themes/store';
 
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
 import { currentUser } from '../data/actions/auth';
 import ChakraExpoDashboard from '../themes/dashboard/ChakraExpoDashboard';
+import ChakraExpoStore from '../themes/store/ChakraExpoStore';
 
 // const GET_TEAMS = gql`
 //   query {
@@ -44,9 +46,14 @@ function App() {
             <Route exact path="/login">
               {user ? <Redirect to="/" /> : <LoginRegister />}
             </Route>
-            <Route exact path="/chakraExpo">
+            <Route exact path="/chakraExpoDashboard">
               <ChakraProvider theme={dashboardTheme}>
                 <ChakraExpoDashboard />
+              </ChakraProvider>
+            </Route>
+            <Route exact path="/chakraExpoStore">
+              <ChakraProvider theme={storeTheme}>
+                <ChakraExpoStore />
               </ChakraProvider>
             </Route>
             <ProtectedRoute path="/">

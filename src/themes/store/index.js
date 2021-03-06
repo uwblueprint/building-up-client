@@ -1,4 +1,5 @@
 import { extendTheme } from '@chakra-ui/react';
+import Heading from './components/Heading';
 
 const storeTheme = extendTheme({
   fonts: {
@@ -12,6 +13,8 @@ const storeTheme = extendTheme({
       darkred: '#B20E00',
     },
   },
+
+  components: { Heading },
 });
 
 export default storeTheme;

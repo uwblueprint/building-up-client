@@ -14,7 +14,7 @@ const Heading = {
       lineHeight: [1.33, null, 1.2],
     },
     h2: {
-      // 3xl = 1.75 rem = 30px
+      // 3xl = 1.75 rem = 28px
       // Same as the default "lg" heading size except fontWeight is semibold
       fontSize: ['2xl', null, '3xl'],
       lineHeight: [1.33, null, 1.2],
