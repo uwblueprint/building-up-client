@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-
-import { Box, Button, Heading, Input, Stack } from '@chakra-ui/react';
+import { Box, Button, Heading, Input, Icon, Stack } from '@chakra-ui/react';
+import { FaChevronCircleRight } from 'react-icons/fa';
 
 /* Temporary code for easily seeing Chakra stuff, will be removed later */
 const ChakraExpoStore = () => {
@@ -8,7 +8,7 @@ const ChakraExpoStore = () => {
 
   return (
     <Box p="36px">
-      <Stack direction="column" spacing="16px" maxW="50%" border="1px solid black" p="8px">
+      <Stack direction="column" spacing="16px" border="1px solid black" p="8px">
         <Stack>
           <Heading as="h1" size="h1">
             Heading 1
@@ -21,9 +21,21 @@ const ChakraExpoStore = () => {
           Heading 3
         </Heading>
         <Heading size="subtitle">Subtitle</Heading>
-        <Heading size="boldCaption">Subtitle</Heading>
-        <Heading size="lightCaption">Subtitle</Heading>
+        <Heading size="boldCaption">Bold Caption</Heading>
+        <Heading size="lightCaption">Light Caption</Heading>
         <div>Here is some body text</div>
+        <Button size="lg">
+          <Heading size="subtitle">LARGE BUTTON</Heading>
+        </Button>
+        <Button size="md">
+          <Heading size="subtitle">MEDIUM BUTTON</Heading>
+        </Button>
+        <Button size="sm" rightIcon={<Icon as={FaChevronCircleRight} />}>
+          <Heading size="subtitle">SMALL BUTTON</Heading>
+        </Button>
+        <Button size="sm" variant="inverted" rightIcon={<Icon as={FaChevronCircleRight} />}>
+          <Heading size="subtitle">SMALL INVERTED BUTTON</Heading>
+        </Button>
       </Stack>
     </Box>
   );

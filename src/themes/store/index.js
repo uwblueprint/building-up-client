@@ -1,5 +1,6 @@
 import { extendTheme } from '@chakra-ui/react';
 import Heading from './components/Heading';
+import Button from './components/Button';
 
 const storeTheme = extendTheme({
   fonts: {
@@ -9,12 +10,13 @@ const storeTheme = extendTheme({
   colors: {
     brand: {
       gray: '#7C7C7C',
+      darkgray: '#333333',
       red: '#CD1000',
       darkred: '#B20E00',
     },
   },
 
-  components: { Heading },
+  components: { Heading, Button },
 });
 
 export default storeTheme;
