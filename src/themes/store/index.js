@@ -1,10 +1,15 @@
 import { extendTheme } from '@chakra-ui/react';
 
 const storeTheme = extendTheme({
+  fonts: {
+    body: 'Karla, system-ui, sans-serif',
+    heading: 'Jost, system-ui, sans-serif',
+  },
   colors: {
     brand: {
-      primary: '#CD1000',
-      secondary: '#B20E00',
+      gray: '#7C7C7C',
+      red: '#CD1000',
+      darkred: '#B20E00',
     },
   },
 });
