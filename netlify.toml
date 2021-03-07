@@ -1,0 +1,17 @@
+[build]
+# Directory to publish from
+publish = "build/"
+
+# Default build command
+command = "npm run build"
+
+# SPAs that handle routing
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
+
+[[headers]]
+for = "/*"
+[headers.values]
+X-Frame-Options = "DENY"
