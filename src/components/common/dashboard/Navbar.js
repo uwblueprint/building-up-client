@@ -9,7 +9,14 @@ import Logo from '../../../assets/logoWhite.png';
 import { logout } from '../../../data/actions/auth';
 
 const NavItem = props => (
-  <Link as={NavLink} to={props.to} _activeLink={{ color: 'white' }} _hover={{ color: 'white' }} textDecoration="none">
+  <Link
+    as={NavLink}
+    to={props.to}
+    color="gray.400"
+    _activeLink={{ color: 'white' }}
+    _hover={{ color: 'white' }}
+    textDecoration="none"
+  >
     <Heading size="h4" as="span">
       <Flex>
         <Icon as={props.icon} mr={2} />
