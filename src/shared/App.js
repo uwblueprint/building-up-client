@@ -7,6 +7,7 @@ import { Box, ChakraProvider, Flex, Grid, Spinner } from '@chakra-ui/react';
 import Dashboard from '../pages/Dashboard/Dashboard';
 import LoginRegister from '../pages/User/LoginRegister';
 import dashboardTheme from '../themes/dashboard';
+import TeamView from '../pages/TeamView/TeamView';
 
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
 import { currentUser } from '../data/actions/auth';
@@ -61,7 +62,7 @@ function App() {
                       Leaderboard page
                     </ProtectedRoute>
                     <ProtectedRoute exact path="/team">
-                      Team page
+                      <TeamView />
                     </ProtectedRoute>
                     {/* All other paths are redirected to /home */}
                     <ProtectedRoute path="/">
