@@ -34,9 +34,9 @@ const ChakraExpoStore = () => {
           <Heading size="subtitle">Small Button</Heading>
         </Button>
         <Button size="sm" variant="inverted" rightIcon={<Icon as={FaChevronCircleRight} />}>
-          <Heading size="subtitle">Small Inverted Button</Heading>
+          <Heading size="subtitle">Inverted Button</Heading>
         </Button>
-        <Input placeholder="Coupon Code" />
+        <Input type="text" name="text" placeholder="Input..." value={value} onChange={e => setValue(e.target.value)} />
       </Stack>
     </Box>
   );
