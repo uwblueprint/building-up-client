@@ -6,7 +6,8 @@ const REGISTER_MUTATION = gql`
             firstName,
             lastName,
             email,
-            id
+            id,
+            teamId
         }
     }
 `;

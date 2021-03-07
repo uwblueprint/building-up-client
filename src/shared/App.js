@@ -5,27 +5,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Box, ChakraProvider, Flex, Grid, Spinner } from '@chakra-ui/react';
 
 import Dashboard from '../pages/Dashboard/Dashboard';
-import Register from '../pages/User/Register';
-import Login from '../pages/User/Login';
+import LoginRegister from '../pages/User/LoginRegister';
 import dashboardTheme from '../themes/dashboard';
+import TeamView from '../pages/TeamView/TeamView';
 
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
 import { currentUser } from '../data/actions/auth';
 import ChakraExpoDashboard from '../themes/dashboard/ChakraExpoDashboard';
 import Navbar from '../components/common/dashboard/Navbar';
-
-// const GET_TEAMS = gql`
-//   query {
-//     getAllTeams {
-//       id
-//     }
-//   }
-// `;
+import Store from '../pages/Storefront/store';
 
 function App() {
   const dispatch = useDispatch();
   const client = useApolloClient();
-
   const { authenticating, user } = useSelector(state => state.auth);
 
   useEffect(() => {
@@ -44,17 +36,16 @@ function App() {
       ) : (
         <Router>
           <Switch>
-            {/* TODO: The login and register should be combined to a single path as per the design */}
             <Route exact path="/login">
-              {user ? <Redirect to="/" /> : <Login />}
-            </Route>
-            <Route exact path="/register">
-              <Register />
+              {user ? <Redirect to="/" /> : <LoginRegister />}
             </Route>
             <Route exact path="/chakraExpo">
               <ChakraProvider theme={dashboardTheme}>
                 <ChakraExpoDashboard />
               </ChakraProvider>
+            </Route>
+            <Route exact path="/store">
+              <Store />
             </Route>
             <ProtectedRoute path="/">
               <Grid templateColumns="280px 1fr" h="100vh">
@@ -72,7 +63,7 @@ function App() {
                       Leaderboard page
                     </ProtectedRoute>
                     <ProtectedRoute exact path="/team">
-                      Team page
+                      <TeamView />
                     </ProtectedRoute>
                     {/* All other paths are redirected to /home */}
                     <ProtectedRoute path="/">

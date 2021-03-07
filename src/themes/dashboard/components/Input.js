@@ -26,7 +26,7 @@ const Input = {
     },
   },
   defaultProps: {
-    focusBorderColor: '#F5D5D5',
+    focusBorderColor: 'brand.50',
   },
 };
 
