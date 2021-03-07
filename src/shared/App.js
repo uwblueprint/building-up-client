@@ -48,6 +48,9 @@ function App() {
                 <ChakraExpoDashboard />
               </ChakraProvider>
             </Route>
+            <Route exact path="/store">
+              <Store />
+            </Route>
             <ProtectedRoute path="/">
               <Grid templateColumns="280px 1fr" h="100vh">
                 {/* All styles here are temporary */}
@@ -65,9 +68,6 @@ function App() {
                     </ProtectedRoute>
                     <ProtectedRoute exact path="/team">
                       Team page
-                    </ProtectedRoute>
-                    <ProtectedRoute exact path="/store">
-                      <Store />
                     </ProtectedRoute>
                     {/* All other paths are redirected to /home */}
                     <ProtectedRoute path="/">
