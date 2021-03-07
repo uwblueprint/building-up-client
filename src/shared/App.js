@@ -20,6 +20,8 @@ function App() {
   const client = useApolloClient();
   const { authenticating, user } = useSelector(state => state.auth);
 
+  const NAVBAR_WIDTH = '280px';
+
   useEffect(() => {
     // Component on mount (i.e. app init): Try to fetch user data (Apollo client internally uses a cookie)
     dispatch(currentUser(client));
@@ -48,13 +50,13 @@ function App() {
               <Store />
             </Route>
             <ProtectedRoute path="/">
-              <Grid templateColumns="280px 1fr" h="100vh">
-                {/* All styles here are temporary */}
+              <Grid templateColumns={`${NAVBAR_WIDTH} 1fr`} h="100vh">
                 <Box borderRight="2px solid black" w="100%" h="100%">
-                  <Navbar />
+                  {/** Navbar width is set manually to keep the position fixed */}
+                  <Navbar w={NAVBAR_WIDTH} />
                 </Box>
 
-                <Flex w="100%" h="100%" p="72px">
+                <Box w="100%" h="100%" p="72px">
                   <Switch>
                     <ProtectedRoute exact path="/home">
                       <Dashboard />
@@ -70,7 +72,7 @@ function App() {
                       <Redirect to="/home" />
                     </ProtectedRoute>
                   </Switch>
-                </Flex>
+                </Box>
               </Grid>
             </ProtectedRoute>
           </Switch>
