@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { useSelector } from 'react-redux';
-import { Box, Button, Heading, Input, FormControl } from '@chakra-ui/react';
+import { Box, Button, Heading, Input, FormControl, Flex, VStack } from '@chakra-ui/react';
 
 const GET_TEAM_INFO = gql`
   query getTeam($id: String!) {
@@ -31,12 +31,12 @@ const TeamView = () => {
 };
 
 const InviteTeamMembers = () => {
-  const [inputList, setInputList] = useState([{ email: '' }]);
+  const [inputList, setInputList] = useState(['']);
 
   const handleInputChange = (e, index) => {
-    const { name, value } = e.target;
+    const { value } = e.target;
     const list = [...inputList];
-    list[index][name] = value;
+    list[index] = value;
     setInputList(list);
   };
 
@@ -47,7 +47,7 @@ const InviteTeamMembers = () => {
   };
 
   const handleAddClick = () => {
-    setInputList([...inputList, { email: '' }]);
+    setInputList([...inputList, '']);
   };
 
   const handleSubmit = e => {
@@ -57,7 +57,7 @@ const InviteTeamMembers = () => {
     const list = [...inputList];
     let output = '';
     for (let i = 0; i < list.length; i++) {
-      output = output.concat(list[i].email);
+      output = output.concat(list[i]);
     }
     alert(output);
   };
@@ -65,32 +65,32 @@ const InviteTeamMembers = () => {
   return (
     <Box w="50%">
       <form onSubmit={e => handleSubmit(e)}>
-        {inputList.map((x, i) => {
-          return (
-            <Box key={i} d="flex" mb="8px">
-              <FormControl w="80%">
-                <Input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  value={x.email}
-                  onChange={e => handleInputChange(e, i)}
-                />
-              </FormControl>
-              {inputList.length !== 1 ? (
-                <Button variant="ghost" onClick={() => handleRemoveClick(i)} maxW="15%">
-                  x
-                </Button>
-              ) : null}
-            </Box>
-          );
-        })}
-        <Button variant="link" mb="40px" fontSize="16px" onClick={handleAddClick} display="block">
-          + Add Another
-        </Button>
-        <Button type="submit" display="block">
-          Send Invites
-        </Button>
+        <VStack align="flex-start">
+          {inputList.map((x, i) => {
+            return (
+              <Flex key={i} mb="8px" w="100%">
+                <FormControl w="80%">
+                  <Input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    value={x}
+                    onChange={e => handleInputChange(e, i)}
+                  />
+                </FormControl>
+                {inputList.length !== 1 ? (
+                  <Button variant="ghost" onClick={() => handleRemoveClick(i)} maxW="15%">
+                    x
+                  </Button>
+                ) : null}
+              </Flex>
+            );
+          })}
+          <Button variant="link" mb="40px" fontSize="16px" onClick={handleAddClick}>
+            + Add Another
+          </Button>
+          <Button type="submit">Send Invites</Button>
+        </VStack>
       </form>
     </Box>
   );
