@@ -1,22 +1,22 @@
 const Button = {
-  // The styles all buttons have in common
   baseStyle: {
     borderRadius: 'none',
     textTransform: 'uppercase',
   },
-  // We can override sizes here, if we want to
   sizes: {
     lg: {
       h: '16',
+      minW: '536px',
     },
     md: {
       h: '16',
+      minW: '409px',
     },
     sm: {
       h: '52px',
+      minW: '44',
     },
   },
-  // The default variant is solid, so we must override colors here
   variants: {
     solid: {
       color: 'white',
@@ -34,17 +34,13 @@ const Button = {
       _hover: {
         color: 'white',
         bg: 'brand.darkgray',
-        border: '1px black solid',
       },
       _active: {
         color: 'white',
         bg: 'brand.darkgray',
-        border: '1px black solid',
       },
     },
   },
-  // The default button prop values
-  defaultProps: {},
 };
 
 export default Button;
