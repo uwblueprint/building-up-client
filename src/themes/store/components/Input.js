@@ -2,12 +2,11 @@ const Input = {
   parts: ['field'],
   baseStyle: {
     field: {
-      p: '12px 16px',
       textTransform: 'uppercase',
+      color: 'brand.gray',
       fontSize: '14px',
       fontFamily: 'heading',
       fontWeight: 'bold',
-      color: 'brand.gray',
       lineHeight: '20px',
       letterSpacing: 'wider',
     },
@@ -16,6 +15,8 @@ const Input = {
     sm: {
       field: {
         height: '52px',
+        py: '4',
+        pl: '8',
         borderRadius: 'none',
       },
     },
