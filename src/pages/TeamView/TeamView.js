@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { useSelector } from 'react-redux';
-import { Box, Button, Heading, Input, FormControl, Flex, VStack } from '@chakra-ui/react';
+import { Box, Button, Heading, Input, FormControl, Flex, VStack, Text } from '@chakra-ui/react';
 
 const GET_TEAM_INFO = gql`
   query getTeam($id: String!) {
@@ -122,9 +122,9 @@ const TeamOverview = ({ teamId }) => {
       <Heading as="h3" size="h3" mb="8px">
         Invite Team Members
       </Heading>
-      <Heading as="p" size="normal" fontWeight="normal" mb="24px">
+      <Text size="normal" mb="24px">
         Enter the emails of the people you want to add
-      </Heading>
+      </Text>
       <InviteTeamMembers />
     </Box>
   );
