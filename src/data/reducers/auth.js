@@ -19,8 +19,7 @@ export default function (state = initialState, action) {
     case REGISTER_SUCCESS:
       return {
         ...state,
-        // TODO: email, userId, firstName, lastName, should be set here
-        user: null,
+        user: payload
       };
     case REGISTER_FAIL:
       return {
@@ -28,17 +27,10 @@ export default function (state = initialState, action) {
         user: null,
       };
     case LOGIN_SUCCESS:
-      const { firstName, lastName, email, userId, teamId } = payload;
       return {
         ...state,
         authenticating: false,
-        user: {
-          firstName,
-          lastName,
-          email,
-          userId,
-          teamId,
-        },
+        user: payload
       };
     case LOGIN_FAIL:
       return {
