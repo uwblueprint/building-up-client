@@ -7,7 +7,7 @@ const NoTeamRegistration = props => {
   const [currentPage, setPage] = useState(0);
   const [teamName, setTeamName] = useState('');
   const [teamAffiliation, setTeamAffiliation] = useState('');
-  const [inputList, setInputList] = useState([{ email: '' }]);
+  const [inputList, setInputList] = useState(['']);
 
   const incrementPage = e => {
     e.preventDefault();

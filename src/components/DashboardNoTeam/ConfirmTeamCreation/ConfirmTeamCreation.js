@@ -1,8 +1,16 @@
 import React from 'react';
-import { useMutation, gql } from '@apollo/client';
-import { Box, Text, Heading, Button, HStack, VStack } from '@chakra-ui/react';
+import { useMutation, useApolloClient, gql } from '@apollo/client';
+import { useDispatch } from 'react-redux';
+
+import { Box, Text, Heading, Button, Flex, HStack, VStack } from '@chakra-ui/react';
+
+import { currentUser } from '../../../data/actions/auth';
 
 const ConfirmTeamCreation = props => {
+  const { decrementPage, teamName, teamAffiliation, userId, inputList } = props;
+  const dispatch = useDispatch();
+  const client = useApolloClient();
+
   const CREATE_TEAM = gql`
     mutation createTeam($name: String!, $organization: String!) {
       createTeam(name: $name, organization: $organization, amountRaised: 0, itemsSold: 0) {
@@ -14,7 +22,11 @@ const ConfirmTeamCreation = props => {
   const ADD_USER_TO_TEAM = gql`
     mutation updateUser($id: ID!, $teamId: String) {
       updateUser(id: $id, teamId: $teamId) {
+        email
+        firstName
+        lastName
         id
+        teamId
       }
     }
   `;
@@ -24,13 +36,13 @@ const ConfirmTeamCreation = props => {
 
   const executeQuery = () => {
     createTeam({
-      variables: { name: props.teamName, organization: props.teamAffiliation },
+      variables: { name: teamName, organization: teamAffiliation },
     })
       .then(data => {
-        let teamId = data.data.createTeam.id;
+        const teamId = data.data.createTeam.id;
         addUser({
-          variables: { id: props.userId, teamId: teamId },
-        }).then(window.location.reload());
+          variables: { id: userId, teamId },
+        }).then(dispatch(currentUser(client)));
       })
       .catch(e => {
         console.log(e);
@@ -38,58 +50,65 @@ const ConfirmTeamCreation = props => {
   };
 
   return (
-    <Box w="full" h="100%" alignItems="flex-start">
-      <Button bg="white" onClick={props.decrementPage} _focus={{ boxShadow: '#FFFFFF' }}>
-        &lt; Back
+    <Box w="100%" h="100%" alignItems="flex-start">
+      <Button bg="white" onClick={decrementPage} _focus={{ boxShadow: 'white' }}>
+        {'< Back'}
       </Button>
       <Heading alignSelf="flex-start" size="h1" as="h1" marginTop={2} marginBottom={8}>
         Create a Team
       </Heading>
-      <Box as="form" w="full" h="84%" onSubmit={props.incrementPage}>
-        <HStack h="full" justifyContent="center" display="flex" flexDirection="row" spacing={4}>
+      <Box w="100%" h="84%">
+        <HStack h="100%" justifyContent="center" display="flex" flexDirection="row" spacing={4}>
           <Box bg="background.primary" alignItems="flex-start" marginRight={4} w="90%" h="100%" borderRadius="4px">
             <Box marginRight={10} marginLeft={10} h="100%" fontWeight="600">
-              <Text fontSize="2xl" marginTop={8} marginBottom={8}>
+              <Heading as="h3" size="h3" marginTop={8} marginBottom={8}>
                 Team Details
-              </Text>
+              </Heading>
               <Text fontSize="xl" fontWeight="semibold" marginBottom={1} letterSpacing="wider" opacity="0.5">
                 TEAM NAME
               </Text>
-              <Text fontSize="3xl" marginBottom={8}>
-                {props.teamName}
-              </Text>
+              <Heading as="h3" size="h3" marginBottom={8}>
+                {teamName}
+              </Heading>
               <Text fontSize="xl" fontWeight="semibold" marginBottom={1} letterSpacing="wider" opacity="0.5">
                 TEAM AFFILIATIONS
               </Text>
-              <Text fontSize="3xl" marginBottom={8}>
-                {props.teamAffiliation === '' ? 'N/A' : props.teamAffiliation}
-              </Text>
+              <Heading as="h3" size="h3" marginBottom={8}>
+                {teamAffiliation === '' ? 'N/A' : teamAffiliation}
+              </Heading>
             </Box>
           </Box>
           <Box bg="background.primary" fontWeight="600" alignItems="flex-start" w="90%" h="100%" borderRadius="4px">
             <VStack marginRight={10} marginLeft={10} h="100%" alignItems="flex-start">
-              <Text fontSize="2xl" fontWeight="semibold" marginTop={8} marginBottom={8}>
+              <Heading as="h3" size="h3" marginTop={8} marginBottom={8}>
                 Invite Team Members (optional)
-              </Text>
-              {props.inputList[0]['email'] === '' ? (
+              </Heading>
+              {(inputList.length === 1) & (inputList[0] === '') ? (
                 <Text fontSize="3xl"> N/A </Text>
               ) : (
-                props.inputList.map((x, i) => {
-                  return (
-                    <Text key={x.email} fontSize="xl" fontWeight="normal">
-                      {x.email}
-                    </Text>
-                  );
+                inputList.map((x, i) => {
+                  if (!x?.trim()) {
+                    return null;
+                  } else {
+                    return (
+                      <Text key={i} fontSize="xl" fontWeight="normal">
+                        {x}
+                      </Text>
+                    );
+                  }
                 })
               )}
             </VStack>
           </Box>
         </HStack>
-        <Box display="flex" flexDirection="row" justifyContent="flex-end" marginTop={4}>
-          <Button _focus={{ boxShadow: '#FFFFFF' }} onClick={executeQuery} type="submit" justifySelf="flex-end">
-            Next
+        <Flex flexDirection="row" marginTop={4} justifyContent="space-between">
+          <Button _focus={{ boxShadow: 'white' }} onClick={decrementPage}>
+            Previous
           </Button>
-        </Box>
+          <Button _focus={{ boxShadow: 'white' }} onClick={executeQuery}>
+            Confirm
+          </Button>
+        </Flex>
       </Box>
     </Box>
   );

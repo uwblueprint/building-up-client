@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, Button, Center, Heading, VStack } from '@chakra-ui/react';
 
 const InitialPage = props => {
+  const { incrementPage } = props;
   return (
     <VStack w="100%" h="100%" spacing={8}>
       <Heading alignSelf="flex-start" size="h1" as="h1" marginTop={50}>
@@ -11,7 +12,7 @@ const InitialPage = props => {
         <Heading as="h4" size="h4" marginBottom={6}>
           It looks like you don't have a team yet!
         </Heading>
-        <Button onClick={props.incrementPage} _focus={{ boxShadow: '#FFFFFF' }}>
+        <Button onClick={incrementPage} _focus={{ boxShadow: 'white' }}>
           Create a Team
         </Button>
       </Center>
