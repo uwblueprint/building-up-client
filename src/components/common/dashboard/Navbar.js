@@ -48,6 +48,10 @@ const Navbar = props => {
       overflowX="hidden"
       textTransform="capitalize"
       role="navigation"
+      position="fixed"
+      left="0"
+      top="0"
+      {...props}
     >
       <VStack color="gray.400" spacing={10} align="flex-start">
         <Image src={Logo} alt="Raising The Roof Logo" w="100%" />
