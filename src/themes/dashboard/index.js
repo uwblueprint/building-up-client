@@ -2,6 +2,7 @@ import { extendTheme } from '@chakra-ui/react';
 import Button from './components/Button';
 import Input from './components/Input';
 import Heading from './components/Heading';
+import Table from './components/Table';
 import Link from './components/Link';
 
 const dashboardTheme = extendTheme({
@@ -41,6 +42,7 @@ const dashboardTheme = extendTheme({
     Button,
     Input,
     Heading,
+    Table,
     Link,
   },
 });

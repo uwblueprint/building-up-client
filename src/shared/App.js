@@ -8,24 +8,21 @@ import Dashboard from '../pages/Dashboard/Dashboard';
 import LoginRegister from '../pages/User/LoginRegister';
 import dashboardTheme from '../themes/dashboard';
 import storeTheme from '../themes/store';
+import TeamView from '../pages/TeamView/TeamView';
 
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
 import { currentUser } from '../data/actions/auth';
 import ChakraExpoDashboard from '../themes/dashboard/ChakraExpoDashboard';
 import ChakraExpoStore from '../themes/store/ChakraExpoStore';
-
-// const GET_TEAMS = gql`
-//   query {
-//     getAllTeams {
-//       id
-//     }
-//   }
-// `;
+import Navbar from '../components/common/dashboard/Navbar';
+import Store from '../pages/Storefront/store';
 
 function App() {
   const dispatch = useDispatch();
   const client = useApolloClient();
   const { authenticating, user } = useSelector(state => state.auth);
+
+  const NAVBAR_WIDTH = '280px';
 
   useEffect(() => {
     // Component on mount (i.e. app init): Try to fetch user data (Apollo client internally uses a cookie)
@@ -55,31 +52,33 @@ function App() {
               <ChakraProvider theme={storeTheme}>
                 <ChakraExpoStore />
               </ChakraProvider>
+            <Route exact path="/store">
+              <Store />
             </Route>
             <ProtectedRoute path="/">
-              <Grid templateColumns="280px 1fr" h="100vh">
-                {/* All styles here are temporary */}
+              <Grid templateColumns={`${NAVBAR_WIDTH} 1fr`} h="100vh">
                 <Box borderRight="2px solid black" w="100%" h="100%">
-                  Navbar Goes Here
+                  {/** Navbar width is set manually to keep the position fixed */}
+                  <Navbar w={NAVBAR_WIDTH} />
                 </Box>
 
-                <Flex w="100%" h="100%" p="72px">
+                <Box w="100%" h="100%" p="72px">
                   <Switch>
                     <ProtectedRoute exact path="/home">
                       <Dashboard />
                     </ProtectedRoute>
                     <ProtectedRoute exact path="/leaderboard">
-                      Leaderboard page
+                      Leaderboard page, not yet implemented.
                     </ProtectedRoute>
                     <ProtectedRoute exact path="/team">
-                      Team page
+                      <TeamView />
                     </ProtectedRoute>
                     {/* All other paths are redirected to /home */}
                     <ProtectedRoute path="/">
                       <Redirect to="/home" />
                     </ProtectedRoute>
                   </Switch>
-                </Flex>
+                </Box>
               </Grid>
             </ProtectedRoute>
           </Switch>
