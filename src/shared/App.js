@@ -62,7 +62,7 @@ function App() {
                       <Dashboard />
                     </ProtectedRoute>
                     <ProtectedRoute exact path="/leaderboard">
-                      Leaderboard page
+                      Leaderboard page, not yet implemented.
                     </ProtectedRoute>
                     <ProtectedRoute exact path="/team">
                       <TeamView />

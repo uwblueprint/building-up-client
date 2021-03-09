@@ -1,7 +1,27 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { useSelector } from 'react-redux';
-import { Box, Button, Heading, Input, FormControl, Flex, VStack, Text } from '@chakra-ui/react';
+import { Redirect } from 'react-router-dom';
+
+import { useTable, useSortBy } from 'react-table';
+import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
+import {
+  Box,
+  Button,
+  Heading,
+  Input,
+  FormControl,
+  Flex,
+  VStack,
+  Text,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  chakra,
+} from '@chakra-ui/react';
 
 const GET_TEAM_INFO = gql`
   query getTeam($id: String!) {
@@ -20,14 +40,7 @@ const TeamView = () => {
     user: { teamId },
   } = useSelector(state => state.auth);
 
-  return teamId ? (
-    <TeamOverview teamId={teamId} />
-  ) : (
-    <div>
-      <h1>Welcome</h1>
-      {'User is not part of a team (todo: implement this view)'}
-    </div>
-  );
+  return teamId ? <TeamOverview teamId={teamId} /> : <Redirect to="/" />;
 };
 
 const InviteTeamMembers = () => {
@@ -89,7 +102,9 @@ const InviteTeamMembers = () => {
           <Button variant="link" mb="40px" fontSize="16px" onClick={handleAddClick}>
             + Add Another
           </Button>
-          <Button type="submit">Send Invites</Button>
+          <Button size="lg" type="submit">
+            Send Invites
+          </Button>
         </VStack>
       </form>
     </Box>
@@ -97,8 +112,96 @@ const InviteTeamMembers = () => {
 };
 
 const TeamMembers = () => {
-  //TODO: Implement the team members table using the shared table component
-  return <Box w="100%" h="500px" mb="64px" background="gray.400"></Box>;
+  //Fetch users for the table, currently empty data
+  const data = useMemo(() => [], []);
+
+  // i.e.
+  /* 
+  data might have this structure (fetched from our backend with useQuery)
+  const data = useMemo(
+    () => [
+      {
+        name: '1st Name',
+        email: 'example1@email.com',
+        userId: 'xxxx',
+      },
+    ],
+    [],
+  );
+  */
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: 'Name',
+        accessor: 'name',
+        Cell: props => <Heading size="h4">{props.value}</Heading>,
+      },
+      {
+        Header: 'Email',
+        accessor: 'email',
+      },
+      {
+        id: 'action',
+        // accessor: 'action',
+        disableSortBy: true,
+        Cell: () => (
+          <Text fontWeight="semibold" color="#C70E0E">
+            Remove
+          </Text>
+        ),
+      },
+    ],
+    [],
+  );
+
+  const renderSortIcon = column => {
+    const { isSorted, isSortedDesc } = column;
+    return isSorted ? (
+      isSortedDesc ? (
+        <TriangleDownIcon aria-label="sorted descending" />
+      ) : (
+        <TriangleUpIcon aria-label="sorted ascending" />
+      )
+    ) : null;
+  };
+
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({ columns, data }, useSortBy);
+
+  return (
+    <Box h="500px" mb={16} bg="background.primary">
+      {/* This outer box is temporary ^^ */}
+      <Table {...getTableProps()}>
+        <Thead>
+          {headerGroups.map(headerGroup => (
+            <Tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map(column => (
+                <Th
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
+                  _hover={column.canSort ? { bg: '#eaeaea' } : {}}
+                >
+                  {column.render('Header')}
+                  <chakra.span pl="4">{renderSortIcon(column)}</chakra.span>
+                </Th>
+              ))}
+            </Tr>
+          ))}
+        </Thead>
+        <Tbody {...getTableBodyProps()}>
+          {rows.map(row => {
+            prepareRow(row);
+            return (
+              <Tr {...row.getRowProps()}>
+                {row.cells.map(cell => (
+                  <Td {...cell.getCellProps()}>{cell.render('Cell')}</Td>
+                ))}
+              </Tr>
+            );
+          })}
+        </Tbody>
+      </Table>
+    </Box>
+  );
 };
 
 const TeamOverview = ({ teamId }) => {
