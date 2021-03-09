@@ -12,7 +12,7 @@ const InitialPage = props => {
         <Heading as="h4" size="h4" marginBottom={6}>
           It looks like you don't have a team yet!
         </Heading>
-        <Button onClick={incrementPage} _focus={{ boxShadow: 'white' }}>
+        <Button size="lg" onClick={incrementPage} _focus={{ boxShadow: 'white' }}>
           Create a Team
         </Button>
       </Center>

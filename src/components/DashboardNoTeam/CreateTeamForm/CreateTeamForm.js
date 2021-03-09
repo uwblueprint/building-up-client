@@ -63,6 +63,7 @@ const CreateTeamForm = props => {
     inputList,
     setInputList,
   } = props;
+
   const onChangeTeamName = e => {
     setTeamName(e.target.value);
   };
@@ -80,40 +81,36 @@ const CreateTeamForm = props => {
         Create a Team
       </Heading>
       <Box as="form" w="100%" h="84%" onSubmit={incrementPage}>
-        <HStack h="100%" justifyContent="center" display="flex" flexDirection="row" spacing={4}>
-          <Box bg="background.primary" alignItems="flex-start" marginRight={4} w="90%" h="100%" borderRadius="4px">
-            <VStack marginRight={10} marginLeft={10} spacing={7} align="flex-start">
-              <Heading as="h3" size="h3" marginTop={8}>
-                Team Details
-              </Heading>
-              <FormControl id="teamCreation" isRequired>
-                <Input bg="white" placeholder="Team Name" value={teamName} onChange={onChangeTeamName} />
-              </FormControl>
-              <Input
-                bg="white"
-                placeholder="Team Affiliation (Optional)"
-                value={teamAffiliation}
-                onChange={onChangeTeamAffiliation}
-              />
-            </VStack>
-          </Box>
-          <Box bg="background.primary" fontWeight="600" alignItems="flex-start" w="90%" h="100%" borderRadius="4px">
-            <VStack align="flex-start" marginRight={10} marginLeft={10} h="100%" spacing={4}>
-              <Heading as="h3" size="h3" marginTop={8}>
-                Invite Team Members (optional)
-              </Heading>
-              <Text fontSize="xl" fontWeight="normal">
-                Enter the emails of the people you want to add
-              </Text>
-              <InviteTeamMembers inputList={inputList} setInputList={setInputList} />
-            </VStack>
-          </Box>
+        <HStack h="100%" justifyContent="center" spacing={4}>
+          <VStack bg="background.primary" w="90%" h="100%" borderRadius="4px" px={10} spacing={6} align="flex-start">
+            <Heading as="h3" size="h3" marginTop={8}>
+              Team Details
+            </Heading>
+            <FormControl id="teamCreation" isRequired>
+              <Input bg="white" placeholder="Team Name" value={teamName} onChange={onChangeTeamName} />
+            </FormControl>
+            <Input
+              bg="white"
+              placeholder="Team Affiliation (Optional)"
+              value={teamAffiliation}
+              onChange={onChangeTeamAffiliation}
+            />
+          </VStack>
+          <VStack bg="background.primary" w="90%" h="100%" borderRadius="4px" px={10} spacing={7} align="flex-start">
+            <Heading as="h3" size="h3" marginTop={8}>
+              Invite Team Members (optional)
+            </Heading>
+            <Text fontSize="xl" fontWeight="normal">
+              Enter the emails of the people you want to add
+            </Text>
+            <InviteTeamMembers inputList={inputList} setInputList={setInputList} />
+          </VStack>
         </HStack>
-        <Box display="flex" flexDirection="row" justifyContent="flex-end" marginTop={4}>
-          <Button _focus={{ boxShadow: 'white' }} type="submit" justifySelf="flex-end">
+        <Flex justify="flex-end" marginTop={4}>
+          <Button size="lg" _focus={{ boxShadow: 'white' }} type="submit">
             Next
           </Button>
-        </Box>
+        </Flex>
       </Box>
     </Box>
   );

@@ -57,59 +57,53 @@ const ConfirmTeamCreation = props => {
       <Heading alignSelf="flex-start" size="h1" as="h1" marginTop={2} marginBottom={8}>
         Create a Team
       </Heading>
-      <Box w="100%" h="84%">
-        <HStack h="100%" justifyContent="center" display="flex" flexDirection="row" spacing={4}>
-          <Box bg="background.primary" alignItems="flex-start" marginRight={4} w="90%" h="100%" borderRadius="4px">
-            <Box marginRight={10} marginLeft={10} h="100%" fontWeight="600">
-              <Heading as="h3" size="h3" marginTop={8} marginBottom={8}>
-                Team Details
-              </Heading>
-              <Text fontSize="xl" fontWeight="semibold" marginBottom={1} letterSpacing="wider" opacity="0.5">
-                TEAM NAME
-              </Text>
-              <Heading as="h3" size="h3" marginBottom={8}>
-                {teamName}
-              </Heading>
-              <Text fontSize="xl" fontWeight="semibold" marginBottom={1} letterSpacing="wider" opacity="0.5">
-                TEAM AFFILIATIONS
-              </Text>
-              <Heading as="h3" size="h3" marginBottom={8}>
-                {teamAffiliation === '' ? 'N/A' : teamAffiliation}
-              </Heading>
-            </Box>
+      <HStack w="100%" h="84%" justifyContent="center" spacing={4}>
+        <VStack bg="background.primary" w="90%" h="100%" borderRadius="4px" px={10} spacing={8} align="flex-start">
+          <Heading as="h3" size="h3" mt={8}>
+            Team Details
+          </Heading>
+          <Box>
+            <Heading size="subtitle" as="h3" letterSpacing="wider" opacity="0.5" mb={1}>
+              Team Name
+            </Heading>
+            <Heading as="h3" size="h3">
+              {teamName}
+            </Heading>
           </Box>
-          <Box bg="background.primary" fontWeight="600" alignItems="flex-start" w="90%" h="100%" borderRadius="4px">
-            <VStack marginRight={10} marginLeft={10} h="100%" alignItems="flex-start">
-              <Heading as="h3" size="h3" marginTop={8} marginBottom={8}>
-                Invite Team Members (optional)
-              </Heading>
-              {(inputList.length === 1) & (inputList[0] === '') ? (
-                <Text fontSize="3xl"> N/A </Text>
-              ) : (
-                inputList.map((x, i) => {
-                  if (!x?.trim()) {
-                    return null;
-                  } else {
-                    return (
-                      <Text key={i} fontSize="xl" fontWeight="normal">
-                        {x}
-                      </Text>
-                    );
-                  }
-                })
-              )}
-            </VStack>
+          <Box>
+            <Heading size="subtitle" letterSpacing="wider" opacity="0.5" mb={1}>
+              Team Affiliation
+            </Heading>
+            <Heading as="h3" size="h3">
+              {teamAffiliation === '' ? 'N/A' : teamAffiliation}
+            </Heading>
           </Box>
-        </HStack>
-        <Flex flexDirection="row" marginTop={4} justifyContent="space-between">
-          <Button _focus={{ boxShadow: 'white' }} onClick={decrementPage}>
-            Previous
-          </Button>
-          <Button _focus={{ boxShadow: 'white' }} onClick={executeQuery}>
-            Confirm
-          </Button>
-        </Flex>
-      </Box>
+        </VStack>
+        <VStack bg="background.primary" w="90%" h="100%" borderRadius="4px" px={10} spacing={8} align="flex-start">
+          <Heading as="h3" size="h3" mt={8}>
+            Invite Team Members (optional)
+          </Heading>
+          {inputList.length === 1 && inputList[0] === '' ? (
+            <Text fontSize="xl">No team members invited.</Text>
+          ) : (
+            inputList.map((x, i) => {
+              return (
+                <Text key={i} fontSize="xl" fontWeight="normal">
+                  {x}
+                </Text>
+              );
+            })
+          )}
+        </VStack>
+      </HStack>
+      <Flex marginTop={4} justify="space-between">
+        <Button size="lg" _focus={{ boxShadow: 'white' }} onClick={decrementPage}>
+          Previous
+        </Button>
+        <Button size="lg" _focus={{ boxShadow: 'white' }} onClick={executeQuery}>
+          Confirm
+        </Button>
+      </Flex>
     </Box>
   );
 };
