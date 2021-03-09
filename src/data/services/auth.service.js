@@ -41,10 +41,9 @@ const CURRENT_USER = gql`
   }
 `;
 
-const register = (firstName, lastName, email, password, client) => {
-  const res = client.mutate({
-    variables: { firstName: firstName, lastName: lastName, email: email, password: password },
-    mutation: REGISTER_MUTATION,
+const getCurrentUser = client => {
+  const res = client.query({
+    query: CURRENT_USER,
   });
   return res;
 };
@@ -66,10 +65,10 @@ const logout = client => {
   return res;
 };
 
-const getCurrentUser = client => {
-  const res = client.query({
-    query: CURRENT_USER,
-    fetchPolicy: 'no-cache',
+const register = (firstName, lastName, email, password, client) => {
+  const res = client.mutate({
+    variables: { firstName: firstName, lastName: lastName, email: email, password: password },
+    mutation: REGISTER_MUTATION,
   });
   return res;
 };

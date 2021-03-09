@@ -6,7 +6,6 @@ export const register = (firstName, lastName, email, password, client) => dispat
   return AuthService.register(firstName, lastName, email, password, client).then(
     res => {
       const { firstName, lastName, email, id, teamId } = res.data.register;
-      console.log(res);
       dispatch({
         type: REGISTER_SUCCESS,
         payload: {

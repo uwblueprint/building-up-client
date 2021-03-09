@@ -14,6 +14,7 @@ import { currentUser } from '../data/actions/auth';
 import ChakraExpoDashboard from '../themes/dashboard/ChakraExpoDashboard';
 import Navbar from '../components/common/dashboard/Navbar';
 import Store from '../pages/Storefront/store';
+import BrainTeaser from '../components/BrainTeaser';
 
 function App() {
   const dispatch = useDispatch();
@@ -58,6 +59,10 @@ function App() {
 
                 <Box w="100%" h="100%" p="72px">
                   <Switch>
+                    {/* BrainTeaser component always after logging in */}
+                    <ProtectedRoute path="/">
+                      <BrainTeaser />
+                    </ProtectedRoute>
                     <ProtectedRoute exact path="/home">
                       <Dashboard />
                     </ProtectedRoute>
