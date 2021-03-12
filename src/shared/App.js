@@ -7,11 +7,13 @@ import { Box, ChakraProvider, Flex, Grid, Spinner } from '@chakra-ui/react';
 import Dashboard from '../pages/Dashboard/Dashboard';
 import LoginRegister from '../pages/User/LoginRegister';
 import dashboardTheme from '../themes/dashboard';
+import storeTheme from '../themes/store';
 import TeamView from '../pages/TeamView/TeamView';
 
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
 import { currentUser } from '../data/actions/auth';
 import ChakraExpoDashboard from '../themes/dashboard/ChakraExpoDashboard';
+import ChakraExpoStore from '../themes/store/ChakraExpoStore';
 import Navbar from '../components/common/dashboard/Navbar';
 import Store from '../pages/Storefront/store';
 
@@ -41,9 +43,14 @@ function App() {
             <Route exact path="/login">
               {user ? <Redirect to="/" /> : <LoginRegister />}
             </Route>
-            <Route exact path="/chakraExpo">
+            <Route exact path="/chakraExpoDashboard">
               <ChakraProvider theme={dashboardTheme}>
                 <ChakraExpoDashboard />
+              </ChakraProvider>
+            </Route>
+            <Route exact path="/chakraExpoStore">
+              <ChakraProvider theme={storeTheme}>
+                <ChakraExpoStore />
               </ChakraProvider>
             </Route>
             <Route exact path="/store">
