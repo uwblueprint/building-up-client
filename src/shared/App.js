@@ -52,6 +52,7 @@ function App() {
               <ChakraProvider theme={storeTheme}>
                 <ChakraExpoStore />
               </ChakraProvider>
+            </Route>
             <Route exact path="/store">
               <Store />
             </Route>
