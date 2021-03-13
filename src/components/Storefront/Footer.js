@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Image, Text, Link, Button, HStack, VStack, Input, Box } from '@chakra-ui/react';
+import { Image, Center, Text, Link, Button, HStack, VStack, Input } from '@chakra-ui/react';
 import { ChevronRightIcon } from '@chakra-ui/icons';
+import { FaFacebookSquare, FaInstagramSquare, FaYoutube, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import smallLogo from '../../assets/building_up_footer_small_icon.png';
 
 const Footer = props => {
   const { subscribtionEmail, changeSubscriptionEmail } = useState();
@@ -16,11 +18,11 @@ const Footer = props => {
   };
 
   return (
-    <Box>
+    <VStack spacing="0px">
       <HStack backgroundColor="black" w="100%" display="flex" paddingTop="54px" paddingBottom="84px">
-        <Image src="" alt="Small Icon" marginLeft="41px" />
+        <Image src={smallLogo} alt="Small Icon" marginLeft="41px" marginRight="47px" alignSelf="flex-start" />
         <HStack backgroundColor="black" w="100%" display="flex" justifyContent="space-between">
-          <VStack w="191px" alignItems="flex-start" spacing="26px">
+          <VStack w="13%" alignItems="flex-start" spacing="26px">
             <Text fontWeight="extrabold" letterSpacing="wider" color="white">
               GET IN TOUCH
             </Text>
@@ -31,27 +33,21 @@ const Footer = props => {
               info@raisingtheroof.org
             </Link>
             <HStack spacing="5">
-              <Link href="">
-                <Image src="" alt="Facebook" />
-              </Link>
-              <Link href="">
-                <Image src="" alt="Instagram" />
-              </Link>
-              <Link href="">
-                <Image src="" alt="Youtube" />
-              </Link>
-              <Link href="">
-                <Image src="" alt="LinkedIn" />
-              </Link>
-              <Link href="">
-                <Image src="" alt="Twitter" />
-              </Link>
+              <FaFacebookSquare fontSize="26px" color="white" />
+              <FaInstagramSquare fontSize="26px" color="white" />
+              <Center h="22px" w="22px" backgroundColor="white" borderRadius="2px">
+                <FaYoutube />
+              </Center>
+              <FaLinkedin fontSize="26px" color="white" />
+              <Center h="22px" w="22px" backgroundColor="white" borderRadius="2px">
+                <FaTwitter />
+              </Center>
             </HStack>
           </VStack>
           <VStack
             as="form"
             alignSelf="flex-end"
-            w="444px"
+            w="31%"
             alignItems="flex-start"
             onSubmit={subscribe}
             marginRight="105px"
@@ -80,18 +76,24 @@ const Footer = props => {
           </VStack>
         </HStack>
       </HStack>
-      <Box backgroundColor="#BE2A1B" w="100%" paddingTop="31px" paddingBottom="26px">
-        <HStack justifyContent="space-between" fontFamily="Karla" color="white" marginLeft="83px" marginRight="105px">
-          <Text>2020 RAISING THE ROOF. ALL RIGHTS RESERVED. CHARTIABLE #139744569RR0001. </Text>
-          <HStack fontWeight="normal" spacing="48px">
-            <Link color="white">SITEMAP</Link>
-            <Link color="white">PRIVACY POLICY </Link>
-            <Link color="white">TERMS OF USE</Link>
-            <Link color="white">SITE CREDITS</Link>
-          </HStack>
+      <HStack
+        justifyContent="space-between"
+        fontFamily="Karla"
+        color="white"
+        backgroundColor="#BE2A1B"
+        w="100%"
+        paddingTop="31px"
+        paddingBottom="26px"
+      >
+        <Text marginLeft="83px">2020 RAISING THE ROOF. ALL RIGHTS RESERVED. CHARTIABLE #139744569RR0001. </Text>
+        <HStack fontWeight="normal" spacing="48px" marginRight="105px">
+          <Link color="white">SITEMAP</Link>
+          <Link color="white">PRIVACY POLICY </Link>
+          <Link color="white">TERMS OF USE</Link>
+          <Link color="white">SITE CREDITS</Link>
         </HStack>
-      </Box>
-    </Box>
+      </HStack>
+    </VStack>
   );
 };
 
