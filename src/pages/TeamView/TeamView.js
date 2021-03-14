@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { useMutation, useQuery, gql } from '@apollo/client';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
@@ -35,6 +35,12 @@ const GET_TEAM_INFO = gql`
   }
 `;
 
+const SEND_INVITE_EMAILS = gql`
+  mutation inviteTeam($emails: [String!], $teamId: String!) {
+    inviteTeam(emails: $emails, teamId: $teamId)
+  }
+`;
+
 const TeamView = () => {
   const {
     user: { teamId },
@@ -63,16 +69,24 @@ const InviteTeamMembers = () => {
     setInputList([...inputList, '']);
   };
 
+  const [inviteTeam] = useMutation(SEND_INVITE_EMAILS);
+  const {
+    user: { teamId },
+  } = useSelector(state => state.auth);
+
   const handleSubmit = e => {
     e.preventDefault();
-    //TODO: The below displays the inputted emails as an alert
-    //      Should change to actually handle the submit function
     const list = [...inputList];
-    let output = '';
-    for (let i = 0; i < list.length; i++) {
-      output = output.concat(list[i]);
-    }
-    alert(output);
+    inviteTeam({
+      variables: { emails: list, teamId: teamId },
+    })
+      .then(data => {
+        console.log(data);
+        // Create a toast or something
+      })
+      .catch(e => {
+        console.log(e);
+      });
   };
 
   return (
