@@ -51,15 +51,7 @@ function App() {
                 </ChakraProvider>
               )}
             />
-            <Route
-              exact
-              path="/store"
-              render={() => (
-                <ChakraProvider theme={storeTheme}>
-                  <Store />
-                </ChakraProvider>
-              )}
-            />
+            <Route exact path="/store" component={Store} />
             <ProtectedRoute path="/">
               <Grid templateColumns={`${NAVBAR_WIDTH} 1fr`} h="100vh">
                 <Box borderRight="2px solid black" w="100%" h="100%">

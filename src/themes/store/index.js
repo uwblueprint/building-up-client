@@ -10,6 +10,7 @@ const storeTheme = extendTheme({
   },
   colors: {
     brand: {
+      lightgray: '#E8E8E8',
       gray: '#7C7C7C',
       darkgray: '#333333',
       lightred: '#F5D5D5',
