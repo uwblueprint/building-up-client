@@ -1,7 +1,5 @@
-import { Image } from '@chakra-ui/image';
-import { VStack, Center, Heading } from '@chakra-ui/layout';
-import { NoMeetingRoom } from '@material-ui/icons';
 import * as React from 'react';
+import { VStack, Heading, Image } from '@chakra-ui/react';
 
 const Item = ({ name, image, price }) => (
   <VStack>

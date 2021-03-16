@@ -1,8 +1,12 @@
 import * as React from 'react';
-import { Heading, HStack, VStack } from '@chakra-ui/layout';
+import { Heading, HStack, VStack } from '@chakra-ui/react';
+import { useShopify } from '../../../hooks/useShopify';
 import Item from '../common/Item';
 
-const BestSellers = ({ items }) => {
+const BestSellers = () => {
+  const { collections } = useShopify();
+  const bestSellersCollection = collections.find(({ handle }) => handle === 'frontpage');
+  // Replace predicate with handle === 'bestsellers' once we have that in place
   return (
     <VStack p={24}>
       <Heading as="h4" size="subtitle" color="brand.red">
@@ -10,9 +14,10 @@ const BestSellers = ({ items }) => {
       </Heading>
       <Heading mb={4}>BEST SELLERS</Heading>
       <HStack spacing={8}>
-        {items.map(({ id, title, images, price }) => (
-          <Item key={id} name={title} image={images && images[0].src} price={'15'} />
-        ))}
+        {bestSellersCollection &&
+          bestSellersCollection.products.map(({ id, title, images, variants }) => (
+            <Item key={id} name={title} image={images && images[0].src} price={variants && variants[0].price} />
+          ))}
       </HStack>
     </VStack>
   );
