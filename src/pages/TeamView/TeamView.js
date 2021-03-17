@@ -82,7 +82,7 @@ const InviteTeamMembers = () => {
     })
       .then(data => {
         console.log(data);
-        // Create a toast or something
+        // Create a toast or alert to indicate emails have been sent
       })
       .catch(e => {
         console.log(e);
