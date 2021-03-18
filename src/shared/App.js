@@ -16,6 +16,7 @@ import ChakraExpoDashboard from '../themes/dashboard/ChakraExpoDashboard';
 import ChakraExpoStore from '../themes/store/ChakraExpoStore';
 import Navbar from '../components/common/dashboard/Navbar';
 import Store from '../pages/Storefront/store';
+import Footer from '../components/Storefront/Footer';
 
 function App() {
   const dispatch = useDispatch();
@@ -51,6 +52,11 @@ function App() {
             <Route exact path="/chakraExpoStore">
               <ChakraProvider theme={storeTheme}>
                 <ChakraExpoStore />
+              </ChakraProvider>
+            </Route>
+            <Route exact path="/footer">
+              <ChakraProvider theme={storeTheme}>
+                <Footer />
               </ChakraProvider>
             </Route>
             <Route exact path="/store">

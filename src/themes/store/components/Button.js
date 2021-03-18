@@ -2,6 +2,7 @@ const Button = {
   baseStyle: {
     borderRadius: 'none',
     textTransform: 'uppercase',
+    fontFamily: 'Jost, system-ui, sans-serif',
   },
   sizes: {
     lg: {
