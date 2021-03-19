@@ -60,13 +60,14 @@ function App() {
                   {/** Navbar width is set manually to keep the position fixed */}
                   <Navbar w={NAVBAR_WIDTH} />
                 </Box>
+
                 <Box w="100%" h="100%" p="72px">
                   <Switch>
                     <ProtectedRoute exact path="/home">
                       <Dashboard />
                     </ProtectedRoute>
                     <ProtectedRoute exact path="/leaderboard">
-                      'Leaderboard page, not yet implemented.'
+                      Leaderboard page, not yet implemented.
                     </ProtectedRoute>
                     <ProtectedRoute exact path="/team">
                       <TeamView />
