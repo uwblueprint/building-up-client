@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Heading, HStack, VStack } from '@chakra-ui/react';
 import { useShopify } from '../../../hooks/useShopify';
-import Item from '../common/Item';
+import Item from '../Item/Item';
 
 const BestSellers = () => {
   const { collections } = useShopify();

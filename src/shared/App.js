@@ -40,18 +40,20 @@ function App() {
       ) : (
         <Router>
           <Switch>
-            <Route exact path="/login" render={() => (user ? <Redirect to="/" /> : <LoginRegister />)} />
-            <Route exact path="/chakraExpoDashboard" component={ChakraExpoDashboard} />
-            <Route
-              exact
-              path="/chakraExpoStore"
-              render={() => (
-                <ChakraProvider theme={storeTheme}>
-                  <ChakraExpoStore />
-                </ChakraProvider>
-              )}
-            />
-            <Route exact path="/store" component={Store} />
+            <Route exact path="/login">
+              {user ? <Redirect to="/" /> : <LoginRegister />}
+            </Route>
+            <Route exact path="/chakraExpoDashboard">
+              <ChakraExpoDashboard />
+            </Route>
+            <Route exact path="/chakraExpoStore">
+              <ChakraProvider theme={storeTheme}>
+                <ChakraExpoStore />
+              </ChakraProvider>
+            </Route>
+            <Route exact path="/store">
+              <Store />
+            </Route>
             <ProtectedRoute path="/">
               <Grid templateColumns={`${NAVBAR_WIDTH} 1fr`} h="100vh">
                 <Box borderRight="2px solid black" w="100%" h="100%">
@@ -60,9 +62,15 @@ function App() {
                 </Box>
                 <Box w="100%" h="100%" p="72px">
                   <Switch>
-                    <ProtectedRoute exact path="/home" component={Dashboard} />
-                    <ProtectedRoute exact path="/leaderboard" component={'Leaderboard page, not yet implemented.'} />
-                    <ProtectedRoute exact path="/team" component={TeamView} />
+                    <ProtectedRoute exact path="/home">
+                      <Dashboard />
+                    </ProtectedRoute>
+                    <ProtectedRoute exact path="/leaderboard">
+                      'Leaderboard page, not yet implemented.'
+                    </ProtectedRoute>
+                    <ProtectedRoute exact path="/team">
+                      <TeamView />
+                    </ProtectedRoute>
                     {/* All other paths are redirected to /home */}
                     <ProtectedRoute path="/">
                       <Redirect to="/home" />
