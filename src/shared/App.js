@@ -14,7 +14,7 @@ import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
 import { currentUser } from '../data/actions/auth';
 import ChakraExpoDashboard from '../themes/dashboard/ChakraExpoDashboard';
 import ChakraExpoStore from '../themes/store/ChakraExpoStore';
-import Navbar from '../components/common/dashboard/Navbar';
+import Navbar from '../components/dashboard/Navbar/Navbar';
 import Store from '../pages/Storefront/store';
 import Footer from '../components/Storefront/Footer';
 

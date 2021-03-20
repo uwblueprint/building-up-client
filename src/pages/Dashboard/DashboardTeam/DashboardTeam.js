@@ -1,6 +1,7 @@
 import React from 'react';
 import { useQuery, gql } from '@apollo/client';
-import { Box, Button, Center, Flex, Heading, HStack, Spacer } from '@chakra-ui/react';
+import { Box, Center, Flex, Heading, HStack, Spacer } from '@chakra-ui/react';
+import ShareStorefrontButton from '../../../components/dashboard/ShareStorefrontButton/ShareStorefrontButton';
 
 const GET_TEAM_INFO = gql`
   query getTeam($id: String!) {
@@ -15,7 +16,11 @@ const GET_TEAM_INFO = gql`
 `;
 
 const StorefrontButton = () => {
-  return <Button w="199px">Share Storefront</Button>;
+  return (
+    <Box w="199px">
+      <ShareStorefrontButton>Share Storefront</ShareStorefrontButton>
+    </Box>
+  );
 };
 
 const SalesInfo = props => {

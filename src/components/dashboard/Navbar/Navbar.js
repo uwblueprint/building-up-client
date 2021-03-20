@@ -1,12 +1,14 @@
-import { useApolloClient } from '@apollo/client';
-import { Button, Flex, Heading, Icon, Image, Link, VStack } from '@chakra-ui/react';
 import React from 'react';
+import { useApolloClient } from '@apollo/client';
+import { Flex, Heading, Icon, Image, Link, VStack } from '@chakra-ui/react';
 import { FiUsers } from 'react-icons/fi';
 import { IoHomeOutline, IoPodiumOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+
 import Logo from '../../../assets/logoWhite.png';
 import { logout } from '../../../data/actions/auth';
+import ShareStorefrontButton from '../ShareStorefrontButton/ShareStorefrontButton';
 
 const NavItem = props => (
   <Link
@@ -68,9 +70,7 @@ const Navbar = props => {
             </NavItem>
           </>
         ) : null}
-        <Button color="black" w="100%">
-          Share Storefront
-        </Button>
+        {hasTeam && <ShareStorefrontButton />}
       </VStack>
       <Link onClick={() => dispatch(logout(client))}>
         <Heading as="span" color="white" size="h4">
