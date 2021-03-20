@@ -1,8 +1,9 @@
-import { ChakraProvider } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
-import { Navbar, BestSellers, ItemListings, Footer } from '../../components/Storefront';
-import { useShopify } from '../../hooks/useShopify';
-import storeTheme from '../../themes/store';
+import { ChakraProvider } from '@chakra-ui/react';
+
+import { Navbar, BestSellers, ItemListings, Footer } from 'components/storefront';
+import { useShopify } from 'hooks/useShopify';
+import storeTheme from 'themes/store';
 
 const Store = () => {
   const { createShop, createCheckout, fetchProducts, fetchCollections } = useShopify();

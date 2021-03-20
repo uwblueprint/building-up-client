@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Box, Flex, Button, Image } from '@chakra-ui/react';
-import LoginInput from '../../components/LoginRegister/LoginInput';
-import RegisterInput from '../../components/LoginRegister/RegisterInput';
-import logo from '../../images/logo-black.png';
+
+import LoginInput from 'components/dashboard/LoginRegister/LoginInput';
+import RegisterInput from 'components/dashboard/LoginRegister/RegisterInput';
+import logo from 'assets/images/logo-black.png';
 
 const TabButton = props => {
   return (

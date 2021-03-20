@@ -1,36 +1,27 @@
 import React, { useState } from 'react';
 import { useApolloClient } from '@apollo/client';
 import { useDispatch } from 'react-redux';
-import { Text, Input, Button, Heading, VStack } from '@chakra-ui/react';
-import { register } from '../../data/actions/auth';
+import { Input, Link, Button, Heading, Text, VStack } from '@chakra-ui/react';
 
-const RegisterInput = () => {
+import { login } from 'data/actions/auth';
+
+const LoginInput = () => {
   const client = useApolloClient();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
   const [submitState, setSubmitState] = useState('');
   const dispatch = useDispatch();
 
   const handleClick = async e => {
     e.preventDefault();
-    dispatch(register(firstName, lastName, email, password, client)).then(
-      registered => {
-        if (!registered) setSubmitState('FAIL');
+    dispatch(login(email, password, client)).then(
+      loggedIn => {
+        if (!loggedIn) setSubmitState('FAIL');
       },
       error => {
         setSubmitState('FAIL');
       },
     );
-  };
-
-  const onChangeFirstName = e => {
-    setFirstName(e.target.value);
-  };
-
-  const onChangeLastName = e => {
-    setLastName(e.target.value);
   };
 
   const onChangeEmail = e => {
@@ -44,11 +35,9 @@ const RegisterInput = () => {
   return (
     <form onSubmit={e => handleClick(e)}>
       <VStack spacing="24px">
-        <Heading size="h1" as="h1" alignSelf="flex-start">
-          Create an account
+        <Heading alignSelf="flex-start" size="h1" as="h1">
+          Welcome
         </Heading>
-        <Input name="firstName" placeholder="First Name" value={firstName} onChange={onChangeFirstName} isRequired />
-        <Input name="lastName" placeholder="Last Name" value={lastName} onChange={onChangeLastName} isRequired />
         <Input type="email" name="email" placeholder="Email" value={email} onChange={onChangeEmail} isRequired />
         <Input
           type="password"
@@ -56,15 +45,17 @@ const RegisterInput = () => {
           placeholder="Password"
           value={password}
           onChange={onChangePass}
+          mb="8px"
           isRequired
         />
-        {submitState === 'FAIL' && <Text alignSelf="flex-start">Unable to register, please try again.</Text>}
+        <Link alignSelf="flex-start">Forgot Password?</Link>
+        {submitState === 'FAIL' && <Text alignSelf="flex-start">Oops! Check your credentials and try again.</Text>}
         <Button role="link" width="131px" height="43px" type="submit">
-          Create Account
+          Sign In
         </Button>
       </VStack>
     </form>
   );
 };
 
-export default RegisterInput;
+export default LoginInput;

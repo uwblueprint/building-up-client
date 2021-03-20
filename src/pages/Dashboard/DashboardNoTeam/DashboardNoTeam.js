@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import InitialPage from '../../components/DashboardNoTeam/InitialPage/InitalPage';
-import CreateTeamForm from '../../components/DashboardNoTeam/CreateTeamForm/CreateTeamForm';
-import ConfirmTeamCreation from '../../components/DashboardNoTeam/ConfirmTeamCreation/ConfirmTeamCreation';
 
-const NoTeamRegistration = props => {
+import InitialPage from 'components/dashboard/DashboardNoTeam/InitialPage/InitalPage';
+import CreateTeamForm from 'components/dashboard/DashboardNoTeam/CreateTeamForm/CreateTeamForm';
+import ConfirmTeamCreation from 'components/dashboard/DashboardNoTeam/ConfirmTeamCreation/ConfirmTeamCreation';
+
+const DashboardNoTeam = props => {
   const [currentPage, setPage] = useState(0);
   const [teamName, setTeamName] = useState('');
   const [teamAffiliation, setTeamAffiliation] = useState('');
@@ -47,4 +48,4 @@ const NoTeamRegistration = props => {
   return pages[currentPage];
 };
 
-export default NoTeamRegistration;
+export default DashboardNoTeam;

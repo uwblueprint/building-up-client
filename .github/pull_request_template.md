@@ -1,4 +1,4 @@
-A simple PR template help you create meaningful PRs. This is just a guide, you can add/remove content as needed
+A simple PR template to help you create meaningful PRs. This is just a guide, you can add/remove content as needed
 
 ## Description
 
@@ -16,4 +16,4 @@ If applicable, list steps to test
 
 ## Screenshots
 
-Add a few screenshots! 
+Add a few screenshots!

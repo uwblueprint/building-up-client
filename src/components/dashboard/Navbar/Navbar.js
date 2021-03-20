@@ -6,9 +6,9 @@ import { IoHomeOutline, IoPodiumOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-import Logo from '../../../assets/logoWhite.png';
-import { logout } from '../../../data/actions/auth';
-import ShareStorefrontButton from '../ShareStorefrontButton/ShareStorefrontButton';
+import Logo from 'assets/images/logoWhite.png';
+import { logout } from 'data/actions/auth';
+import ShareStorefrontButton from 'components/dashboard/ShareStorefrontButton/ShareStorefrontButton';
 
 const NavItem = props => (
   <Link

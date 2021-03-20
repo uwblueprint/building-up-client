@@ -1,7 +1,8 @@
 import React from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { Box, Center, Flex, Heading, HStack, Spacer } from '@chakra-ui/react';
-import ShareStorefrontButton from '../../../components/dashboard/ShareStorefrontButton/ShareStorefrontButton';
+
+import ShareStorefrontButton from 'components/dashboard/ShareStorefrontButton/ShareStorefrontButton';
 
 const GET_TEAM_INFO = gql`
   query getTeam($id: String!) {
@@ -51,7 +52,7 @@ const NoSales = () => {
   );
 };
 
-const TeamOverview = ({ teamId }) => {
+const DashboardTeam = ({ teamId }) => {
   const { loading, error, data } = useQuery(GET_TEAM_INFO, {
     variables: { id: teamId },
   });
@@ -87,4 +88,4 @@ const TeamOverview = ({ teamId }) => {
   );
 };
 
-export default TeamOverview;
+export default DashboardTeam;

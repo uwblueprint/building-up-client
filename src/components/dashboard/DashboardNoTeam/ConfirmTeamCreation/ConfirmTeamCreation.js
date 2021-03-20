@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import { Box, Text, Heading, Button, Flex, HStack, VStack } from '@chakra-ui/react';
 
-import { currentUser } from '../../../data/actions/auth';
+import { currentUser } from 'data/actions/auth';
 
 const ConfirmTeamCreation = props => {
   const { decrementPage, teamName, teamAffiliation, userId, inputList } = props;

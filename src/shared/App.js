@@ -5,18 +5,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Box, ChakraProvider, Flex, Grid, Spinner } from '@chakra-ui/react';
 
 import Dashboard from '../pages/Dashboard/Dashboard';
-import LoginRegister from '../pages/User/LoginRegister';
+import LoginRegister from '../pages/LoginRegister/LoginRegister';
 import dashboardTheme from '../themes/dashboard';
 import storeTheme from '../themes/store';
 import TeamView from '../pages/TeamView/TeamView';
 
-import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
+import ProtectedRoute from '../components/dashboard/ProtectedRoute/ProtectedRoute';
 import { currentUser } from '../data/actions/auth';
 import ChakraExpoDashboard from '../themes/dashboard/ChakraExpoDashboard';
 import ChakraExpoStore from '../themes/store/ChakraExpoStore';
 import Navbar from '../components/dashboard/Navbar/Navbar';
-import Store from '../pages/Storefront/store';
-import Footer from '../components/Storefront/Footer';
+import Storefront from '../pages/Storefront/Storefront';
 
 function App() {
   const dispatch = useDispatch();
@@ -52,13 +51,8 @@ function App() {
                 <ChakraExpoStore />
               </ChakraProvider>
             </Route>
-            <Route exact path="/footer">
-              <ChakraProvider theme={storeTheme}>
-                <Footer />
-              </ChakraProvider>
-            </Route>
             <Route exact path="/store">
-              <Store />
+              <Storefront />
             </Route>
             <ProtectedRoute path="/">
               <Grid templateColumns={`${NAVBAR_WIDTH} 1fr`} h="100vh">
