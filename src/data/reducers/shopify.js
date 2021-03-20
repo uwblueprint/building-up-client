@@ -28,7 +28,7 @@ const initialState = {
   cartCount: 0, // the number of items in the cart
   checkout: {}, // the checkout object that Shopify creates
   products: [], // the checkout object that Shopify creates
-  featured: [], // the list of featured products pulled from Shopify (currently unused)
+  collections: [], // the list of collections pulled from Shopify
   product: {}, // the product that the user is currently viewing
   shop: {}, // the shop object that Shopify creates
 };
@@ -40,7 +40,7 @@ export default (state = initialState, action) => {
     case PRODUCT_FOUND:
       return { ...state, product: action.payload };
     case COLLECTION_FOUND:
-      return { ...state, featured: action.payload };
+      return { ...state, collections: action.payload };
     case CHECKOUT_FOUND:
       return { ...state, checkout: action.payload };
     case SHOP_FOUND:
@@ -85,6 +85,18 @@ const getProduct = id => {
       payload: res,
     });
     return res;
+  };
+};
+
+// Gets all the collections from Shopify
+const getCollections = () => {
+  return dispatch => {
+    client.collection.fetchAllWithProducts().then(res => {
+      dispatch({
+        type: COLLECTION_FOUND,
+        payload: res,
+      });
+    });
   };
 };
 
@@ -204,11 +216,12 @@ export const useShopify = () => {
   const cartCount = useSelector(state => state.shopifyState.cartCount);
   const products = useSelector(state => state.shopifyState.products);
   const product = useSelector(state => state.shopifyState.product);
-  const featured = useSelector(state => state.shopifyState.featured);
+  const collections = useSelector(state => state.shopifyState.collections);
   const checkoutState = useSelector(state => state.shopifyState.checkout);
   const shopDetails = useSelector(state => state.shopifyState.shop);
   const fetchProducts = () => dispatch(getProducts());
   const fetchProduct = id => dispatch(getProduct(id));
+  const fetchCollections = () => dispatch(getCollections());
   const createCheckout = () => dispatch(checkout());
   const createShop = () => dispatch(shopInfo());
   const closeCart = () => dispatch(handleCartClose());
@@ -225,7 +238,7 @@ export const useShopify = () => {
   return {
     products,
     product,
-    featured,
+    collections,
     cartStatus,
     checkoutState,
     cartCount,
@@ -235,6 +248,7 @@ export const useShopify = () => {
     addVariant,
     fetchProducts,
     fetchProduct,
+    fetchCollections,
     createCheckout,
     createShop,
     closeCart,

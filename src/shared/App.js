@@ -45,9 +45,7 @@ function App() {
               {user ? <Redirect to="/" /> : <LoginRegister />}
             </Route>
             <Route exact path="/chakraExpoDashboard">
-              <ChakraProvider theme={dashboardTheme}>
-                <ChakraExpoDashboard />
-              </ChakraProvider>
+              <ChakraExpoDashboard />
             </Route>
             <Route exact path="/chakraExpoStore">
               <ChakraProvider theme={storeTheme}>
