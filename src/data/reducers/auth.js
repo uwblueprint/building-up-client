@@ -5,11 +5,14 @@ import {
   LOGIN_FAIL,
   LOGOUT_FAIL,
   LOGOUT_SUCCESS,
+  GET_TEAM_SUCCESS,
+  GET_TEAM_FAIL,
 } from '../actions/type';
 
 const initialState = {
   authenticating: true,
   user: null,
+  team: null,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -37,18 +40,31 @@ const authReducer = (state = initialState, action) => {
         ...state,
         authenticating: false,
         user: null,
+        team: null,
       };
     case LOGOUT_SUCCESS:
       return {
         ...state,
         authenticating: false,
         user: null,
+        team: null,
       };
     case LOGOUT_FAIL:
       return {
         ...state,
         authenticating: false,
         user: null,
+        team: null,
+      };
+    case GET_TEAM_SUCCESS:
+      return {
+        ...state,
+        team: payload,
+      };
+    case GET_TEAM_FAIL:
+      return {
+        ...state,
+        team: null,
       };
     default:
       return state;

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Box, Text, Heading, Button, Flex, HStack, VStack } from '@chakra-ui/react';
 
 import { ADD_USER_TO_TEAM, CREATE_TEAM, SEND_INVITE_EMAILS } from 'data/gql/team';
-import { currentUser } from 'data/actions/auth';
+import { currentUser, teamInfo } from 'data/actions/auth';
 
 const ConfirmTeamCreation = props => {
   const { decrementPage, teamName, teamAffiliation, userId, inputList } = props;
@@ -24,7 +24,13 @@ const ConfirmTeamCreation = props => {
         const list = [...inputList];
         addUser({
           variables: { id: userId, teamId },
-        }).then(dispatch(currentUser(client)));
+        }).then(
+          dispatch(currentUser(client)).then(teamId => {
+            if (teamId) {
+              dispatch(teamInfo(teamId, client));
+            }
+          }),
+        );
 
         inviteUsersToTeam({
           variables: { emails: list, teamId: teamId },

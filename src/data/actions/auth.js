@@ -1,4 +1,13 @@
-import { REGISTER_SUCCESS, REGISTER_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT_FAIL, LOGOUT_SUCCESS } from './type';
+import {
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  LOGOUT_FAIL,
+  LOGOUT_SUCCESS,
+  GET_TEAM_SUCCESS,
+  GET_TEAM_FAIL,
+} from './type';
 
 import AuthService from '../services/auth.service';
 
@@ -91,7 +100,6 @@ export const logout = client => dispatch => {
 export const currentUser = client => dispatch => {
   return AuthService.getCurrentUser(client).then(
     res => {
-      //login successful
       if (res.data.getActiveUser !== null) {
         const { firstName, lastName, email, id, teamId } = res.data.getActiveUser;
         dispatch({
@@ -104,13 +112,13 @@ export const currentUser = client => dispatch => {
             teamId,
           },
         });
-        //login failed
+        return Promise.resolve(teamId);
       } else {
         dispatch({
           type: LOGIN_FAIL,
         });
+        return Promise.resolve();
       }
-      return Promise.resolve();
     },
     error => {
       console.error(error);
@@ -118,6 +126,41 @@ export const currentUser = client => dispatch => {
         type: LOGIN_FAIL,
       });
       return Promise.reject();
+    },
+  );
+};
+
+export const teamInfo = (teamId, client) => dispatch => {
+  return AuthService.getTeamInfo(teamId, client).then(
+    res => {
+      //query successful
+      if (res.data.getTeam !== null) {
+        const { name, organization, id, itemsSold, amountRaised } = res.data.getTeam;
+        dispatch({
+          type: GET_TEAM_SUCCESS,
+          payload: {
+            teamName: name,
+            affiliation: organization,
+            teamId: id,
+            itemsSold,
+            amountRaised,
+          },
+        });
+        return Promise.resolve(res.data.getTeam);
+      } else {
+        //query failed
+        dispatch({
+          type: GET_TEAM_FAIL,
+        });
+        return Promise.resolve();
+      }
+    },
+    error => {
+      console.error(error);
+      dispatch({
+        type: GET_TEAM_FAIL,
+      });
+      return Promise.reject(error);
     },
   );
 };

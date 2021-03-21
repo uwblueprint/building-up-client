@@ -1,20 +1,7 @@
 import React from 'react';
-import { useQuery, gql } from '@apollo/client';
 import { Box, Center, Flex, Heading, HStack, Spacer } from '@chakra-ui/react';
-
-import ShareStorefrontButton from 'components/dashboard/ShareStorefrontButton/ShareStorefrontButton';
-
-const GET_TEAM_INFO = gql`
-  query getTeam($id: String!) {
-    getTeam(id: $id) {
-      name
-      organization
-      id
-      amountRaised
-      itemsSold
-    }
-  }
-`;
+import { useSelector } from 'react-redux';
+import ShareStorefrontButton from '../../../components/dashboard/ShareStorefrontButton/ShareStorefrontButton';
 
 const StorefrontButton = () => {
   return (
@@ -52,38 +39,32 @@ const NoSales = () => {
   );
 };
 
-const DashboardTeam = ({ teamId }) => {
-  const { loading, error, data } = useQuery(GET_TEAM_INFO, {
-    variables: { id: teamId },
-  });
+const DashboardTeam = () => {
+  const { team } = useSelector(state => state.auth);
 
-  return loading ? (
-    'Loading...'
-  ) : error ? (
-    `Error! ${error.message}`
-  ) : (
+  return (
     <Box w="100%">
       <Heading textTransform="uppercase" as="p" size="subtitle" color="gray.500" mb="8px">
-        Team {data.getTeam.name}
+        Team {team.teamName}
       </Heading>
       <Flex mb="40px">
         <Heading as="h1" size="h1">
           Dashboard
         </Heading>
         <Spacer />
-        {data.getTeam.itemsSold !== 0 ? <StorefrontButton /> : null}
+        {team.itemsSold !== 0 ? <StorefrontButton /> : null}
       </Flex>
       <Heading as="h3" size="h3" mb="23px">
         Overview
       </Heading>
       <HStack mb="72px" spacing="100px">
-        <SalesInfo description="Total Items Sold" amount={data.getTeam.itemsSold} />
-        <SalesInfo description="Total Capital Raised" amount={'$' + data.getTeam.amountRaised} />
+        <SalesInfo description="Total Items Sold" amount={team.itemsSold} />
+        <SalesInfo description="Total Capital Raised" amount={'$' + team.amountRaised} />
       </HStack>
       <Heading as="h3" size="h3" mb="21px">
         Sales Log
       </Heading>
-      {data.getTeam.itemsSold === 0 ? <NoSales /> : null}
+      {team.itemsSold === 0 ? <NoSales /> : null}
     </Box>
   );
 };
