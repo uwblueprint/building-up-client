@@ -74,9 +74,6 @@ const getCurrentUser = client => {
   return res;
 };
 
-export default {
-  register,
-  login,
-  logout,
-  getCurrentUser,
-};
+const AuthService = { register, login, logout, getCurrentUser };
+
+export default AuthService;

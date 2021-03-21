@@ -33,7 +33,7 @@ const initialState = {
   shop: {}, // the shop object that Shopify creates
 };
 
-export default (state = initialState, action) => {
+const shopifyReducer = (state = initialState, action) => {
   switch (action.type) {
     case PRODUCTS_FOUND:
       return { ...state, products: action.payload };
@@ -258,3 +258,5 @@ export const useShopify = () => {
     setCount,
   };
 };
+
+export default shopifyReducer;

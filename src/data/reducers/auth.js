@@ -12,14 +12,14 @@ const initialState = {
   user: null,
 };
 
-export default function (state = initialState, action) {
+const authReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
     case REGISTER_SUCCESS:
       return {
         ...state,
-        user: payload
+        user: payload,
       };
     case REGISTER_FAIL:
       return {
@@ -30,7 +30,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         authenticating: false,
-        user: payload
+        user: payload,
       };
     case LOGIN_FAIL:
       return {
@@ -53,4 +53,6 @@ export default function (state = initialState, action) {
     default:
       return state;
   }
-}
+};
+
+export default authReducer;
