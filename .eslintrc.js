@@ -7,7 +7,7 @@ module.exports = {
   extends: ['react-app', 'prettier', 'prettier/react', 'prettier/@typescript-eslint'],
   plugins: ['prettier'],
   rules: {
-    'prettier/prettier': ['error', prettierOptions],
+    'prettier/prettier': ['warn', prettierOptions],
   },
   overrides: [
     {

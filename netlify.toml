@@ -3,7 +3,7 @@
 publish = "build/"
 
 # Default build command
-command = "npm run build"
+command = "yarn build"
 
 # SPAs that handle routing
 [[redirects]]
