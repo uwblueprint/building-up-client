@@ -1,9 +1,9 @@
 import React from 'react';
-import { useMutation, useApolloClient, gql } from '@apollo/client';
+import { useMutation, useApolloClient } from '@apollo/client';
 import { useDispatch } from 'react-redux';
-
 import { Box, Text, Heading, Button, Flex, HStack, VStack } from '@chakra-ui/react';
 
+import { ADD_USER_TO_TEAM, CREATE_TEAM, SEND_INVITE_EMAILS } from 'data/gql/team';
 import { currentUser } from 'data/actions/auth';
 
 const ConfirmTeamCreation = props => {
@@ -11,28 +11,9 @@ const ConfirmTeamCreation = props => {
   const dispatch = useDispatch();
   const client = useApolloClient();
 
-  const CREATE_TEAM = gql`
-    mutation createTeam($name: String!, $organization: String!) {
-      createTeam(name: $name, organization: $organization, amountRaised: 0, itemsSold: 0) {
-        id
-      }
-    }
-  `;
-
-  const ADD_USER_TO_TEAM = gql`
-    mutation updateUser($id: ID!, $teamId: String) {
-      updateUser(id: $id, teamId: $teamId) {
-        email
-        firstName
-        lastName
-        id
-        teamId
-      }
-    }
-  `;
-
   const [createTeam] = useMutation(CREATE_TEAM);
   const [addUser] = useMutation(ADD_USER_TO_TEAM);
+  const [inviteUsersToTeam] = useMutation(SEND_INVITE_EMAILS);
 
   const executeQuery = () => {
     createTeam({
@@ -40,9 +21,21 @@ const ConfirmTeamCreation = props => {
     })
       .then(data => {
         const teamId = data.data.createTeam.id;
+        const list = [...inputList];
         addUser({
           variables: { id: userId, teamId },
         }).then(dispatch(currentUser(client)));
+
+        inviteUsersToTeam({
+          variables: { emails: list, teamId: teamId },
+        })
+          .then(data => {
+            console.log(data);
+            // Create a toast or alert to indicate emails have been sent
+          })
+          .catch(e => {
+            console.log(e);
+          });
       })
       .catch(e => {
         console.log(e);

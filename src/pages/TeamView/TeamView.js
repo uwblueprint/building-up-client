@@ -1,9 +1,9 @@
 import React, { useMemo, useState } from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-
 import { useTable, useSortBy } from 'react-table';
+import { GET_TEAM_INFO, SEND_INVITE_EMAILS } from '../../data/gql/team';
 import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import {
   Box,
@@ -22,18 +22,6 @@ import {
   Td,
   chakra,
 } from '@chakra-ui/react';
-
-const GET_TEAM_INFO = gql`
-  query getTeam($id: String!) {
-    getTeam(id: $id) {
-      name
-      organization
-      id
-      amountRaised
-      itemsSold
-    }
-  }
-`;
 
 const TeamView = () => {
   const {
@@ -63,16 +51,24 @@ const InviteTeamMembers = () => {
     setInputList([...inputList, '']);
   };
 
+  const [inviteUsersToTeam] = useMutation(SEND_INVITE_EMAILS);
+  const {
+    user: { teamId },
+  } = useSelector(state => state.auth);
+
   const handleSubmit = e => {
     e.preventDefault();
-    //TODO: The below displays the inputted emails as an alert
-    //      Should change to actually handle the submit function
     const list = [...inputList];
-    let output = '';
-    for (let i = 0; i < list.length; i++) {
-      output = output.concat(list[i]);
-    }
-    alert(output);
+    inviteUsersToTeam({
+      variables: { emails: list, teamId: teamId },
+    })
+      .then(data => {
+        console.log(data);
+        // Create a toast or alert to indicate emails have been sent
+      })
+      .catch(e => {
+        console.log(e);
+      });
   };
 
   return (
