@@ -1,9 +1,9 @@
 import React, { useMemo, useState } from 'react';
-import { useMutation, useQuery, gql } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-
 import { useTable, useSortBy } from 'react-table';
+import { GET_TEAM_INFO, SEND_INVITE_EMAILS } from '../../data/gql/team';
 import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import {
   Box,
@@ -22,24 +22,6 @@ import {
   Td,
   chakra,
 } from '@chakra-ui/react';
-
-const GET_TEAM_INFO = gql`
-  query getTeam($id: String!) {
-    getTeam(id: $id) {
-      name
-      organization
-      id
-      amountRaised
-      itemsSold
-    }
-  }
-`;
-
-const SEND_INVITE_EMAILS = gql`
-  mutation inviteTeam($emails: [String!], $teamId: String!) {
-    inviteTeam(emails: $emails, teamId: $teamId)
-  }
-`;
 
 const TeamView = () => {
   const {
