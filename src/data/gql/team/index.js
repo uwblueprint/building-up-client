@@ -13,8 +13,8 @@ export const GET_TEAM_INFO = gql`
 `;
 
 export const SEND_INVITE_EMAILS = gql`
-  mutation inviteTeam($emails: [String!], $teamId: String!) {
-    inviteTeam(emails: $emails, teamId: $teamId)
+  mutation inviteUsersToTeam($emails: [String!], $teamId: String!) {
+    inviteUsersToTeam(emails: $emails, teamId: $teamId)
   }
 `;
 

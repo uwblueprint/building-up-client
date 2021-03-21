@@ -13,7 +13,7 @@ const ConfirmTeamCreation = props => {
 
   const [createTeam] = useMutation(CREATE_TEAM);
   const [addUser] = useMutation(ADD_USER_TO_TEAM);
-  const [inviteTeam] = useMutation(SEND_INVITE_EMAILS);
+  const [inviteUsersToTeam] = useMutation(SEND_INVITE_EMAILS);
 
   const executeQuery = () => {
     createTeam({
@@ -26,7 +26,7 @@ const ConfirmTeamCreation = props => {
           variables: { id: userId, teamId },
         }).then(dispatch(currentUser(client)));
 
-        inviteTeam({
+        inviteUsersToTeam({
           variables: { emails: list, teamId: teamId },
         })
           .then(data => {

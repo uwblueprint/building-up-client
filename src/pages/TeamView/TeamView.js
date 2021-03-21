@@ -51,7 +51,7 @@ const InviteTeamMembers = () => {
     setInputList([...inputList, '']);
   };
 
-  const [inviteTeam] = useMutation(SEND_INVITE_EMAILS);
+  const [inviteUsersToTeam] = useMutation(SEND_INVITE_EMAILS);
   const {
     user: { teamId },
   } = useSelector(state => state.auth);
@@ -59,7 +59,7 @@ const InviteTeamMembers = () => {
   const handleSubmit = e => {
     e.preventDefault();
     const list = [...inputList];
-    inviteTeam({
+    inviteUsersToTeam({
       variables: { emails: list, teamId: teamId },
     })
       .then(data => {
