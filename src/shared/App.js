@@ -11,11 +11,12 @@ import storeTheme from '../themes/store';
 import TeamView from '../pages/TeamView/TeamView';
 
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
-import { currentUser } from '../data/actions/auth';
+import { currentUser, teamInfo } from '../data/actions/auth';
 import ChakraExpoDashboard from '../themes/dashboard/ChakraExpoDashboard';
 import ChakraExpoStore from '../themes/store/ChakraExpoStore';
 import Navbar from '../components/common/dashboard/Navbar';
 import Store from '../pages/Storefront/store';
+import Leaderboard from '../pages/Dashboard/Leaderboard';
 
 function App() {
   const dispatch = useDispatch();
@@ -26,7 +27,11 @@ function App() {
 
   useEffect(() => {
     // Component on mount (i.e. app init): Try to fetch user data (Apollo client internally uses a cookie)
-    dispatch(currentUser(client));
+    dispatch(currentUser(client)).then(
+      teamId => {
+        if (teamId) dispatch(teamInfo(teamId, client));
+      }
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -69,7 +74,7 @@ function App() {
                       <Dashboard />
                     </ProtectedRoute>
                     <ProtectedRoute exact path="/leaderboard">
-                      Leaderboard page, not yet implemented.
+                      <Leaderboard/>
                     </ProtectedRoute>
                     <ProtectedRoute exact path="/team">
                       <TeamView />

@@ -1,18 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { Box, Button, Center, Flex, Heading, HStack, Spacer } from '@chakra-ui/react';
-
-const GET_TEAM_INFO = gql`
-  query getTeam($id: String!) {
-    getTeam(id: $id) {
-      name
-      organization
-      id
-      amountRaised
-      itemsSold
-    }
-  }
-`;
+import { useApolloClient } from '@apollo/client';
+import { useDispatch } from 'react-redux';
+import { teamInfo } from '../../../data/actions/auth';
 
 const StorefrontButton = () => {
   return <Button w="199px">Share Storefront</Button>;
@@ -47,9 +38,27 @@ const NoSales = () => {
 };
 
 const TeamOverview = ({ teamId }) => {
-  const { loading, error, data } = useQuery(GET_TEAM_INFO, {
-    variables: { id: teamId },
-  });
+  const client = useApolloClient();
+  const dispatch = useDispatch();
+  const [data, setData] = useState();
+  const [error, setError] = useState();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    dispatch(teamInfo(teamId, client)).then(
+      data => {
+        if (data) setData(data);
+        else setData(data);
+  
+        setLoading(false);
+      },
+      error => {
+        setError(error);
+        setLoading(false);
+      },
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return loading ? (
     'Loading...'
@@ -58,26 +67,26 @@ const TeamOverview = ({ teamId }) => {
   ) : (
     <Box w="100%">
       <Heading textTransform="uppercase" as="p" size="subtitle" color="gray.500" mb="8px">
-        Team {data.getTeam.name}
+        Team {data.name}
       </Heading>
       <Flex mb="40px">
         <Heading as="h1" size="h1">
           Dashboard
         </Heading>
         <Spacer />
-        {data.getTeam.itemsSold !== 0 ? <StorefrontButton /> : null}
+        {data.itemsSold !== 0 ? <StorefrontButton /> : null}
       </Flex>
       <Heading as="h3" size="h3" mb="23px">
         Overview
       </Heading>
       <HStack mb="72px" spacing="100px">
-        <SalesInfo description="Total Items Sold" amount={data.getTeam.itemsSold} />
-        <SalesInfo description="Total Capital Raised" amount={'$' + data.getTeam.amountRaised} />
+        <SalesInfo description="Total Items Sold" amount={data.itemsSold} />
+        <SalesInfo description="Total Capital Raised" amount={'$' + data.amountRaised} />
       </HStack>
       <Heading as="h3" size="h3" mb="21px">
         Sales Log
       </Heading>
-      {data.getTeam.itemsSold === 0 ? <NoSales /> : null}
+      {data.itemsSold === 0 ? <NoSales /> : null}
     </Box>
   );
 };

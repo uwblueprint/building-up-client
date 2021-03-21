@@ -41,6 +41,18 @@ const CURRENT_USER = gql`
   }
 `;
 
+const GET_TEAM_INFO = gql`
+  query getTeam($id: String!) {
+    getTeam(id: $id) {
+      name
+      organization
+      id
+      amountRaised
+      itemsSold
+    }
+  }
+`;
+
 const register = (firstName, lastName, email, password, client) => {
   const res = client.mutate({
     variables: { firstName: firstName, lastName: lastName, email: email, password: password },
@@ -74,9 +86,18 @@ const getCurrentUser = client => {
   return res;
 };
 
+const getTeamInfo = ( teamId, client) => {
+  const res = client.query({
+    variables: { id: teamId },
+    query: GET_TEAM_INFO
+  });
+  return res;
+};
+
 export default {
   register,
   login,
   logout,
   getCurrentUser,
+  getTeamInfo,
 };
