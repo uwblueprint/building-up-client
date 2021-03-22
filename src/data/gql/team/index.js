@@ -25,15 +25,3 @@ export const CREATE_TEAM = gql`
     }
   }
 `;
-
-export const ADD_USER_TO_TEAM = gql`
-  mutation updateUser($id: ID!, $teamId: String) {
-    updateUser(id: $id, teamId: $teamId) {
-      email
-      firstName
-      lastName
-      id
-      teamId
-    }
-  }
-`;

@@ -5,6 +5,7 @@ import {
   LOGIN_FAIL,
   LOGOUT_FAIL,
   LOGOUT_SUCCESS,
+  UPDATE_USER,
 } from '../actions/type';
 
 const initialState = {
@@ -49,6 +50,11 @@ const authReducer = (state = initialState, action) => {
         ...state,
         authenticating: false,
         user: null,
+      };
+    case UPDATE_USER:
+      return {
+        ...state,
+        user: { ...state.user, ...payload },
       };
     default:
       return state;
