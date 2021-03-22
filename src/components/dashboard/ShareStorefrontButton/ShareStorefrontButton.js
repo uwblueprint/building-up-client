@@ -9,7 +9,7 @@ const ShareStorefrontButton = () => {
   useEffect(() => {
     if (hasCopied) {
       toast({
-        position: 'top-right',
+        position: 'top',
         render: props => <Toast {...props} description="Link copied to clipboard!" isClosable />,
       });
     }
