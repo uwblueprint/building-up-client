@@ -4,11 +4,7 @@ const Input = {
     field: {
       textTransform: 'uppercase',
       color: 'brand.gray',
-      fontSize: '14px',
-      fontFamily: 'heading',
-      fontWeight: 'bold',
-      lineHeight: '20px',
-      letterSpacing: 'wider',
+      textStyle: 'subtitle',
     },
   },
   sizes: {
