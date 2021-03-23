@@ -15,7 +15,16 @@ const NavLink = chakra(Link, {
 });
 
 const Navbar = () => (
-  <Grid bg="black" w="100%" h="126px" templateColumns="repeat(3, 1fr)" alignItems="center" color="white">
+  <Grid
+    bg="black"
+    w="100%"
+    h="126px"
+    position="sticky"
+    top="0"
+    templateColumns="repeat(3, 1fr)"
+    alignItems="center"
+    color="white"
+  >
     <GridItem as={Image} src={Logo} maxH="85px" alt="Raising The Roof Logo" colStart={2} justifySelf="center" />
     <GridItem
       as={HStack}
