@@ -1,47 +1,46 @@
 import React from 'react';
-import { useMutation, useApolloClient } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
-import { Box, Text, Heading, Button, Flex, HStack, VStack } from '@chakra-ui/react';
+import { Box, Text, Heading, Button, Flex, HStack, VStack, useToast } from '@chakra-ui/react';
+import Toast from 'components/dashboard/Toast/Toast';
 
-import { ADD_USER_TO_TEAM, CREATE_TEAM, SEND_INVITE_EMAILS } from 'data/gql/team';
-import { currentUser, teamInfo } from 'data/actions/auth';
+import { CREATE_TEAM, SEND_INVITE_EMAILS } from 'data/gql/team';
+import { JOIN_TEAM } from 'data/gql/user';
+import { UPDATE_USER } from 'data/actions/type';
 
 const ConfirmTeamCreation = props => {
   const { decrementPage, teamName, teamAffiliation, userId, inputList } = props;
   const dispatch = useDispatch();
-  const client = useApolloClient();
+  const toast = useToast();
 
   const [createTeam] = useMutation(CREATE_TEAM);
-  const [addUser] = useMutation(ADD_USER_TO_TEAM);
+  const [joinTeam] = useMutation(JOIN_TEAM);
   const [inviteUsersToTeam] = useMutation(SEND_INVITE_EMAILS);
 
   const executeQuery = () => {
-    createTeam({
-      variables: { name: teamName, organization: teamAffiliation },
-    })
+    createTeam({ variables: { name: teamName, organization: teamAffiliation } })
       .then(data => {
         const teamId = data.data.createTeam.id;
         const list = [...inputList];
-        addUser({
-          variables: { id: userId, teamId },
-        }).then(
-          dispatch(currentUser(client)).then(teamId => {
-            if (teamId) {
-              dispatch(teamInfo(teamId, client));
-            }
-          }),
-        );
 
-        inviteUsersToTeam({
-          variables: { emails: list, teamId: teamId },
-        })
-          .then(data => {
-            console.log(data);
-            // Create a toast or alert to indicate emails have been sent
-          })
-          .catch(e => {
-            console.log(e);
+        joinTeam({ variables: { id: userId, teamId } }).then(() => {
+          dispatch({ type: UPDATE_USER, payload: { teamId } });
+          toast({
+            position: 'top',
+            render: props => <Toast {...props} description="Your team has been created." isClosable />,
           });
+
+          inviteUsersToTeam({
+            variables: { emails: list, teamId: teamId },
+          })
+            .then(data => {
+              console.log(data);
+              // Create a toast or alert to indicate emails have been sent
+            })
+            .catch(e => {
+              console.log(e);
+            });
+        });
       })
       .catch(e => {
         console.log(e);

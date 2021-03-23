@@ -7,6 +7,7 @@ import {
   LOGOUT_SUCCESS,
   GET_TEAM_SUCCESS,
   GET_TEAM_FAIL,
+  UPDATE_USER,
 } from '../actions/type';
 
 const initialState = {
@@ -65,6 +66,11 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         team: null,
+      };
+    case UPDATE_USER:
+      return {
+        ...state,
+        user: { ...state.user, ...payload },
       };
     default:
       return state;
