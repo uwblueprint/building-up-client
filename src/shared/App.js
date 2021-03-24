@@ -15,9 +15,9 @@ import { currentUser } from '../data/actions/auth';
 import ChakraExpoDashboard from '../themes/dashboard/ChakraExpoDashboard';
 import ChakraExpoStore from '../themes/store/ChakraExpoStore';
 import Navbar from '../components/dashboard/Navbar/Navbar';
-import Store from '../pages/Storefront/store';
+import Store from '../pages/Storefront/Storefront';
 import Invite from '../pages/Invite';
-import Footer from '../components/Storefront/Footer';
+import Footer from '../components/Storefront/Footer/Footer';
 
 function App() {
   const [redirectPath, setRedirectPath] = useState('/');
@@ -80,7 +80,7 @@ function App() {
                   <ProtectedRoute setRedirect={setRedirectPath} exact path="/team">
                     <TeamView />
                   </ProtectedRoute>
-                  <ProtectedRoute setRedirect={setRedirectPath} exact path="/invite/:id">
+                  <ProtectedRoute setRedirect={setRedirectPath} exact path="/invite/:teamId">
                     <Invite />
                   </ProtectedRoute>
                   {/* All other paths are redirected to /home */}
