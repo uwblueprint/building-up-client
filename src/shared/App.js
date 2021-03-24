@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useApolloClient } from '@apollo/client';
-import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, ChakraProvider, Flex, Grid, Spinner } from '@chakra-ui/react';
 

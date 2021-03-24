@@ -1,10 +1,11 @@
-import { useMutation, useQuery } from '@apollo/client';
+import { useApolloClient, useMutation, useQuery } from '@apollo/client';
 import { Box, Button, ButtonGroup, Heading, Text, useToast, VStack } from '@chakra-ui/react';
 import Toast from 'components/dashboard/Toast/Toast';
+import { currentUser } from 'data/actions/auth';
 import { GET_TEAM_INFO } from 'data/gql/team';
 import { JOIN_TEAM } from 'data/gql/user';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useParams } from 'react-router-dom';
 
 const RedirectHome = <Redirect to="/" />;
@@ -22,6 +23,8 @@ const InviteLayout = props => (
 );
 
 function Invite(props) {
+  const client = useApolloClient();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [shouldRedirect, triggerRedirect] = useState(false);
   const toast = useToast();
@@ -29,7 +32,7 @@ function Invite(props) {
   const { teamId } = useParams();
   const { userId } = useSelector(state => state.auth.user);
 
-  const [joinTeam, { _ }] = useMutation(JOIN_TEAM);
+  const [joinTeam] = useMutation(JOIN_TEAM);
 
   const { loading: teamLoading, error, data } = useQuery(GET_TEAM_INFO, {
     variables: { id: teamId },
@@ -73,13 +76,14 @@ function Invite(props) {
               setLoading(true);
               await joinTeam({ variables: { id: userId, teamId } });
               setLoading(false);
-              triggerRedirect(true);
               toast({
                 position: 'top',
                 render: props => (
                   <Toast {...props} description={`Successfully joined team: ${name} - ${organization}`} isClosable />
                 ),
               });
+              await dispatch(currentUser(client));
+              triggerRedirect(true);
             }}
           >
             Accept
