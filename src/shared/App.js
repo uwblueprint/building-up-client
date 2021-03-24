@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useApolloClient } from '@apollo/client';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, ChakraProvider, Flex, Grid, Spinner } from '@chakra-ui/react';
 
@@ -15,13 +15,15 @@ import { currentUser } from '../data/actions/auth';
 import ChakraExpoDashboard from '../themes/dashboard/ChakraExpoDashboard';
 import ChakraExpoStore from '../themes/store/ChakraExpoStore';
 import Navbar from '../components/dashboard/Navbar/Navbar';
-import Storefront from '../pages/Storefront/Storefront';
+import Store from '../pages/Storefront/store';
+import Invite from '../pages/Invite';
+import Footer from '../components/Storefront/Footer';
 
 function App() {
+  const [redirectPath, setRedirectPath] = useState('/');
   const dispatch = useDispatch();
   const client = useApolloClient();
   const { authenticating, user } = useSelector(state => state.auth);
-
   const NAVBAR_WIDTH = '280px';
 
   useEffect(() => {
@@ -38,50 +40,58 @@ function App() {
           <Spinner size="xl" />
         </Flex>
       ) : (
-        <Router>
-          <Switch>
-            <Route exact path="/login">
-              {user ? <Redirect to="/" /> : <LoginRegister />}
-            </Route>
-            <Route exact path="/chakraExpoDashboard">
+        <Switch>
+          <Route exact path="/login">
+            {user ? <Redirect to={redirectPath} /> : <LoginRegister />}
+          </Route>
+          <Route exact path="/chakraExpoDashboard">
+            <ChakraProvider theme={dashboardTheme}>
               <ChakraExpoDashboard />
-            </Route>
-            <Route exact path="/chakraExpoStore">
-              <ChakraProvider theme={storeTheme}>
-                <ChakraExpoStore />
-              </ChakraProvider>
-            </Route>
-            <Route exact path="/store">
-              <Storefront />
-            </Route>
-            <ProtectedRoute path="/">
-              <Grid templateColumns={`${NAVBAR_WIDTH} 1fr`} h="100vh">
-                <Box borderRight="2px solid black" w="100%" h="100%">
-                  {/** Navbar width is set manually to keep the position fixed */}
-                  <Navbar w={NAVBAR_WIDTH} />
-                </Box>
+            </ChakraProvider>
+          </Route>
+          <Route exact path="/chakraExpoStore">
+            <ChakraProvider theme={storeTheme}>
+              <ChakraExpoStore />
+            </ChakraProvider>
+          </Route>
+          <Route exact path="/footer">
+            <ChakraProvider theme={storeTheme}>
+              <Footer />
+            </ChakraProvider>
+          </Route>
+          <Route exact path="/store">
+            <Store />
+          </Route>
+          <ProtectedRoute setRedirect={setRedirectPath} path="/">
+            <Grid templateColumns={`${NAVBAR_WIDTH} 1fr`} h="100vh">
+              <Box borderRight="2px solid black" w="100%" h="100%">
+                {/** Navbar width is set manually to keep the position fixed */}
+                <Navbar w={NAVBAR_WIDTH} />
+              </Box>
 
-                <Box w="100%" h="100%" p="72px">
-                  <Switch>
-                    <ProtectedRoute exact path="/home">
-                      <Dashboard />
-                    </ProtectedRoute>
-                    <ProtectedRoute exact path="/leaderboard">
-                      Leaderboard page, not yet implemented.
-                    </ProtectedRoute>
-                    <ProtectedRoute exact path="/team">
-                      <TeamView />
-                    </ProtectedRoute>
-                    {/* All other paths are redirected to /home */}
-                    <ProtectedRoute path="/">
-                      <Redirect to="/home" />
-                    </ProtectedRoute>
-                  </Switch>
-                </Box>
-              </Grid>
-            </ProtectedRoute>
-          </Switch>
-        </Router>
+              <Box w="100%" h="100%" p="72px">
+                <Switch>
+                  <ProtectedRoute setRedirect={setRedirectPath} exact path="/home">
+                    <Dashboard />
+                  </ProtectedRoute>
+                  <ProtectedRoute setRedirect={setRedirectPath} exact path="/leaderboard">
+                    Leaderboard page, not yet implemented.
+                  </ProtectedRoute>
+                  <ProtectedRoute setRedirect={setRedirectPath} exact path="/team">
+                    <TeamView />
+                  </ProtectedRoute>
+                  <ProtectedRoute setRedirect={setRedirectPath} exact path="/invite/:id">
+                    <Invite />
+                  </ProtectedRoute>
+                  {/* All other paths are redirected to /home */}
+                  <ProtectedRoute setRedirect={setRedirectPath} path="/">
+                    <Redirect to="/home" />
+                  </ProtectedRoute>
+                </Switch>
+              </Box>
+            </Grid>
+          </ProtectedRoute>
+        </Switch>
       )}
     </ChakraProvider>
   );
