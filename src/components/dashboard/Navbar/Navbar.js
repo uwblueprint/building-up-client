@@ -10,6 +10,8 @@ import Logo from 'assets/images/logoWhite.png';
 import { logout } from 'data/actions/auth';
 import ShareStorefrontButton from 'components/dashboard/ShareStorefrontButton/ShareStorefrontButton';
 
+export const NAVBAR_WIDTH = '280px';
+
 const NavItem = props => (
   <Link
     as={NavLink}
@@ -43,6 +45,7 @@ const Navbar = props => {
       as="nav"
       bg="background.secondary"
       direction="column"
+      w={NAVBAR_WIDTH}
       h="100%"
       px={12}
       py={20}
