@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { ChakraProvider } from '@chakra-ui/react';
 
-import { Navbar, BestSellers, ItemListings, Footer } from 'components/Storefront';
+import { Navbar, BestSellers, ItemListings, Footer } from 'components/storefront';
 import { useShopify } from 'hooks/useShopify';
 import storeTheme from 'themes/store';
 

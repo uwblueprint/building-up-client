@@ -1,4 +1,6 @@
 import { extendTheme } from '@chakra-ui/react';
+
+import { textStyles } from './styles';
 import Heading from './components/Heading';
 import Button from './components/Button';
 import Input from './components/Input';
@@ -18,6 +20,7 @@ const storeTheme = extendTheme({
       darkred: '#B20E00',
     },
   },
+  textStyles,
 
   components: { Heading, Button, Input },
 });
