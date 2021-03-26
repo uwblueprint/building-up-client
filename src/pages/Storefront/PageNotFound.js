@@ -1,5 +1,14 @@
 import * as React from 'react';
+import { VStack, Heading, Button } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
-const PageNotFound = () => <div>{'Page not found.'}</div>;
+const PageNotFound = () => (
+  <VStack p={24}>
+    <Heading mb={4}>Oops! The product you’re looking for could not be found.</Heading>
+    <Button as={Link} textTransform="uppercase" to="/store">
+      {'Return to Home'}
+    </Button>
+  </VStack>
+);
 
 export default PageNotFound;
