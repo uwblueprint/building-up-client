@@ -16,7 +16,7 @@ const BestSellers = () => {
       <HStack spacing={8}>
         {bestSellersCollection &&
           bestSellersCollection.products.map(({ id, title, images, variants }) => (
-            <Item key={id} name={title} image={images && images[0].src} price={variants && variants[0].price} />
+            <Item key={id} id={id} name={title} image={images && images[0].src} price={variants && variants[0].price} />
           ))}
       </HStack>
     </VStack>

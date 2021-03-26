@@ -51,7 +51,7 @@ function App() {
                 <ChakraExpoStore />
               </ChakraProvider>
             </Route>
-            <Route exact path="/store">
+            <Route path="/store">
               <Storefront />
             </Route>
             <ProtectedRoute path="/">
