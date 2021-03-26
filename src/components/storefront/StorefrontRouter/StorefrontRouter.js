@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
-import { ChakraProvider } from '@chakra-ui/react';
-
-import { Navbar, BestSellers, ItemListings, Footer } from 'components/storefront';
-import { useShopify } from 'hooks/useShopify';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
-import Product from './Product';
+import { ChakraProvider } from '@chakra-ui/react';
 import storeTheme from 'themes/store';
+import { useShopify } from '../../../hooks/useShopify';
+import { Navbar, Footer } from '../';
+import Home from '../../../pages/Storefront/Home';
+import Product from '../../../pages/Storefront/Product';
+import PageNotFound from 'pages/Storefront/PageNotFound';
 
-const Store = () => {
+const StorefrontRouter = () => {
   const { createShop, createCheckout, fetchProducts, fetchCollections } = useShopify();
   const { path } = useRouteMatch();
 
@@ -25,11 +26,13 @@ const Store = () => {
       <Navbar />
       <Switch>
         <Route exact path={path}>
-          <BestSellers />
-          <ItemListings />
+          <Home />
         </Route>
         <Route path={`${path}/products/:id`}>
           <Product />
+        </Route>
+        <Route path={`${path}/*`}>
+          <PageNotFound />
         </Route>
       </Switch>
       <Footer />
@@ -37,4 +40,4 @@ const Store = () => {
   );
 };
 
-export default Store;
+export default StorefrontRouter;

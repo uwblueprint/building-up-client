@@ -15,7 +15,7 @@ import { currentUser } from '../data/actions/auth';
 import ChakraExpoDashboard from '../themes/dashboard/ChakraExpoDashboard';
 import ChakraExpoStore from '../themes/store/ChakraExpoStore';
 import Navbar from '../components/dashboard/Navbar/Navbar';
-import Storefront from '../pages/Storefront/Storefront';
+import StorefrontRouter from '../components/storefront/StorefrontRouter/StorefrontRouter';
 
 function App() {
   const dispatch = useDispatch();
@@ -52,7 +52,7 @@ function App() {
               </ChakraProvider>
             </Route>
             <Route path="/store">
-              <Storefront />
+              <StorefrontRouter />
             </Route>
             <ProtectedRoute path="/">
               <Grid templateColumns={`${NAVBAR_WIDTH} 1fr`} h="100vh">
