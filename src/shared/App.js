@@ -32,28 +32,28 @@ function App() {
 
   return (
     <ChakraProvider theme={dashboardTheme}>
-      {authenticating ? (
-        <Flex direction="column" alignItems="center">
-          <div>Authenticating... </div>
-          <Spinner size="xl" />
-        </Flex>
-      ) : (
-        <Router>
-          <Switch>
-            <Route exact path="/login">
-              {user ? <Redirect to="/" /> : <LoginRegister />}
-            </Route>
-            <Route exact path="/chakraExpoDashboard">
-              <ChakraExpoDashboard />
-            </Route>
-            <Route exact path="/chakraExpoStore">
-              <ChakraProvider theme={storeTheme}>
-                <ChakraExpoStore />
-              </ChakraProvider>
-            </Route>
-            <Route exact path="/store">
-              <Storefront />
-            </Route>
+      <Router>
+        <Switch>
+          <Route exact path="/login">
+            {user ? <Redirect to="/" /> : <LoginRegister />}
+          </Route>
+          <Route exact path="/chakraExpoDashboard">
+            <ChakraExpoDashboard />
+          </Route>
+          <Route exact path="/chakraExpoStore">
+            <ChakraProvider theme={storeTheme}>
+              <ChakraExpoStore />
+            </ChakraProvider>
+          </Route>
+          <Route exact path="/store">
+            <Storefront />
+          </Route>
+          {authenticating ? (
+            <Flex direction="column" alignItems="center">
+              <div>Authenticating... </div>
+              <Spinner size="xl" />
+            </Flex>
+          ) : (
             <ProtectedRoute path="/">
               <Grid templateColumns={`${NAVBAR_WIDTH} 1fr`} h="100vh">
                 <Box borderRight="2px solid black" w="100%" h="100%">
@@ -80,9 +80,9 @@ function App() {
                 </Box>
               </Grid>
             </ProtectedRoute>
-          </Switch>
-        </Router>
-      )}
+          )}
+        </Switch>
+      </Router>
     </ChakraProvider>
   );
 
