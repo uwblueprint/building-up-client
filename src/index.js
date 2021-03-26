@@ -8,7 +8,6 @@ import { API_URL } from './config/config';
 
 import { Provider } from 'react-redux';
 import store from './data/store';
-import { BrowserRouter } from 'react-router-dom';
 
 const link = createHttpLink({
   uri: API_URL,
@@ -23,9 +22,7 @@ const client = new ApolloClient({
 ReactDOM.render(
   <Provider store={store}>
     <ApolloProvider client={client}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <App />
     </ApolloProvider>
   </Provider>,
   document.getElementById('root'),

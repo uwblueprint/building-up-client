@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useApolloClient } from '@apollo/client';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { ChakraProvider } from '@chakra-ui/react';
 
@@ -24,28 +24,30 @@ function App() {
   }, []);
 
   return (
-    <Switch>
-      {/* pages with Chakra components, helpful to reference when developing */}
-      <Route exact path="/chakraExpoDashboard">
-        <ChakraProvider theme={dashboardTheme}>
-          <ChakraExpoDashboard />
-        </ChakraProvider>
-      </Route>
-      <Route exact path="/chakraExpoStore">
-        <ChakraProvider theme={storeTheme}>
-          <ChakraExpoStore />
-        </ChakraProvider>
-      </Route>
+    <BrowserRouter>
+      <Switch>
+        {/* pages with Chakra components, helpful to reference when developing */}
+        <Route exact path="/chakraExpoDashboard">
+          <ChakraProvider theme={dashboardTheme}>
+            <ChakraExpoDashboard />
+          </ChakraProvider>
+        </Route>
+        <Route exact path="/chakraExpoStore">
+          <ChakraProvider theme={storeTheme}>
+            <ChakraExpoStore />
+          </ChakraProvider>
+        </Route>
 
-      {/* TODO: put in storefront router */}
-      <Route exact path="/store">
-        <Storefront />
-      </Route>
-      {/* All dashboard pages are controlled by DashboardRouter */}
-      <Route path="/">
-        <DashboardRouter />
-      </Route>
-    </Switch>
+        {/* TODO: put in storefront router */}
+        <Route exact path="/store">
+          <Storefront />
+        </Route>
+        {/* All dashboard pages are controlled by DashboardRouter */}
+        <Route path="/">
+          <DashboardRouter />
+        </Route>
+      </Switch>
+    </BrowserRouter>
   );
 }
 
