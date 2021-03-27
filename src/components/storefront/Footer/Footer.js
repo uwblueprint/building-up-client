@@ -76,7 +76,7 @@ const Footer = () => {
           </VStack>
         </HStack>
       </Flex>
-      <HStack justifyContent="space-between" bg="#BE2A1B" px="105px" py="30px">
+      <HStack justifyContent="space-between" bg="brand.red" px="105px" py="30px">
         <Text>2020 RAISING THE ROOF. ALL RIGHTS RESERVED. CHARTIABLE #139744569RR0001. </Text>
         <HStack spacing="48px">
           <Link href="https://raisingtheroof.org/privacy-policy/">PRIVACY POLICY </Link>
