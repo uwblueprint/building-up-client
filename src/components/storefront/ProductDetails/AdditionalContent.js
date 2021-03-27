@@ -13,7 +13,6 @@ const content = [
     panel:
       'Your toque purchase is NOT eligible for a tax receipt, under Revenue Canada rules, because you receive a product for your contribution. However, a donation of $20 or more in addition to your item purchase is fully tax receiptable.',
   },
-  { title: 'Share', panel: 'To be implemented' },
 ];
 
 const Item = ({ title, panel }) => {
