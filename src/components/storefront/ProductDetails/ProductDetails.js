@@ -14,7 +14,9 @@ const ProductDetails = ({ product }) => {
 
   return (
     <Flex py={20} px={32}>
-      <Image boxSize="80%" border="1px solid black" src={productImage} alt={title} />
+      <Flex direction="column" w="100%" h="100%">
+        <Image boxSize="100%" border="1px solid black" src={productImage} alt={title} />
+      </Flex>
       <Flex direction="column" w="100%" pl={10}>
         <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.gray">
           {`Item #${productSku}`}
