@@ -1,9 +1,10 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { useTable, useSortBy } from 'react-table';
-import { GET_TEAM_INFO, SEND_INVITE_EMAILS } from '../../data/gql/team';
+import { GET_TEAM_INFO, GET_USERS_FOR_TEAM, SEND_INVITE_EMAILS } from 'data/gql/team';
+import { LEAVE_TEAM } from 'data/gql/user';
 import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import {
   Box,
@@ -107,24 +108,21 @@ const InviteTeamMembers = () => {
   );
 };
 
-const TeamMembers = () => {
-  //Fetch users for the table, currently empty data
-  const data = useMemo(() => [], []);
+const TeamMembers = ({ members, handleRemove, loadingRemove }) => {
+  const {
+    user: { userId },
+  } = useSelector(state => state.auth);
 
-  // i.e.
-  /* 
-  data might have this structure (fetched from our backend with useQuery)
   const data = useMemo(
     () => [
-      {
-        name: '1st Name',
-        email: 'example1@email.com',
-        userId: 'xxxx',
-      },
+      members.map(user => ({
+        id: user.id,
+        name: user.firstName + ' ' + user.lastName,
+        email: user.email,
+      })),
     ],
-    [],
+    [members],
   );
-  */
 
   const columns = useMemo(
     () => [
@@ -138,17 +136,25 @@ const TeamMembers = () => {
         accessor: 'email',
       },
       {
-        id: 'action',
-        // accessor: 'action',
+        accessor: 'id',
         disableSortBy: true,
-        Cell: () => (
-          <Text fontWeight="semibold" color="#C70E0E">
-            Remove
-          </Text>
-        ),
+        Cell: props =>
+          props.value !== userId ? (
+            <Button
+              variant="link"
+              disabled={loadingRemove}
+              fontWeight="semibold"
+              color="#C70E0E"
+              onClick={() => {
+                handleRemove(props.value);
+              }}
+            >
+              Remove
+            </Button>
+          ) : null,
       },
     ],
-    [],
+    [handleRemove, loadingRemove, userId],
   );
 
   const renderSortIcon = column => {
@@ -162,7 +168,13 @@ const TeamMembers = () => {
     ) : null;
   };
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({ columns, data }, useSortBy);
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
+    {
+      columns,
+      data: data[0],
+    },
+    useSortBy,
+  );
 
   return (
     <Box h="500px" mb={16} bg="background.primary">
@@ -205,6 +217,23 @@ const TeamOverview = ({ teamId }) => {
     variables: { id: teamId },
   });
 
+  const { loading: loadingMembers, error: errorMembers, data: members, refetch } = useQuery(GET_USERS_FOR_TEAM, {
+    variables: { teamId: teamId },
+  });
+
+  const [leaveTeam, { loading: loadingRemove, data: leaveTeamData }] = useMutation(LEAVE_TEAM);
+
+  const handleRemove = id => {
+    leaveTeam({ variables: { id } });
+  };
+
+  useEffect(() => {
+    console.log(leaveTeamData);
+    if (leaveTeamData) {
+      refetch();
+    }
+  });
+
   return loading ? (
     'Loading...'
   ) : error ? (
@@ -217,7 +246,14 @@ const TeamOverview = ({ teamId }) => {
       <Heading as="h1" size="h1" mb="24px">
         Team Members
       </Heading>
-      <TeamMembers />
+      {loadingMembers ? (
+        'Loading...'
+      ) : errorMembers ? (
+        `Error! ${errorMembers.message}`
+      ) : (
+        <TeamMembers members={members.getUsersForTeam} handleRemove={handleRemove} loadingRemove={loadingRemove} />
+      )}
+      ;
       <Heading as="h3" size="h3" mb="8px">
         Invite Team Members
       </Heading>

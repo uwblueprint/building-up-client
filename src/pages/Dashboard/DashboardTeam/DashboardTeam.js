@@ -1,20 +1,9 @@
 import React from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { Box, Center, Flex, Heading, HStack, Spacer } from '@chakra-ui/react';
+import { GET_TEAM_INFO } from 'data/gql/team';
 
 import ShareStorefrontButton from 'components/dashboard/ShareStorefrontButton/ShareStorefrontButton';
-
-const GET_TEAM_INFO = gql`
-  query getTeam($id: String!) {
-    getTeam(id: $id) {
-      name
-      organization
-      id
-      amountRaised
-      itemsSold
-    }
-  }
-`;
 
 const StorefrontButton = () => {
   return (
