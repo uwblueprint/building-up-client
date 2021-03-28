@@ -9,6 +9,7 @@ import LoginRegister from '../pages/LoginRegister/LoginRegister';
 import dashboardTheme from '../themes/dashboard';
 import storeTheme from '../themes/store';
 import TeamView from '../pages/TeamView/TeamView';
+import EmailVerificationSent from '../pages/EmailVerification/EmailVerificationSent';
 
 import ProtectedRoute from '../components/dashboard/ProtectedRoute/ProtectedRoute';
 import { currentUser } from '../data/actions/auth';
@@ -71,6 +72,9 @@ function App() {
                     </ProtectedRoute>
                     <ProtectedRoute exact path="/team">
                       <TeamView />
+                    </ProtectedRoute>
+                    <ProtectedRoute exact path="/verify">
+                      <EmailVerificationSent />
                     </ProtectedRoute>
                     {/* All other paths are redirected to /home */}
                     <ProtectedRoute path="/">
