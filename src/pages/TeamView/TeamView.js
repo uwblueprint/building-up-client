@@ -228,7 +228,6 @@ const TeamOverview = ({ teamId }) => {
   };
 
   useEffect(() => {
-    console.log(leaveTeamData);
     if (leaveTeamData) {
       refetch();
     }
