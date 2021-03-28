@@ -31,6 +31,7 @@ const dashboardTheme = extendTheme({
       700: '#661b18',
       800: '#3d100f',
       900: '#150404',
+      error: '#C70E0E',
     },
     background: {
       primary: '#FAFAFA',
