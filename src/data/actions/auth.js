@@ -170,4 +170,4 @@ export const noTeamInfo = (teamId, client) => dispatch => {
     type: GET_TEAM_FAIL,
   });
   return Promise.resolve();
-}
+};
