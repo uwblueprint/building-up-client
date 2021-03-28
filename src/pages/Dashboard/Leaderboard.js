@@ -3,8 +3,7 @@ import { useQuery } from '@apollo/client';
 import { Box, Flex, VStack, Heading, Text, Table, Tr, Td, Th, Thead, Tbody, Spinner, Center } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { GET_GLOBAL_LEADERBOARD } from "../../data/gql/team"
-
+import { GET_GLOBAL_LEADERBOARD } from '../../data/gql/team';
 
 const composeTableHeader = (header, i) => {
   return (
@@ -66,21 +65,18 @@ const Leaderboard = () => {
     user: { teamId },
     team,
   } = useSelector(state => state.auth);
-  const { data: teamData } = team;
+  const { loading: teamLoading, data: teamData } = team;
 
-  const { loading, error, data: leaderboardData } = useQuery(GET_GLOBAL_LEADERBOARD);
-  if (loading)
-    return (
-      <Center h="100%">
-        <Spinner size="xl" />
-        Loading...
-      </Center>
-    );
-  if (error) return `Error! ${error.message}`;
-
+  const { loading: leaderboardLoading, error, data: leaderboardData } = useQuery(GET_GLOBAL_LEADERBOARD);
   const headers = ['RANK', 'TEAM NAME', 'AFFILIATION', 'AMOUNT RAISED'];
 
-  return teamData ? (
+  return teamLoading || leaderboardLoading ? (
+    <Center h="100%">
+      <Spinner size="xl" />
+    </Center>
+  ) : error ? (
+    `Error! ${error.message}`
+  ) : teamData ? (
     <Box>
       <Flex justifyContent="space-between">
         <VStack alignItems="flex-start">

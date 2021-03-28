@@ -55,7 +55,7 @@ const authReducer = (state = initialState, action) => {
         authenticating: false,
         user: null,
         team: {
-          loading: true,
+          loading: false,
           data: null,
         },
       };
@@ -65,7 +65,7 @@ const authReducer = (state = initialState, action) => {
         authenticating: false,
         user: null,
         team: {
-          loading: true,
+          loading: false,
           data: null,
         },
       };

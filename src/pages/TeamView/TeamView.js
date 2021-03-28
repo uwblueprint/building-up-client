@@ -21,6 +21,8 @@ import {
   Th,
   Td,
   chakra,
+  Center,
+  Spinner,
 } from '@chakra-ui/react';
 
 const TeamView = () => {
@@ -28,7 +30,7 @@ const TeamView = () => {
     user: { teamId },
   } = useSelector(state => state.auth);
 
-  return teamId ? <TeamOverview teamId={teamId} /> : <Redirect to="/" />;
+  return teamId ? <TeamOverview /> : <Redirect to="/" />;
 };
 
 const InviteTeamMembers = () => {
@@ -201,14 +203,14 @@ const TeamMembers = () => {
 };
 
 const TeamOverview = ({ teamId }) => {
-  // const { loading, error, data } = useQuery(GET_TEAM_INFO, {
-  //   variables: { id: teamId },
-  // });
-
   const { team } = useSelector(state => state.auth);
-  const { data } = team;
+  const { loading, data } = team;
 
-  return (
+  return loading ? (
+    <Center h="100%">
+      <Spinner size="xl" />
+    </Center>
+  ) : (
     <Box w="100%">
       <Heading textTransform="uppercase" as="p" size="subtitle" color="gray.500" mb="8px">
         Team {data.teamName}

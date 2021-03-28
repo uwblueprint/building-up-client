@@ -33,7 +33,7 @@ function App() {
   useEffect(() => {
     if (user && user.teamId) {
       dispatch(teamInfo(user.teamId, client));
-    } else {
+    } else if (user && !user.teamId) {
       dispatch(noTeamInfo());
     }
   }, [user, dispatch, client]);
