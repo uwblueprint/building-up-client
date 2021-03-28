@@ -1,9 +1,9 @@
 import React, { useMemo, useState } from 'react';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { useTable, useSortBy } from 'react-table';
-import { GET_TEAM_INFO, SEND_INVITE_EMAILS } from '../../data/gql/team';
+import { SEND_INVITE_EMAILS } from '../../data/gql/team';
 import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import {
   Box,
@@ -201,18 +201,17 @@ const TeamMembers = () => {
 };
 
 const TeamOverview = ({ teamId }) => {
-  const { loading, error, data } = useQuery(GET_TEAM_INFO, {
-    variables: { id: teamId },
-  });
+  // const { loading, error, data } = useQuery(GET_TEAM_INFO, {
+  //   variables: { id: teamId },
+  // });
 
-  return loading ? (
-    'Loading...'
-  ) : error ? (
-    `Error! ${error.message}`
-  ) : (
+  const { team } = useSelector(state => state.auth);
+  const { data } = team;
+
+  return (
     <Box w="100%">
       <Heading textTransform="uppercase" as="p" size="subtitle" color="gray.500" mb="8px">
-        Team {data.getTeam.name}
+        Team {data.teamName}
       </Heading>
       <Heading as="h1" size="h1" mb="24px">
         Team Members

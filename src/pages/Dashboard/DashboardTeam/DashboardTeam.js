@@ -41,30 +41,31 @@ const NoSales = () => {
 
 const DashboardTeam = () => {
   const { team } = useSelector(state => state.auth);
+  const { data } = team;
 
   return (
     <Box w="100%">
       <Heading textTransform="uppercase" as="p" size="subtitle" color="gray.500" mb="8px">
-        Team {team.teamName}
+        Team {data.dataName}
       </Heading>
       <Flex mb="40px">
         <Heading as="h1" size="h1">
           Dashboard
         </Heading>
         <Spacer />
-        {team.itemsSold !== 0 ? <StorefrontButton /> : null}
+        {data.itemsSold !== 0 ? <StorefrontButton /> : null}
       </Flex>
       <Heading as="h3" size="h3" mb="23px">
         Overview
       </Heading>
       <HStack mb="72px" spacing="100px">
-        <SalesInfo description="Total Items Sold" amount={team.itemsSold} />
-        <SalesInfo description="Total Capital Raised" amount={'$' + team.amountRaised} />
+        <SalesInfo description="Total Items Sold" amount={data.itemsSold} />
+        <SalesInfo description="Total Capital Raised" amount={'$' + data.amountRaised} />
       </HStack>
       <Heading as="h3" size="h3" mb="21px">
         Sales Log
       </Heading>
-      {team.itemsSold === 0 ? <NoSales /> : null}
+      {data.itemsSold === 0 ? <NoSales /> : null}
     </Box>
   );
 };

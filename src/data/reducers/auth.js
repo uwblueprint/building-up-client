@@ -13,7 +13,10 @@ import {
 const initialState = {
   authenticating: true,
   user: null,
-  team: null,
+  team: {
+    loading: true,
+    data: null,
+  },
 };
 
 const authReducer = (state = initialState, action) => {
@@ -41,31 +44,43 @@ const authReducer = (state = initialState, action) => {
         ...state,
         authenticating: false,
         user: null,
-        team: null,
+        team: {
+          loading: false,
+          data: null,
+        },
       };
     case LOGOUT_SUCCESS:
       return {
         ...state,
         authenticating: false,
         user: null,
-        team: null,
+        team: {
+          loading: true,
+          data: null,
+        },
       };
     case LOGOUT_FAIL:
       return {
         ...state,
         authenticating: false,
         user: null,
-        team: null,
+        team: {
+          loading: true,
+          data: null,
+        },
       };
     case GET_TEAM_SUCCESS:
       return {
         ...state,
-        team: payload,
+        team: { loading: false, data: payload },
       };
     case GET_TEAM_FAIL:
       return {
         ...state,
-        team: null,
+        team: {
+          loading: false,
+          data: null,
+        },
       };
     case UPDATE_USER:
       return {
