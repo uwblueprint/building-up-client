@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink, Redirect, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
-import { Box, Button, ButtonGroup, Center, Heading, Link, Spinner, Text, VStack, useToast } from '@chakra-ui/react';
+import { Box, Button, ButtonGroup, Center, Heading, Spinner, Text, VStack, useToast } from '@chakra-ui/react';
 
 import Toast from 'components/dashboard/Toast/Toast';
 
@@ -13,9 +13,6 @@ import { JOIN_TEAM } from 'data/gql/user';
 const InviteLayout = props => (
   <VStack spacing={4} align="left">
     <Box>
-      <Link color="gray.500" mb="8px" as={RouterLink} to="/">
-        Back to home
-      </Link>
       <Heading size="h1" as="h1">
         Team Invite
       </Heading>
@@ -81,12 +78,27 @@ function Invite(props) {
             {teamData.getTeam.organization}
           </Text>
           <Text>If you join this team, you will leave your current team.</Text>
-          <ButtonGroup variant="outline" size="lg" spacing={6}>
-            <Button as={RouterLink} to="/" isLoading={joinTeamLoading} colorScheme="red">
-              Decline
-            </Button>
-            <Button isLoading={joinTeamLoading} colorScheme="green" onClick={handleJoinTeam}>
+          <ButtonGroup size="lg" spacing={2}>
+            <Button
+              isLoading={joinTeamLoading}
+              variant="solid"
+              textColor="white"
+              bg="black"
+              _hover={{ bg: 'gray.800' }}
+              _active={{ bg: 'gray.700' }}
+              onClick={handleJoinTeam}
+            >
               Accept
+            </Button>
+            <Button
+              as={RouterLink}
+              to="/"
+              isLoading={joinTeamLoading}
+              variant="outline"
+              colorScheme="gray"
+              borderColor="black"
+            >
+              Decline
             </Button>
           </ButtonGroup>
         </>
