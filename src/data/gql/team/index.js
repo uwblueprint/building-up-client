@@ -33,7 +33,6 @@ export const GET_USERS_FOR_TEAM = gql`
       firstName
       lastName
       email
-      teamId
     }
   }
 `;
