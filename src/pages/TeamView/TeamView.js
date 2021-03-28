@@ -258,7 +258,6 @@ const TeamOverview = ({ teamId }) => {
       ) : (
         <TeamMembers members={members.getUsersForTeam} handleRemove={handleRemove} loadingRemove={loadingRemove} />
       )}
-      ;
       <Heading as="h3" size="h3" mb="8px">
         Invite Team Members
       </Heading>
