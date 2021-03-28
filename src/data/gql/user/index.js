@@ -34,3 +34,20 @@ export const LEAVE_TEAM = gql`
     }
   }
 `;
+
+export const VERIFY_ACCOUNT = gql`
+  mutation verifyAccount($id: ID!, $hash: String!) {
+    verifyAccount(id: $id, hash: $hash) {
+      id
+      hash
+    }
+  }
+`;
+
+export const SEND_VERIFICATION_EMAIL = gql`
+  mutation sendVerificationEmail($id: ID!) {
+    sendVerificationEmail(id: $id) {
+      id
+    }
+  }
+`;
