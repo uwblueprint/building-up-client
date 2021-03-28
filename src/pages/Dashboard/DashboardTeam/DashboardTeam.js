@@ -46,7 +46,7 @@ const DashboardTeam = () => {
   return (
     <Box w="100%">
       <Heading textTransform="uppercase" as="p" size="subtitle" color="gray.500" mb="8px">
-        Team {data.dataName}
+        Team {data.teamName}
       </Heading>
       <Flex mb="40px">
         <Heading as="h1" size="h1">

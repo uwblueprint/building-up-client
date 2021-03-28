@@ -1,19 +1,10 @@
 import React from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { Box, Flex, VStack, Heading, Text, Table, Tr, Td, Th, Thead, Tbody, Spinner, Center } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { GET_GLOBAL_LEADERBOARD } from "../../data/gql/team"
 
-const GET_GLOBAL_LEADERBOARD = gql`
-  query getGlobalLeaderboard {
-    getGlobalLeaderboard {
-      id
-      name
-      organization
-      itemsSold
-    }
-  }
-`;
 
 const composeTableHeader = (header, i) => {
   return (
@@ -87,7 +78,7 @@ const Leaderboard = () => {
     );
   if (error) return `Error! ${error.message}`;
 
-  const headers = ['RANK', 'TEAM NAME', 'AFFILIATION', 'ITEMS SOLD'];
+  const headers = ['RANK', 'TEAM NAME', 'AFFILIATION', 'AMOUNT RAISED'];
 
   return teamData ? (
     <Box>

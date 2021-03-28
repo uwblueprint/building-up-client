@@ -11,7 +11,7 @@ import storeTheme from '../themes/store';
 import TeamView from '../pages/TeamView/TeamView';
 
 import ProtectedRoute from '../components/dashboard/ProtectedRoute/ProtectedRoute';
-import { currentUser, teamInfo } from '../data/actions/auth';
+import { currentUser, teamInfo, noTeamInfo } from '../data/actions/auth';
 import ChakraExpoDashboard from '../themes/dashboard/ChakraExpoDashboard';
 import ChakraExpoStore from '../themes/store/ChakraExpoStore';
 import Navbar from '../components/dashboard/Navbar/Navbar';
@@ -33,6 +33,8 @@ function App() {
   useEffect(() => {
     if (user && user.teamId) {
       dispatch(teamInfo(user.teamId, client));
+    } else {
+      dispatch(noTeamInfo());
     }
   }, [user, dispatch, client]);
 

@@ -164,3 +164,9 @@ export const teamInfo = (teamId, client) => dispatch => {
     },
   );
 };
+
+export const noTeamInfo = (teamId, client) => dispatch => {
+  dispatch({
+    type: GET_TEAM_FAIL,
+  });
+}
