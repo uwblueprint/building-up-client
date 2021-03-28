@@ -1,5 +1,6 @@
 // Abstracting this as its own component, it's going to need to access the state and render a "badge" with the # of items in the cart
 // https://chakra-ui.com/docs/media-and-icons/icon#using-the-createicon-function
+import React from 'react';
 import { createIcon } from '@chakra-ui/react';
 
 const BagIcon = createIcon({
