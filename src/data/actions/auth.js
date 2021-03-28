@@ -117,7 +117,7 @@ export const currentUser = client => dispatch => {
         dispatch({
           type: LOGIN_FAIL,
         });
-        return Promise.resolve();
+        return Promise.reject();
       }
     },
     error => {
@@ -152,7 +152,7 @@ export const teamInfo = (teamId, client) => dispatch => {
         dispatch({
           type: GET_TEAM_FAIL,
         });
-        return Promise.resolve();
+        return Promise.reject();
       }
     },
     error => {
@@ -169,4 +169,5 @@ export const noTeamInfo = (teamId, client) => dispatch => {
   dispatch({
     type: GET_TEAM_FAIL,
   });
+  return Promise.resolve();
 }
