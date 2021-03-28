@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react';
 import { Stack, HStack, VStack, Heading } from '@chakra-ui/react';
+import { useShopify } from '../../hooks/useShopify';
+import { CartItem } from 'components/storefront';
 
 import { useSelector, shallowEqual } from 'react-redux';
 import { selectors as teamSelectors } from '../../data/reducers/team';
-import { useShopify } from '../../hooks/useShopify';
-import { CartItem } from 'components/storefront';
 
 // Cart page that shows the user the items in their cart, allows them to change quantity, and proceed to checkout
 
 const Cart = () => {
   // you're going to need to update products so that it's only the ones inside their cart
   const { products, checkoutState, updateCartAttributes } = useShopify();
+  // checkoutState is currently empty, you're going to need to add to it later on
   const team = useSelector(teamSelectors.selectTeam, shallowEqual);
 
   //   useEffect(() => {
@@ -35,7 +36,7 @@ const Cart = () => {
     <>
       <Heading mb={4}>SHOPPING BAG</Heading>
       <HStack p={4}>
-        <VStack>{products && products.map(product => <CartItem product={product} />)}</VStack>
+        <VStack>{products && products.map(product => <CartItem key={product.id} product={product} />)}</VStack>
       </HStack>
     </>
   );

@@ -3,7 +3,6 @@ import { Heading, Flex, Image, Text } from '@chakra-ui/react';
 
 const CartItem = ({ product }) => {
   const { images, title, variants } = product;
-  console.log('product', product);
   const productSku = variants[0].sku;
   const productImage = images[0].src;
   const productPrice = variants[0].price;
@@ -21,6 +20,7 @@ const CartItem = ({ product }) => {
         <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.darkgray">
           {title}
         </Heading>
+        {/* You're going to need to get the quanity from the state somehow */}
         <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.darkgray">
           {`Quantity X $${productPrice}`}
         </Heading>
