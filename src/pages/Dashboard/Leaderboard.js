@@ -17,7 +17,7 @@ const composeTableHeader = (header, i) => {
 };
 
 const TableRow = props => {
-  const { bgColor, borderBottomWidth, rank, teamName, affiliation, itemsSold } = props;
+  const { bgColor, borderBottomWidth, rank, teamName, affiliation, amountRaised } = props;
   return (
     <Tr borderBottomWidth={borderBottomWidth} borderColor="white" bg={bgColor} height="88px">
       <Td>
@@ -39,13 +39,13 @@ const TableRow = props => {
       <Td>
         <Text>{affiliation}</Text>
       </Td>
-      <Td fontWeight="semibold">{itemsSold}</Td>
+      <Td fontWeight="semibold">{amountRaised}</Td>
     </Tr>
   );
 };
 
 const composeTableBody = (row, i) => {
-  const { id, name, organization, itemsSold } = row;
+  const { id, name, organization, amountRaised } = row;
   const colors = ['#FFF9DA', '#FAF7F9', '#FFF2E7'];
   return (
     <TableRow
@@ -54,7 +54,7 @@ const composeTableBody = (row, i) => {
       rank={i + 1}
       teamName={name}
       affiliation={organization}
-      itemsSold={itemsSold}
+      amountRaised={amountRaised}
       key={id}
     />
   );

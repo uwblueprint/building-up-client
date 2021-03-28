@@ -32,6 +32,7 @@ export const GET_GLOBAL_LEADERBOARD = gql`
       id
       name
       organization
+      itemsSold
       amountRaised
     }
   }
