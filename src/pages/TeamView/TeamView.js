@@ -217,7 +217,7 @@ const TeamOverview = ({ teamId }) => {
     variables: { id: teamId },
   });
 
-  const { loading: loadingMembers, error: errorMembers, data: members, refetch } = useQuery(GET_USERS_FOR_TEAM, {
+  const { loading: loadingMembers, error: errorMembers, data: members, updateQuery } = useQuery(GET_USERS_FOR_TEAM, {
     variables: { teamId: teamId },
   });
 
@@ -229,7 +229,13 @@ const TeamOverview = ({ teamId }) => {
 
   useEffect(() => {
     if (leaveTeamData) {
-      refetch();
+      updateQuery(previous => {
+        const ret = {};
+        ret.getUsersForTeam = previous.getUsersForTeam.filter(user => {
+          return user.id !== leaveTeamData.leaveTeam.id;
+        });
+        return ret;
+      });
     }
   });
 
