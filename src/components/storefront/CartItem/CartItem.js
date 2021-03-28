@@ -10,6 +10,7 @@ const CartItem = ({ product }) => {
   return (
     <Flex py={20} px={32}>
       <Flex direction="column" w="100%" h="100%">
+        {/* you probably want to set a max width on the images as well */}
         <Image boxSize="100%" border="1px solid black" src={productImage} alt={title} />
       </Flex>
       <Flex direction="column" w="100%" pl={10}>
