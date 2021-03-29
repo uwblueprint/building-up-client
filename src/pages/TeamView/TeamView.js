@@ -3,8 +3,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { useTable, useSortBy } from 'react-table';
-import { GET_TEAM_INFO, GET_USERS_FOR_TEAM, SEND_INVITE_EMAILS } from 'data/gql/team';
-import { LEAVE_TEAM } from 'data/gql/user';
+
 import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import {
   Box,
@@ -22,7 +21,12 @@ import {
   Th,
   Td,
   chakra,
+  Center,
+  Spinner,
 } from '@chakra-ui/react';
+
+import { GET_USERS_FOR_TEAM, SEND_INVITE_EMAILS } from 'data/gql/team';
+import { LEAVE_TEAM } from 'data/gql/user';
 
 const TeamView = () => {
   const {
@@ -207,9 +211,8 @@ const TeamMembers = ({ members, handleRemove, loadingRemove }) => {
 };
 
 const TeamOverview = ({ teamId }) => {
-  const { loading, error, data } = useQuery(GET_TEAM_INFO, {
-    variables: { id: teamId },
-  });
+  const { team } = useSelector(state => state.auth);
+  const { loading, data } = team;
 
   const { loading: loadingMembers, error: errorMembers, data: members, updateQuery } = useQuery(GET_USERS_FOR_TEAM, {
     variables: { teamId: teamId },
@@ -234,13 +237,13 @@ const TeamOverview = ({ teamId }) => {
   });
 
   return loading ? (
-    'Loading...'
-  ) : error ? (
-    `Error! ${error.message}`
+    <Center h="100%">
+      <Spinner size="xl" />
+    </Center>
   ) : (
     <Flex direction="column" w="100%" h="100%">
       <Heading textTransform="uppercase" as="p" size="subtitle" color="gray.500" mb="8px">
-        Team {data.getTeam.name}
+        Team {data.teamName}
       </Heading>
       <Heading as="h1" size="h1" mb="24px">
         Team Members
