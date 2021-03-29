@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import { GET_TEAM_INFO } from 'data/gql/team';
 
 const REGISTER_MUTATION = gql`
   mutation createNewUser($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
@@ -37,18 +38,6 @@ const CURRENT_USER = gql`
       lastName
       id
       teamId
-    }
-  }
-`;
-
-const GET_TEAM_INFO = gql`
-  query getTeam($id: String!) {
-    getTeam(id: $id) {
-      name
-      organization
-      id
-      amountRaised
-      itemsSold
     }
   }
 `;
