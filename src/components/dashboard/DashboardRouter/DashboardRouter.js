@@ -32,7 +32,7 @@ const DashboardRouter = () => {
           After signing in, redirect to the original path 
           */}
           <Route exact path="/login">
-            {user ? <Redirect to={location.state?.from?.pathname ?? '/'} /> : <LoginRegister />}
+            {user ? <Redirect to={location.state?.from?.location?.pathname ?? '/'} /> : <LoginRegister />}
           </Route>
           <ProtectedRoute path="/">
             <Grid templateColumns={`${NAVBAR_WIDTH} 1fr`} h="100vh">
