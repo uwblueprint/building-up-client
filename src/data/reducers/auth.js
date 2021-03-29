@@ -8,6 +8,7 @@ import {
   GET_TEAM_SUCCESS,
   GET_TEAM_FAIL,
   UPDATE_USER,
+  UPDATE_USERS_TEAM,
 } from '../actions/type';
 
 const initialState = {
@@ -86,6 +87,14 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         user: { ...state.user, ...payload },
+      };
+    case UPDATE_USERS_TEAM:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          teamId: payload,
+        },
       };
     default:
       return state;

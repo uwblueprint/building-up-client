@@ -5,7 +5,7 @@ const Button = {
   sizes: {},
   // The default variant is solid, so we must override colors here
   variants: {
-    solid: {
+    default: {
       bg: 'brand.50',
       _hover: {
         bg: 'brand.100',
@@ -16,7 +16,9 @@ const Button = {
     },
   },
   // The default button prop values
-  defaultProps: {},
+  defaultProps: {
+    variant: 'default',
+  },
 };
 
 export default Button;
