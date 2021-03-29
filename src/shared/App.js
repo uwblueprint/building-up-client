@@ -55,7 +55,7 @@ function App() {
               <Storefront />
             </Route>
             <ProtectedRoute path="/">
-              <Grid templateColumns={`${NAVBAR_WIDTH} 1fr`} h="100vh">
+              <Grid templateColumns={`${NAVBAR_WIDTH} 1fr`} templateRows="100vh" h="100vh">
                 <Box borderRight="2px solid black" w="100%" h="100%">
                   {/** Navbar width is set manually to keep the position fixed */}
                   <Navbar w={NAVBAR_WIDTH} />

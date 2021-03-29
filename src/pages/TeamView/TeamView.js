@@ -114,13 +114,12 @@ const TeamMembers = ({ members, handleRemove, loadingRemove }) => {
   } = useSelector(state => state.auth);
 
   const data = useMemo(
-    () => [
+    () =>
       members.map(user => ({
         id: user.id,
         name: user.firstName + ' ' + user.lastName,
         email: user.email,
       })),
-    ],
     [members],
   );
 
@@ -143,7 +142,6 @@ const TeamMembers = ({ members, handleRemove, loadingRemove }) => {
             <Button
               variant="link"
               disabled={loadingRemove}
-              fontWeight="semibold"
               color="#C70E0E"
               onClick={() => {
                 handleRemove(props.value);
@@ -168,16 +166,10 @@ const TeamMembers = ({ members, handleRemove, loadingRemove }) => {
     ) : null;
   };
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
-    {
-      columns,
-      data: data[0],
-    },
-    useSortBy,
-  );
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({ columns, data }, useSortBy);
 
   return (
-    <Box h="500px" mb={16} bg="background.primary">
+    <Box minH="300px" overflow="auto" mb={16} bg="background.primary">
       {/* This outer box is temporary ^^ */}
       <Table {...getTableProps()}>
         <Thead>
@@ -187,6 +179,8 @@ const TeamMembers = ({ members, handleRemove, loadingRemove }) => {
                 <Th
                   {...column.getHeaderProps(column.getSortByToggleProps())}
                   _hover={column.canSort ? { bg: '#eaeaea' } : {}}
+                  position="sticky"
+                  top="0"
                 >
                   {column.render('Header')}
                   <chakra.span pl="4">{renderSortIcon(column)}</chakra.span>
@@ -244,7 +238,7 @@ const TeamOverview = ({ teamId }) => {
   ) : error ? (
     `Error! ${error.message}`
   ) : (
-    <Box w="100%">
+    <Flex direction="column" w="100%" h="100%">
       <Heading textTransform="uppercase" as="p" size="subtitle" color="gray.500" mb="8px">
         Team {data.getTeam.name}
       </Heading>
@@ -265,7 +259,7 @@ const TeamOverview = ({ teamId }) => {
         Enter the emails of the people you want to add
       </Text>
       <InviteTeamMembers />
-    </Box>
+    </Flex>
   );
 };
 
