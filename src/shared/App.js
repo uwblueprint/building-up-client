@@ -8,13 +8,14 @@ import Dashboard from '../pages/Dashboard/Dashboard';
 import LoginRegister from '../pages/LoginRegister/LoginRegister';
 import dashboardTheme from '../themes/dashboard';
 import storeTheme from '../themes/store';
-import TeamView from '../pages/TeamView/TeamView';
+import TeamOverview from '../pages/TeamOverview/TeamOverview';
 
 import ProtectedRoute from '../components/dashboard/ProtectedRoute/ProtectedRoute';
 import { currentUser, teamInfo, noTeamInfo } from '../data/actions/auth';
 import ChakraExpoDashboard from '../themes/dashboard/ChakraExpoDashboard';
 import ChakraExpoStore from '../themes/store/ChakraExpoStore';
 import Navbar from '../components/dashboard/Navbar/Navbar';
+import PageContainer from 'components/dashboard/PageContainer/PageContainer';
 import Storefront from '../pages/Storefront/Storefront';
 import Leaderboard from '../pages/Dashboard/Leaderboard';
 
@@ -26,10 +27,12 @@ function App() {
 
   const NAVBAR_WIDTH = '280px';
 
+  // Try to login the user on app init
   useEffect(() => {
     dispatch(currentUser(client));
   }, [dispatch, client]);
 
+  // Update the current team info when the user changes
   useEffect(() => {
     if (user && user.teamId) {
       dispatch(teamInfo(user.teamId, client));
@@ -75,21 +78,27 @@ function App() {
                       <Spinner size="xl" />
                     </Center>
                   ) : (
-                    <Switch>
-                      <ProtectedRoute exact path="/home">
-                        <Dashboard />
-                      </ProtectedRoute>
-                      <ProtectedRoute exact path="/leaderboard">
-                        <Leaderboard />
-                      </ProtectedRoute>
-                      <ProtectedRoute exact path="/team">
-                        <TeamView />
-                      </ProtectedRoute>
-                      {/* All other paths are redirected to /home */}
-                      <ProtectedRoute path="/">
-                        <Redirect to="/home" />
-                      </ProtectedRoute>
-                    </Switch>
+                    <PageContainer>
+                      <Switch>
+                        <ProtectedRoute exact path="/home">
+                          <Dashboard team={team.data} />
+                        </ProtectedRoute>
+                        {team.data && (
+                          <Switch>
+                            <ProtectedRoute exact path="/leaderboard">
+                              <Leaderboard team={team.data} />
+                            </ProtectedRoute>
+                            <ProtectedRoute exact path="/team">
+                              <TeamOverview team={team.data} />
+                            </ProtectedRoute>
+                          </Switch>
+                        )}
+                        {/* All other paths are redirected to /home */}
+                        <ProtectedRoute path="/">
+                          <Redirect to="/home" />
+                        </ProtectedRoute>
+                      </Switch>
+                    </PageContainer>
                   )}
                 </Box>
               </Grid>

@@ -74,7 +74,7 @@ const CreateTeamForm = props => {
 
   return (
     <Box w="100%" h="100%" alignItems="flex-start">
-      <Button bg="white" onClick={decrementPage} _focus={{ boxShadow: 'white' }}>
+      <Button color="black" onClick={decrementPage} _focus={{ boxShadow: 'white' }} variant="link">
         {'< Back'}
       </Button>
       <Heading alignSelf="flex-start" size="h1" as="h1" marginTop={2} marginBottom={8}>
