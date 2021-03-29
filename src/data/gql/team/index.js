@@ -26,6 +26,17 @@ export const CREATE_TEAM = gql`
   }
 `;
 
+export const GET_USERS_FOR_TEAM = gql`
+  query getUsersForTeam($teamId: String!) {
+    getUsersForTeam(teamId: $teamId) {
+      id
+      firstName
+      lastName
+      email
+    }
+  }
+`;
+
 export const GET_GLOBAL_LEADERBOARD = gql`
   query getGlobalLeaderboard {
     getGlobalLeaderboard {

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Box, Center, Flex, Heading, HStack, Spacer } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
-import ShareStorefrontButton from '../../../components/dashboard/ShareStorefrontButton/ShareStorefrontButton';
+import { Box, Center, Flex, Heading, HStack } from '@chakra-ui/react';
+
+import PageHeading from 'components/dashboard/PageHeading/PageHeading';
+import ShareStorefrontButton from 'components/dashboard/ShareStorefrontButton/ShareStorefrontButton';
 
 const StorefrontButton = () => {
   return (
@@ -39,34 +40,33 @@ const NoSales = () => {
   );
 };
 
-const DashboardTeam = () => {
-  const { team } = useSelector(state => state.auth);
-  const { data } = team;
-
+const DashboardTeam = ({ team }) => {
   return (
-    <Box w="100%">
-      <Heading textTransform="uppercase" as="p" size="subtitle" color="gray.500" mb="8px">
-        Team {data.teamName}
-      </Heading>
-      <Flex mb="40px">
-        <Heading as="h1" size="h1">
-          Dashboard
-        </Heading>
-        <Spacer />
-        {data.itemsSold !== 0 ? <StorefrontButton /> : null}
+    <>
+      <Flex w="100%" justify="space-between">
+        <PageHeading teamName={team.teamName} title="Dashboard" />
+        {team.itemsSold !== 0 && (
+          <Box alignSelf="flex-end">
+            <StorefrontButton />
+          </Box>
+        )}
       </Flex>
-      <Heading as="h3" size="h3" mb="23px">
-        Overview
-      </Heading>
-      <HStack mb="72px" spacing="100px">
-        <SalesInfo description="Total Items Sold" amount={data.itemsSold} />
-        <SalesInfo description="Total Capital Raised" amount={'$' + data.amountRaised} />
-      </HStack>
-      <Heading as="h3" size="h3" mb="21px">
-        Sales Log
-      </Heading>
-      {data.itemsSold === 0 ? <NoSales /> : null}
-    </Box>
+      <Box mb="32px">
+        <Heading as="h3" size="h3" mb="23px">
+          Overview
+        </Heading>
+        <HStack spacing="100px">
+          <SalesInfo description="Total Items Sold" amount={team.itemsSold} />
+          <SalesInfo description="Total Capital Raised" amount={`$${team.amountRaised}`} />
+        </HStack>
+      </Box>
+      <Box w="100%">
+        <Heading as="h3" size="h3" mb="21px">
+          Sales Log
+        </Heading>
+        {team.itemsSold === 0 ? <NoSales /> : null}
+      </Box>
+    </>
   );
 };
 
