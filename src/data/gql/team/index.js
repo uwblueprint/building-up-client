@@ -25,3 +25,15 @@ export const CREATE_TEAM = gql`
     }
   }
 `;
+
+export const GET_GLOBAL_LEADERBOARD = gql`
+  query getGlobalLeaderboard {
+    getGlobalLeaderboard {
+      id
+      name
+      organization
+      itemsSold
+      amountRaised
+    }
+  }
+`;

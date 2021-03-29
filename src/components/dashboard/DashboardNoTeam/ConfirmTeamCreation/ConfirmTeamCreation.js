@@ -25,6 +25,7 @@ const ConfirmTeamCreation = props => {
 
         joinTeam({ variables: { id: userId, teamId } }).then(() => {
           dispatch({ type: UPDATE_USER, payload: { teamId } });
+
           toast({
             position: 'top',
             render: props => <Toast {...props} description="Your team has been created." isClosable />,
