@@ -1,28 +1,16 @@
-import React, { useEffect } from 'react';
-import { useApolloClient } from '@apollo/client';
+import React from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { ChakraProvider } from '@chakra-ui/react';
 
 import dashboardTheme from '../themes/dashboard';
 import storeTheme from '../themes/store';
 
-import { currentUser } from '../data/actions/auth';
 import ChakraExpoDashboard from '../themes/dashboard/ChakraExpoDashboard';
 import ChakraExpoStore from '../themes/store/ChakraExpoStore';
 import Storefront from '../pages/Storefront/Storefront';
 import DashboardRouter from 'components/dashboard/DashboardRouter/DashboardRouter';
 
 function App() {
-  const dispatch = useDispatch();
-  const client = useApolloClient();
-
-  useEffect(() => {
-    // Component on mount (i.e. app init): Try to fetch user data (Apollo client internally uses a cookie)
-    dispatch(currentUser(client));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <BrowserRouter>
       <Switch>

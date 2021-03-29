@@ -47,8 +47,8 @@ const Navbar = props => {
       direction="column"
       w={NAVBAR_WIDTH}
       h="100%"
-      px={12}
-      py={20}
+      px={{ base: 6, md: 8, lg: 12 }}
+      py={{ base: 4, sm: 8, md: 12, xl: 20 }}
       justify="space-between"
       overflowX="hidden"
       textTransform="capitalize"

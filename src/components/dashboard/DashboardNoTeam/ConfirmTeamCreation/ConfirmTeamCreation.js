@@ -25,6 +25,7 @@ const ConfirmTeamCreation = props => {
 
         joinTeam({ variables: { id: userId, teamId } }).then(() => {
           dispatch({ type: UPDATE_USER, payload: { teamId } });
+
           toast({
             position: 'top',
             render: props => <Toast {...props} description="Your team has been created." isClosable />,
@@ -49,7 +50,7 @@ const ConfirmTeamCreation = props => {
 
   return (
     <Box w="100%" h="100%" alignItems="flex-start">
-      <Button bg="white" onClick={decrementPage} _focus={{ boxShadow: 'white' }}>
+      <Button color="black" onClick={decrementPage} _focus={{ boxShadow: 'white' }} variant="link">
         {'< Back'}
       </Button>
       <Heading alignSelf="flex-start" size="h1" as="h1" marginTop={2} marginBottom={8}>
@@ -57,9 +58,14 @@ const ConfirmTeamCreation = props => {
       </Heading>
       <HStack w="100%" h="84%" justifyContent="center" spacing={4}>
         <VStack bg="background.primary" w="90%" h="100%" borderRadius="4px" px={10} spacing={8} align="flex-start">
-          <Heading as="h3" size="h3" mt={8}>
-            Team Details
-          </Heading>
+          <Flex direction="row" justify="space-between" w="100%" mt={8}>
+            <Heading as="h3" size="h3">
+              Team Details
+            </Heading>
+            <Button variant="link" color="brand.error" onClick={decrementPage}>
+              Edit
+            </Button>
+          </Flex>
           <Box>
             <Heading size="subtitle" as="h3" letterSpacing="wider" opacity="0.5" mb={1}>
               Team Name
@@ -94,10 +100,7 @@ const ConfirmTeamCreation = props => {
           )}
         </VStack>
       </HStack>
-      <Flex marginTop={4} justify="space-between">
-        <Button size="lg" _focus={{ boxShadow: 'white' }} onClick={decrementPage}>
-          Previous
-        </Button>
+      <Flex marginTop={4} justify="flex-end">
         <Button size="lg" _focus={{ boxShadow: 'white' }} onClick={executeQuery}>
           Confirm
         </Button>
