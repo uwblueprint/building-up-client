@@ -80,6 +80,7 @@ export const logout = client => dispatch => {
         dispatch({
           type: LOGOUT_SUCCESS,
         });
+        client.resetStore();
       } else {
         dispatch({
           type: LOGOUT_FAIL,
