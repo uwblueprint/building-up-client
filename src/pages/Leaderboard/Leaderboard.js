@@ -42,7 +42,7 @@ const TableRow = props => {
       <Td>
         <Text>{affiliation}</Text>
       </Td>
-      <Td fontWeight="semibold">{amountRaised}</Td>
+      <Td fontWeight="semibold">{`$${amountRaised.toFixed(2)}`}</Td>
     </Tr>
   );
 };

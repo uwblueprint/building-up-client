@@ -57,7 +57,7 @@ const DashboardTeam = ({ team }) => {
         </Heading>
         <HStack spacing="100px">
           <SalesInfo description="Total Items Sold" amount={team.itemsSold} />
-          <SalesInfo description="Total Capital Raised" amount={`$${team.amountRaised}`} />
+          <SalesInfo description="Total Capital Raised" amount={`$${team.amountRaised.toFixed(2)}`} />
         </HStack>
       </Box>
       <Box w="100%">
