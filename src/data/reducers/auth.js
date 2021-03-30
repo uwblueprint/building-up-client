@@ -45,10 +45,6 @@ const authReducer = (state = initialState, action) => {
         ...state,
         authenticating: false,
         user: null,
-        team: {
-          loading: false,
-          data: null,
-        },
       };
     case LOGOUT_SUCCESS:
       return {
@@ -56,7 +52,7 @@ const authReducer = (state = initialState, action) => {
         authenticating: false,
         user: null,
         team: {
-          loading: false,
+          loading: true,
           data: null,
         },
       };

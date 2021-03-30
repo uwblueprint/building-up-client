@@ -11,7 +11,7 @@ const headers = ['RANK', 'TEAM NAME', 'AFFILIATION', 'AMOUNT RAISED'];
 
 const composeTableHeader = (header, i) => {
   return (
-    <Th bgColor="white" key={i}>
+    <Th bgColor="white" key={i} position="sticky" top={0}>
       <Heading textTransform="uppercase" as="p" size="subtitle" color="black" opacity="0.5" mb="8px">
         {header}
       </Heading>
@@ -87,7 +87,7 @@ const Leaderboard = ({ team }) => {
           </Flex>
         )}
       </Flex>
-      <Skeleton height="400px" isLoaded={!leaderboardLoading} w="100%">
+      <Skeleton minH="400px" isLoaded={!leaderboardLoading} w="100%" overflow="auto">
         {error ? (
           `Error! ${error.message}`
         ) : (

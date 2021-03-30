@@ -64,7 +64,7 @@ const DashboardRouter = () => {
                 {/** Navbar width is set manually to keep the position fixed */}
                 <Navbar />
               </Box>
-              <Box w="100%" h="100%" p="72px">
+              <Box w="100%" h="100%">
                 {teamLoading ? (
                   <Center h="100%">
                     <Spinner size="xl" />
