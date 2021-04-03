@@ -26,8 +26,8 @@ function App() {
           </ChakraProvider>
         </Route>
 
-        {/* TODO: put in storefront router */}
-        <Route exact path="/store">
+        {/* All store pages are controlled by StorefrontRouter */}
+        <Route path="/store">
           <StorefrontRouter />
         </Route>
         {/* All dashboard pages are controlled by DashboardRouter */}
