@@ -4,12 +4,12 @@ import DashboardNoTeam from './DashboardNoTeam/DashboardNoTeam';
 
 import DashboardTeam from './DashboardTeam/DashboardTeam';
 
-const Dashboard = () => {
+const Dashboard = ({ team }) => {
   const {
-    user: { userId, teamId },
+    user: { userId },
   } = useSelector(state => state.auth);
 
-  return teamId ? <DashboardTeam teamId={teamId} /> : <DashboardNoTeam userId={userId} />;
+  return team ? <DashboardTeam team={team} /> : <DashboardNoTeam userId={userId} />;
 };
 
 export default Dashboard;
