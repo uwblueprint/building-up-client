@@ -14,6 +14,7 @@ import Invite from 'pages/Invite/Invite';
 import Leaderboard from 'pages/Leaderboard/Leaderboard';
 import LoginRegister from 'pages/LoginRegister/LoginRegister';
 import TeamOverview from 'pages/TeamOverview/TeamOverview';
+import EmailVerificationSent from 'pages/EmailVerification/EmailVerificationSent';
 
 import PageContainer from '../PageContainer/PageContainer';
 import Navbar, { NAVBAR_WIDTH } from '../Navbar/Navbar';
@@ -88,6 +89,9 @@ const DashboardRouter = () => {
                           <TeamOverview team={teamData} />
                         </ProtectedRoute>
                       )}
+                      <ProtectedRoute exact path="/verify">
+                        <EmailVerificationSent team={teamData} />
+                      </ProtectedRoute>
                       <Route path="/">
                         <Redirect to="/home" />
                       </Route>
