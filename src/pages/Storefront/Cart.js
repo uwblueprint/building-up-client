@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Flex, HStack, VStack, Heading, Text, Button, Input } from '@chakra-ui/react';
+import { Box, HStack, VStack, Heading, Divider, Flex, FormControl, Text, Button, Input } from '@chakra-ui/react';
 import { useShopify } from '../../hooks/useShopify';
 import { CartItem } from 'components/storefront';
 
@@ -34,34 +34,83 @@ const Cart = () => {
 
   return (
     <>
-      <Heading mb={4}>SHOPPING BAG</Heading>
-      <HStack p={4}>
-        <VStack>{products && products.map(product => <CartItem key={product.id} product={product} />)}</VStack>
-      </HStack>
-      {/* This stuff is probably useful for HStack and VStack */}
-      {/* <Flex backgroundColor="black" py="80px" px="105px">
-        <HStack w="100%" h="100%" justifyContent="space-between" alignItems="flex-start">
-          <VStack alignItems="flex-start" spacing="26px" h="100%" marginTop="0px">
-            <Text fontWeight="extrabold" letterSpacing="wider" color="white" fontFamily="Jost">
-              GET IN TOUCH
-            </Text>
-            <Text>
-              116 Industry Street <br /> Suite 313 <br /> Toronto, ON M6M 4L8
-            </Text>
-          </VStack>
-          <VStack as="form" w="31%" alignItems="flex-start" spacing="26px">
-            <Text fontWeight="extrabold" letterSpacing="wider" fontFamily="Jost">
-              STAY CONNECTED
-            </Text>
-            <Text letterSpacing="wider" color="brand.gray">
-              In case you want to join the list of recipients of our news and updates, please fill in your email.
-            </Text>
-            <Button size="sm" type="submit" variant="inverted" color="black">
-              SUBSCRIBE
+      <Box bg="black" w="100%" color="black" px="105px">
+        <Heading alignSelf="flex-start" color="white" py={5}>
+          MY SHOPPING BAG
+        </Heading>
+      </Box>
+      <HStack w="100%" h="100%" justifyContent="space-between" alignItems="flex-start" px="105px">
+        <VStack alignItems="flex-start" pt="64px" pb="64px">
+          <Flex w="100%" justifyContent="space-between">
+            <Heading as="h4" size="subtitle" color="brand.black">
+              CONTINUE SHOPPING
+            </Heading>
+            <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.gray">
+              X ITEMS
+            </Heading>
+          </Flex>
+          <Divider />
+          {/* TO DO: change to 36px in between the pictures */}
+          {/* The products here should be the line-items in the Shopify Checkout */}
+          {products &&
+            products.map(product => (
+              <Box py="10px">
+                <CartItem key={product.id} product={product} />
+                <Divider py="12px" />
+              </Box>
+            ))}
+          <HStack py="30px">
+            <FormControl w="40%">
+              <Input
+                type="coupon"
+                name="coupon"
+                placeholder="123ABCD"
+                // Need to change on-hover colour
+                // onChange={e => handleInputChange(e, i)}
+              />
+            </FormControl>
+            <Button size="sm" type="submit">
+              APPLY COUPON
             </Button>
+          </HStack>
+        </VStack>
+        <VStack alignItems="flex-start" pt="92px">
+          {/* Fix the 92px */}
+          <VStack alignItems="flex-start" bg="#E8E8E8" spacing="40px" px="36px" py="36px" w="409px">
+            {/* Change this 409px */}
+            <Heading as="h4" size="subtitle" color="brand.black">
+              ORDER SUMMARY
+            </Heading>
+            <VStack w="100%" alignItems="flex-start" spacing="30px">
+              <Flex w="100%" justifyContent="space-between">
+                <Text>SUBTOTAL</Text>
+                <Text fontWeight="semibold">$1545</Text>
+              </Flex>
+              <Flex w="100%" justifyContent="space-between">
+                <Text>SHIPPING ESTIMATE</Text>
+                <Text fontWeight="semibold">$5</Text>
+              </Flex>
+              <Flex w="100%" justifyContent="space-between">
+                <Text>TAXES ESTIMATE</Text>
+                <Text fontWeight="semibold">$200</Text>
+              </Flex>
+            </VStack>
+            <Divider />
+            {/* Need to make the dividers thiccer */}
+            <Flex w="100%" justifyContent="space-between">
+              <Heading as="h4" size="subtitle" color="brand.black">
+                ESTIMATED TOTAL
+              </Heading>
+              <Heading as="h4" size="subtitle" color="brand.black">
+                $1750
+              </Heading>
+            </Flex>
           </VStack>
-        </HStack>
-      </Flex> */}
+          <Button size="md" type="submit">
+            PROCEED TO CHECKOUT
+          </Button>
+        </VStack>
+      </HStack>
     </>
   );
 };

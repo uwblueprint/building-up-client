@@ -8,12 +8,12 @@ const CartItem = ({ product }) => {
   const productPrice = variants[0].price;
 
   return (
-    <Flex py={20} px={32}>
-      <Flex direction="column" w="100%" h="100%">
+    <Flex>
+      <Flex direction="column" w="100%">
         {/* you probably want to set a max width on the images as well */}
-        <Image boxSize="100%" border="1px solid black" src={productImage} alt={title} />
+        <Image boxSize="100" border="1px solid black" src={productImage} alt={title} />
       </Flex>
-      <Flex direction="column" w="100%" pl={10}>
+      <Flex direction="column" w="100%">
         {/* you should probably also add a bigger vertical space between these headings */}
         <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.gray">
           {`Item #${productSku}`}
@@ -21,7 +21,7 @@ const CartItem = ({ product }) => {
         <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.darkgray">
           {title}
         </Heading>
-        {/* You're going to need to get the quanity from the state somehow */}
+        {/* Fetch quantity from state */}
         <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.darkgray">
           {`Quantity X $${productPrice}`}
         </Heading>
