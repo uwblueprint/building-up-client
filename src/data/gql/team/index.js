@@ -1,5 +1,13 @@
 import { gql } from '@apollo/client';
 
+export const GET_ALL_TEAMS = gql`
+  query getAllTeams {
+    getAllTeams {
+      id
+    }
+  }
+`;
+
 export const GET_TEAM_INFO = gql`
   query getTeam($id: String!) {
     getTeam(id: $id) {
