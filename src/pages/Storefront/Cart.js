@@ -1,7 +1,20 @@
 import React, { useEffect } from 'react';
-import { Box, HStack, VStack, Heading, Divider, Flex, FormControl, Text, Button, Input } from '@chakra-ui/react';
 import { useShopify } from '../../hooks/useShopify';
 import { CartItem } from 'components/storefront';
+import { CloseIcon } from '@chakra-ui/icons';
+import {
+  Box,
+  HStack,
+  VStack,
+  Heading,
+  Divider,
+  Flex,
+  FormControl,
+  Text,
+  Button,
+  Input,
+  IconButton,
+} from '@chakra-ui/react';
 
 import { useSelector, shallowEqual } from 'react-redux';
 import { selectors as teamSelectors } from '../../data/reducers/team';
@@ -55,7 +68,10 @@ const Cart = () => {
           {products &&
             products.map(product => (
               <Box w="100%" py="10px">
+                {/* <Flex w="100%" justifyContent="space-between"> */}
                 <CartItem key={product.id} product={product} />
+                {/* <IconButton variant="unstyled" aria-label="Remove from cart" icon={<CloseIcon />} /> */}
+                {/* </Flex> */}
                 <Divider py="12px" />
               </Box>
             ))}
