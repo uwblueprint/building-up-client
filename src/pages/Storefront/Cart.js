@@ -40,7 +40,7 @@ const Cart = () => {
         </Heading>
       </Box>
       <HStack w="100%" h="100%" justifyContent="space-between" alignItems="flex-start" px="105px">
-        <VStack alignItems="flex-start" pt="64px" pb="64px">
+        <VStack w="100%" alignItems="flex-start" pt="64px" pb="64px" pr="45px">
           <Flex w="100%" justifyContent="space-between">
             <Heading as="h4" size="subtitle" color="brand.black">
               CONTINUE SHOPPING
@@ -54,7 +54,7 @@ const Cart = () => {
           {/* The products here should be the line-items in the Shopify Checkout */}
           {products &&
             products.map(product => (
-              <Box py="10px">
+              <Box w="100%" py="10px">
                 <CartItem key={product.id} product={product} />
                 <Divider py="12px" />
               </Box>
@@ -75,7 +75,7 @@ const Cart = () => {
           </HStack>
         </VStack>
         <VStack alignItems="flex-start" pt="92px">
-          {/* Fix the 92px */}
+          {/* Fix the 92px, it's super sketch */}
           <VStack alignItems="flex-start" bg="#E8E8E8" spacing="40px" px="36px" py="36px" w="409px">
             {/* Change this 409px */}
             <Heading as="h4" size="subtitle" color="brand.black">

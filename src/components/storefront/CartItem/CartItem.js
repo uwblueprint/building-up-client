@@ -9,19 +9,17 @@ const CartItem = ({ product }) => {
 
   return (
     <Flex>
-      <Flex direction="column" w="100%">
-        {/* you probably want to set a max width on the images as well */}
-        <Image boxSize="100" border="1px solid black" src={productImage} alt={title} />
+      <Flex direction="column" w="20%">
+        <Image boxSize="200" border="1px solid black" src={productImage} alt={title} />
       </Flex>
-      <Flex direction="column" w="100%">
-        {/* you should probably also add a bigger vertical space between these headings */}
+      <Flex direction="column" w="50%">
         <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.gray">
           {`Item #${productSku}`}
         </Heading>
         <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.darkgray">
           {title}
         </Heading>
-        {/* Fetch quantity from state */}
+        {/* Fetch quantity from checkout lineitems */}
         <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.darkgray">
           {`Quantity X $${productPrice}`}
         </Heading>
