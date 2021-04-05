@@ -5,8 +5,8 @@ import Item from '../Item/Item';
 
 const BestSellers = () => {
   const { collections } = useShopify();
-  const bestSellersCollection = collections.find(({ handle }) => handle === 'frontpage');
-  // Replace predicate with handle === 'bestsellers' once we have that in place
+  const bestSellersCollection = collections.find(({ handle }) => handle === 'best-sellers');
+
   return (
     <VStack p={24}>
       <Heading as="h4" size="subtitle" color="brand.red">
@@ -16,7 +16,7 @@ const BestSellers = () => {
       <HStack spacing={8}>
         {bestSellersCollection &&
           bestSellersCollection.products.map(({ id, title, images, variants }) => (
-            <Item key={id} name={title} image={images && images[0].src} price={variants && variants[0].price} />
+            <Item key={id} id={id} name={title} image={images && images[0].src} price={variants && variants[0].price} />
           ))}
       </HStack>
     </VStack>

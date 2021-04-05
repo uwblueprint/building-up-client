@@ -16,6 +16,13 @@ const Input = {
         borderRadius: 'none',
       },
     },
+    quantity: {
+      field: {
+        width: '90px',
+        height: '52px',
+        borderRadius: 'none',
+      },
+    },
   },
   variants: {
     outline: {
@@ -26,6 +33,20 @@ const Input = {
         },
         _focus: {
           borderColor: 'brand.lightred',
+        },
+      },
+    },
+    quantity: {
+      field: {
+        textAlign: 'center',
+        padding: '4',
+        border: '1px solid',
+        borderColor: 'brand.gray',
+        _hover: {
+          borderColor: 'black',
+        },
+        _focus: {
+          borderColor: 'black',
         },
       },
     },

@@ -17,6 +17,10 @@ const Button = {
       h: '52px',
       minW: '44',
     },
+    icon: {
+      h: '52px',
+      w: '52px',
+    },
   },
   variants: {
     solid: {

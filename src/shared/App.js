@@ -7,7 +7,7 @@ import storeTheme from '../themes/store';
 
 import ChakraExpoDashboard from '../themes/dashboard/ChakraExpoDashboard';
 import ChakraExpoStore from '../themes/store/ChakraExpoStore';
-import Storefront from '../pages/Storefront/Storefront';
+import StorefrontRouter from '../components/storefront/StorefrontRouter/StorefrontRouter';
 import DashboardRouter from 'components/dashboard/DashboardRouter/DashboardRouter';
 
 function App() {
@@ -26,9 +26,9 @@ function App() {
           </ChakraProvider>
         </Route>
 
-        {/* TODO: put in storefront router */}
-        <Route exact path="/store">
-          <Storefront />
+        {/* All store pages are controlled by StorefrontRouter */}
+        <Route path="/store">
+          <StorefrontRouter />
         </Route>
         {/* All dashboard pages are controlled by DashboardRouter */}
         <Route path="/">
