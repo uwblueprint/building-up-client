@@ -10,9 +10,12 @@ const client = Client.buildClient({
   domain: 'raising-the-roof-chez-toit.myshopify.com',
 });
 
+const PRODUCTS_FETCHING = 'shopify/PRODUCTS_FETCHING';
 const PRODUCTS_FOUND = 'shopify/PRODUCTS_FOUND';
 const PRODUCT_FOUND = 'shopify/PRODUCT_FOUND';
-const COLLECTION_FOUND = 'shopify/COLLECTION_FOUND';
+const COLLECTIONS_FETCHING = 'shopify/COLLECTIONS_FETCHING';
+const COLLECTIONS_FOUND = 'shopify/COLLECTIONS_FOUND';
+const CHECKOUT_FETCHING = 'shopify/CHECKOUT_FETCHING';
 const CHECKOUT_FOUND = 'shopify/CHECKOUT_FOUND';
 const SHOP_FOUND = 'shopify/SHOP_FOUND';
 const UPDATE_CART_ATTRIBUTE = 'shopify/UPDATE_CART_ATTRIBUTE';
@@ -23,26 +26,40 @@ const OPEN_CART = 'shopify/OPEN_CART';
 const CLOSE_CART = 'shopify/CLOSE_CART';
 const CART_COUNT = 'shopify/CART_COUNT';
 
+const CHECKOUT_ID_LOCAL_STORAGE_KEY = 'SHOPIFY_CHECKOUT_ID';
+const CHECKOUT_ID_FROM_LOCAL_STORAGE = window.localStorage.getItem(CHECKOUT_ID_LOCAL_STORAGE_KEY);
+
 const initialState = {
   isCartOpen: false, // whether the cart popover is visible or not (currently unused)
-  cartCount: 0, // the number of items in the cart
-  checkout: {}, // the checkout object that Shopify creates
-  products: [], // the checkout object that Shopify creates
-  collections: [], // the list of collections pulled from Shopify
-  product: {}, // the product that the user is currently viewing
-  shop: {}, // the shop object that Shopify creates
+  cartCount: 0, // the number of items in the cart (unused, I don't think this is needed)
+  checkout: {
+    loading: true,
+    data: null,
+  }, // the checkout object that Shopify creates
+  products: { loading: true, data: [] }, // the list of products fetched from Shopify
+  collections: { loading: true, data: [] }, // the list of collections pulled from Shopify
+  product: {}, // the product that the user is currently viewing (unused, I don't think this is needed)
+  shop: {}, // the shop object that Shopify creates (unused, I don't think this is needed)
 };
 
 const shopifyReducer = (state = initialState, action) => {
   switch (action.type) {
+    case PRODUCTS_FETCHING:
+      return { ...state, products: { ...state.products, loading: true } };
     case PRODUCTS_FOUND:
-      return { ...state, products: action.payload };
+      return { ...state, products: { loading: false, data: action.payload } };
     case PRODUCT_FOUND:
       return { ...state, product: action.payload };
-    case COLLECTION_FOUND:
-      return { ...state, collections: action.payload };
+    case COLLECTIONS_FETCHING:
+      return { ...state, collections: { ...state.collections, loading: true } };
+    case COLLECTIONS_FOUND:
+      return { ...state, collections: { loading: false, data: action.payload } };
+    case CHECKOUT_FETCHING:
+      return { ...state, checkout: { ...state.checkout, loading: true } };
     case CHECKOUT_FOUND:
-      return { ...state, checkout: action.payload };
+      // Store the id in local storage
+      window.localStorage.setItem(CHECKOUT_ID_LOCAL_STORAGE_KEY, action.payload.id);
+      return { ...state, checkout: { loading: false, data: action.payload } };
     case SHOP_FOUND:
       return { ...state, shop: action.payload };
     case UPDATE_CART_ATTRIBUTE:
@@ -67,6 +84,7 @@ const shopifyReducer = (state = initialState, action) => {
 // Gets all the products from Shopify
 const getProducts = () => {
   return dispatch => {
+    dispatch({ type: PRODUCTS_FETCHING });
     client.product.fetchAll().then(res => {
       dispatch({
         type: PRODUCTS_FOUND,
@@ -91,24 +109,42 @@ const getProduct = id => {
 // Gets all the collections from Shopify
 const getCollections = () => {
   return dispatch => {
+    dispatch({ type: COLLECTIONS_FETCHING });
     client.collection.fetchAllWithProducts().then(res => {
       dispatch({
-        type: COLLECTION_FOUND,
+        type: COLLECTIONS_FOUND,
         payload: res,
       });
     });
   };
 };
 
+const createCheckout = dispatch => {
+  client.checkout.create().then(res => {
+    dispatch({
+      type: CHECKOUT_FOUND,
+      payload: res,
+    });
+  });
+};
+
 // Creates initial checkout state from Shopify
 const checkout = () => {
   return dispatch => {
-    client.checkout.create().then(res => {
-      dispatch({
-        type: CHECKOUT_FOUND,
-        payload: res,
-      });
-    });
+    dispatch({ type: CHECKOUT_FETCHING });
+    if (CHECKOUT_ID_FROM_LOCAL_STORAGE) {
+      client.checkout
+        .fetch(CHECKOUT_ID_FROM_LOCAL_STORAGE)
+        .then(res =>
+          dispatch({
+            type: CHECKOUT_FOUND,
+            payload: res,
+          }),
+        )
+        .catch(err => createCheckout(dispatch));
+    } else {
+      createCheckout(dispatch);
+    }
   };
 };
 
@@ -222,7 +258,7 @@ export const useShopify = () => {
   const fetchProducts = () => dispatch(getProducts());
   const fetchProduct = id => dispatch(getProduct(id));
   const fetchCollections = () => dispatch(getCollections());
-  const createCheckout = () => dispatch(checkout());
+  const initializeCheckout = () => dispatch(checkout());
   const createShop = () => dispatch(shopInfo());
   const closeCart = () => dispatch(handleCartClose());
   const openCart = () => dispatch(handleCartOpen());
@@ -249,7 +285,7 @@ export const useShopify = () => {
     fetchProducts,
     fetchProduct,
     fetchCollections,
-    createCheckout,
+    initializeCheckout,
     createShop,
     closeCart,
     openCart,

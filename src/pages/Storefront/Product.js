@@ -6,9 +6,11 @@ import PageNotFound from './PageNotFound';
 
 const Product = () => {
   const { id } = useParams();
-  const { products } = useShopify();
+  const {
+    products: { loading, data },
+  } = useShopify();
 
-  const product = products.find(product => product.id === id);
+  const product = data.find(product => product.id === id);
 
   return product ? <ProductDetails product={product} /> : <PageNotFound />;
 };

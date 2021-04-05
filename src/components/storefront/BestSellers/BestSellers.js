@@ -4,8 +4,10 @@ import { useShopify } from 'hooks/useShopify';
 import Item from '../Item/Item';
 
 const BestSellers = () => {
-  const { collections } = useShopify();
-  const bestSellersCollection = collections.find(({ handle }) => handle === 'best-sellers');
+  const {
+    collections: { loading, data },
+  } = useShopify();
+  const bestSellersCollection = data.find(({ handle }) => handle === 'best-sellers');
 
   return (
     <VStack p={24}>

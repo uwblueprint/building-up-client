@@ -9,15 +9,15 @@ import Product from '../../../pages/Storefront/Product';
 import PageNotFound from 'pages/Storefront/PageNotFound';
 
 const StorefrontRouter = () => {
-  const { createShop, createCheckout, fetchProducts, fetchCollections } = useShopify();
+  const { createShop, initializeCheckout, fetchProducts, fetchCollections } = useShopify();
   const { path } = useRouteMatch();
 
   useEffect(() => {
-    // Component on mount (i.e. app init): Try to fetch user data (Apollo client internally uses a cookie)
+    // Component on mount: Fetch all data required for Shopify (products, collections, and checkout)
     createShop();
     fetchProducts();
     fetchCollections();
-    createCheckout();
+    initializeCheckout();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
