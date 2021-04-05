@@ -25,7 +25,7 @@ const StorefrontRouter = () => {
     <ChakraProvider theme={storeTheme}>
       <Flex direction="column" minHeight="100vh">
         <Navbar />
-        <Container maxW="container.xl" flex="1">
+        <Container maxW="container.xl" display="flex" flexDirection="column" flex="1" py={20} px={24}>
           <Switch>
             <Route exact path={path}>
               <Home />

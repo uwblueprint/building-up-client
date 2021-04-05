@@ -32,10 +32,7 @@ const CHECKOUT_ID_FROM_LOCAL_STORAGE = window.localStorage.getItem(CHECKOUT_ID_L
 const initialState = {
   isCartOpen: false, // whether the cart popover is visible or not (currently unused)
   cartCount: 0, // the number of items in the cart (unused, I don't think this is needed)
-  checkout: {
-    loading: true,
-    data: null,
-  }, // the checkout object that Shopify creates
+  checkout: { loading: true, data: null }, // the checkout object that Shopify creates
   products: { loading: true, data: [] }, // the list of products fetched from Shopify
   collections: { loading: true, data: [] }, // the list of collections pulled from Shopify
   product: {}, // the product that the user is currently viewing (unused, I don't think this is needed)
@@ -129,7 +126,7 @@ const createCheckout = dispatch => {
 };
 
 // Creates initial checkout state from Shopify
-const checkout = () => {
+const initCheckout = () => {
   return dispatch => {
     dispatch({ type: CHECKOUT_FETCHING });
     if (CHECKOUT_ID_FROM_LOCAL_STORAGE) {
@@ -253,12 +250,12 @@ export const useShopify = () => {
   const products = useSelector(state => state.shopifyState.products);
   const product = useSelector(state => state.shopifyState.product);
   const collections = useSelector(state => state.shopifyState.collections);
-  const checkoutState = useSelector(state => state.shopifyState.checkout);
+  const checkout = useSelector(state => state.shopifyState.checkout);
   const shopDetails = useSelector(state => state.shopifyState.shop);
   const fetchProducts = () => dispatch(getProducts());
   const fetchProduct = id => dispatch(getProduct(id));
   const fetchCollections = () => dispatch(getCollections());
-  const initializeCheckout = () => dispatch(checkout());
+  const initializeCheckout = () => dispatch(initCheckout());
   const createShop = () => dispatch(shopInfo());
   const closeCart = () => dispatch(handleCartClose());
   const openCart = () => dispatch(handleCartOpen());
@@ -276,7 +273,7 @@ export const useShopify = () => {
     product,
     collections,
     cartStatus,
-    checkoutState,
+    checkout,
     cartCount,
     shopDetails,
     updateCartCount,
