@@ -37,12 +37,17 @@ const Cart = () => {
   //     ]);
   //   }, [checkoutState.id, team.id, team.name]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Temporary checkout code from last term, will need to udpate
   const openCheckout = () => {
     if (checkoutState.webUrl) {
       console.log('webUrl exists');
     }
     // window.open(checkoutState.webUrl) // opens checkout in a new window
     window.location.replace(checkoutState.webUrl); // opens checkout in same window
+  };
+
+  const applyCoupon = () => {
+    console.log('coupon');
   };
 
   return (
@@ -65,6 +70,7 @@ const Cart = () => {
           <Divider />
           {/* TO DO: change to 36px in between the pictures */}
           {/* The products here should be the line-items in the Shopify Checkout */}
+          {/* Will need to specify a key here */}
           {products &&
             products.map(product => (
               <Box w="100%" py="10px">
@@ -85,7 +91,7 @@ const Cart = () => {
                 // onChange={e => handleInputChange(e, i)}
               />
             </FormControl>
-            <Button size="sm" type="submit">
+            <Button size="sm" onClick={applyCoupon}>
               APPLY COUPON
             </Button>
           </HStack>
@@ -94,6 +100,8 @@ const Cart = () => {
           {/* Fix the 92px, it's super sketch */}
           <VStack alignItems="flex-start" bg="#E8E8E8" spacing="40px" px="36px" py="36px" w="409px">
             {/* Change this 409px */}
+            {/* Current the values in Order Summary are just placeholders */}
+            {/* Probably want to extract the order summary to another component */}
             <Heading as="h4" size="subtitle" color="brand.black">
               ORDER SUMMARY
             </Heading>
@@ -122,7 +130,7 @@ const Cart = () => {
               </Heading>
             </Flex>
           </VStack>
-          <Button size="md" type="submit">
+          <Button size="md" onClick={openCheckout}>
             PROCEED TO CHECKOUT
           </Button>
         </VStack>

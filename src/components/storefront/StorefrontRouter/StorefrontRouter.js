@@ -26,22 +26,20 @@ const StorefrontRouter = () => {
     <ChakraProvider theme={storeTheme}>
       <Flex direction="column" minHeight="100vh">
         <Navbar />
-        <Container maxW="container.xl" flex="1">
-          <Switch>
-            <Route exact path={path}>
-              <Home />
-            </Route>
-            <Route path={`${path}/products/:id`}>
-              <Product />
-            </Route>
-            <Route path={`${path}/cart`}>
-              <Cart />
-            </Route>
-            <Route path={`${path}/*`}>
-              <PageNotFound />
-            </Route>
-          </Switch>
-        </Container>
+        <Switch>
+          <Route exact path={path}>
+            <Home />
+          </Route>
+          <Route path={`${path}/products/:id`}>
+            <Product />
+          </Route>
+          <Route path={`${path}/cart`}>
+            <Cart />
+          </Route>
+          <Route path={`${path}/*`}>
+            <PageNotFound />
+          </Route>
+        </Switch>
         <Footer />
       </Flex>
     </ChakraProvider>
