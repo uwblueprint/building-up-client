@@ -29,10 +29,10 @@ const Input = {
       field: {
         borderColor: 'brand.gray',
         _hover: {
-          borderColor: 'brand.lightred',
+          borderColor: 'black',
         },
         _focus: {
-          borderColor: 'brand.lightred',
+          borderColor: 'black',
         },
       },
     },

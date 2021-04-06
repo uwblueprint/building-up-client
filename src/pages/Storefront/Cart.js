@@ -1,7 +1,8 @@
 import React from 'react';
 import { useShopify } from '../../hooks/useShopify';
 import { CartItem } from 'components/storefront';
-import { Box, HStack, VStack, Heading, Divider, Flex, FormControl, Text, Button, Input } from '@chakra-ui/react';
+import { Box, HStack, VStack, Heading, Divider, Flex, FormControl, Text, Button, Input, Link } from '@chakra-ui/react';
+import { Link as RouterLink } from 'react-router-dom';
 // import { useSelector, shallowEqual } from 'react-redux';
 // import { selectors as teamSelectors } from '../../data/reducers/team';
 
@@ -38,16 +39,19 @@ const Cart = () => {
 
   return (
     <>
-      <Box bg="black" color="black" px="105px">
-        <Heading alignSelf="flex-start" color="white" py={6}>
+      <Box bg="black" px="105px">
+        <Heading color="white" py={6}>
           MY SHOPPING BAG
         </Heading>
       </Box>
       <HStack w="100%" h="100%" justifyContent="space-between" alignItems="flex-start" px="105px">
-        <VStack w="100%" alignItems="flex-start" py="64px" pr="45px">
+        <VStack flex={1} alignItems="flex-start" py="64px" pr="45px">
+          {/* Add spacing to this VStack */}
           <Flex w="100%" justifyContent="space-between">
-            <Heading as="h4" size="subtitle" color="brand.black">
-              CONTINUE SHOPPING
+            <Heading as="h4" size="subtitle">
+              <Link as={RouterLink} to={`/store`}>
+                CONTINUE SHOPPING
+              </Link>
             </Heading>
             <Heading as="h4" color="brand.gray" size="subtitle" textTransform="uppercase">
               {/* TO DO: update this to be the length of the line items in cart */}
@@ -64,11 +68,11 @@ const Cart = () => {
               </Box>
             ))}
           <HStack py="30px">
-            <FormControl w="40%">
+            <FormControl w="50%">
               <Input
-                type="coupon"
+                type="text"
                 name="coupon"
-                placeholder="123ABCD"
+                placeholder="COUPON CODE"
                 // onChange={e => handleInputChange(e, i)}
               />
             </FormControl>
@@ -79,8 +83,8 @@ const Cart = () => {
         </VStack>
         <VStack alignItems="flex-start" pt="92px">
           <VStack alignItems="flex-start" bg="brand.lightgray" spacing="40px" p="36px" w="409px" mb="24px">
-            {/* The current values in Order Summary are just placeholders */}
-            <Heading as="h4" size="subtitle" color="brand.black">
+            {/* TO DO: refactor to store titles & prices in array & map through to render */}
+            <Heading as="h4" size="subtitle">
               ORDER SUMMARY
             </Heading>
             <VStack w="100%" alignItems="flex-start" spacing="30px">
@@ -99,10 +103,10 @@ const Cart = () => {
             </VStack>
             <Divider borderColor="brand.gray" />
             <Flex w="100%" justifyContent="space-between">
-              <Heading as="h4" size="subtitle" color="brand.black">
+              <Heading as="h4" size="subtitle">
                 ESTIMATED TOTAL
               </Heading>
-              <Heading as="h4" size="subtitle" color="brand.black">
+              <Heading as="h4" size="subtitle">
                 $1750
               </Heading>
             </Flex>
