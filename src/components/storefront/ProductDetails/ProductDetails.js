@@ -20,7 +20,7 @@ const ProductDetails = ({ product }) => {
   });
 
   return (
-    <Flex py={20} px={32}>
+    <Flex>
       <Flex direction="column" w="100%" h="100%">
         {images.map(({ id, src }) => (
           <Image key={id} boxSize="100%" border="1px solid black" src={src} alt={title} mb={6} />
