@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useShopify } from '../../hooks/useShopify';
 import { CartItem } from 'components/storefront';
 import { Box, HStack, VStack, Heading, Divider, Flex, FormControl, Text, Button, Input } from '@chakra-ui/react';
-import { useSelector, shallowEqual } from 'react-redux';
-import { selectors as teamSelectors } from '../../data/reducers/team';
+// import { useSelector, shallowEqual } from 'react-redux';
+// import { selectors as teamSelectors } from '../../data/reducers/team';
 
 // Cart page that shows the user the items in their cart, allows them to change quantity, and proceed to checkout
 
 const Cart = () => {
-  const { products, checkoutState, updateCartAttributes } = useShopify();
-  const team = useSelector(teamSelectors.selectTeam, shallowEqual);
+  const { products, checkoutState } = useShopify();
+  // const team = useSelector(teamSelectors.selectTeam, shallowEqual);
 
   /* previous code that might be userful
   useEffect(() => {

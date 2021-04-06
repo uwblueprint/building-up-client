@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
-import { ChakraProvider, Container, Flex } from '@chakra-ui/react';
+import { ChakraProvider, Flex } from '@chakra-ui/react';
 import storeTheme from 'themes/store';
 import { useShopify } from '../../../hooks/useShopify';
 import { Navbar, Footer } from '../';
