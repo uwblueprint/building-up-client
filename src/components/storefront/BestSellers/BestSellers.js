@@ -5,8 +5,8 @@ import Item from '../Item/Item';
 
 const BestSellers = () => {
   const { collections } = useShopify();
-  const bestSellersCollection = collections.find(({ handle }) => handle === 'frontpage');
-  // Replace predicate with handle === 'bestsellers' once we have that in place
+  const bestSellersCollection = collections.find(({ handle }) => handle === 'best-sellers');
+
   return (
     <VStack p={24}>
       <Heading as="h4" size="subtitle" color="brand.red">

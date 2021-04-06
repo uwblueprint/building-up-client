@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, Container, Flex } from '@chakra-ui/react';
 import storeTheme from 'themes/store';
 import { useShopify } from '../../../hooks/useShopify';
 import { Navbar, Footer } from '../';
@@ -24,22 +24,26 @@ const StorefrontRouter = () => {
 
   return (
     <ChakraProvider theme={storeTheme}>
-      <Navbar />
-      <Switch>
-        <Route exact path={path}>
-          <Home />
-        </Route>
-        <Route path={`${path}/products/:id`}>
-          <Product />
-        </Route>
-        <Route path={`${path}/cart`}>
-          <Cart />
-        </Route>
-        <Route path={`${path}/*`}>
-          <PageNotFound />
-        </Route>
-      </Switch>
-      <Footer />
+      <Flex direction="column" minHeight="100vh">
+        <Navbar />
+        <Container maxW="container.xl" flex="1">
+          <Switch>
+            <Route exact path={path}>
+              <Home />
+            </Route>
+            <Route path={`${path}/products/:id`}>
+              <Product />
+            </Route>
+            <Route path={`${path}/cart`}>
+              <Cart />
+            </Route>
+            <Route path={`${path}/*`}>
+              <PageNotFound />
+            </Route>
+          </Switch>
+        </Container>
+        <Footer />
+      </Flex>
     </ChakraProvider>
   );
 };

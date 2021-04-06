@@ -1,20 +1,8 @@
 import React from 'react';
-import { useQuery, gql } from '@apollo/client';
-import { Box, Center, Flex, Heading, HStack, Spacer } from '@chakra-ui/react';
+import { Box, Center, Flex, Heading, HStack } from '@chakra-ui/react';
 
+import PageHeading from 'components/dashboard/PageHeading/PageHeading';
 import ShareStorefrontButton from 'components/dashboard/ShareStorefrontButton/ShareStorefrontButton';
-
-const GET_TEAM_INFO = gql`
-  query getTeam($id: String!) {
-    getTeam(id: $id) {
-      name
-      organization
-      id
-      amountRaised
-      itemsSold
-    }
-  }
-`;
 
 const StorefrontButton = () => {
   return (
@@ -52,39 +40,33 @@ const NoSales = () => {
   );
 };
 
-const DashboardTeam = ({ teamId }) => {
-  const { loading, error, data } = useQuery(GET_TEAM_INFO, {
-    variables: { id: teamId },
-  });
-
-  return loading ? (
-    'Loading...'
-  ) : error ? (
-    `Error! ${error.message}`
-  ) : (
-    <Box w="100%">
-      <Heading textTransform="uppercase" as="p" size="subtitle" color="gray.500" mb="8px">
-        Team {data.getTeam.name}
-      </Heading>
-      <Flex mb="40px">
-        <Heading as="h1" size="h1">
-          Dashboard
-        </Heading>
-        <Spacer />
-        {data.getTeam.itemsSold !== 0 ? <StorefrontButton /> : null}
+const DashboardTeam = ({ team }) => {
+  return (
+    <>
+      <Flex w="100%" justify="space-between">
+        <PageHeading teamName={team.teamName} title="Dashboard" />
+        {team.itemsSold !== 0 && (
+          <Box alignSelf="flex-end">
+            <StorefrontButton />
+          </Box>
+        )}
       </Flex>
-      <Heading as="h3" size="h3" mb="23px">
-        Overview
-      </Heading>
-      <HStack mb="72px" spacing="100px">
-        <SalesInfo description="Total Items Sold" amount={data.getTeam.itemsSold} />
-        <SalesInfo description="Total Capital Raised" amount={'$' + data.getTeam.amountRaised} />
-      </HStack>
-      <Heading as="h3" size="h3" mb="21px">
-        Sales Log
-      </Heading>
-      {data.getTeam.itemsSold === 0 ? <NoSales /> : null}
-    </Box>
+      <Box mb="32px">
+        <Heading as="h3" size="h3" mb="23px">
+          Overview
+        </Heading>
+        <HStack spacing="100px">
+          <SalesInfo description="Total Items Sold" amount={team.itemsSold} />
+          <SalesInfo description="Total Capital Raised" amount={`$${team.amountRaised.toFixed(2)}`} />
+        </HStack>
+      </Box>
+      <Box w="100%">
+        <Heading as="h3" size="h3" mb="21px">
+          Sales Log
+        </Heading>
+        {team.itemsSold === 0 ? <NoSales /> : null}
+      </Box>
+    </>
   );
 };
 

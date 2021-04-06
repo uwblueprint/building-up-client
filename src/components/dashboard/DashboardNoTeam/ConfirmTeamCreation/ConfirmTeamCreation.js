@@ -13,33 +13,37 @@ const ConfirmTeamCreation = props => {
   const dispatch = useDispatch();
   const toast = useToast();
 
-  const [createTeam] = useMutation(CREATE_TEAM);
-  const [joinTeam] = useMutation(JOIN_TEAM);
+  const [createTeam, { loading: loadingCreateTeam }] = useMutation(CREATE_TEAM);
+  const [joinTeam, { loading: loadingJoinTeam }] = useMutation(JOIN_TEAM);
   const [inviteUsersToTeam] = useMutation(SEND_INVITE_EMAILS);
 
   const executeQuery = () => {
     createTeam({ variables: { name: teamName, organization: teamAffiliation } })
       .then(data => {
         const teamId = data.data.createTeam.id;
-        const list = [...inputList];
 
         joinTeam({ variables: { id: userId, teamId } }).then(() => {
           dispatch({ type: UPDATE_USER, payload: { teamId } });
+
           toast({
             position: 'top',
             render: props => <Toast {...props} description="Your team has been created." isClosable />,
           });
 
-          inviteUsersToTeam({
-            variables: { emails: list, teamId: teamId },
-          })
-            .then(data => {
-              console.log(data);
-              // Create a toast or alert to indicate emails have been sent
+          if (inputList.length > 0 && inputList[0] !== '') {
+            inviteUsersToTeam({
+              variables: { emails: inputList, teamId: teamId },
             })
-            .catch(e => {
-              console.log(e);
-            });
+              .then(data => {
+                toast({
+                  position: 'top',
+                  render: props => <Toast {...props} description="Email invites sent!" isClosable />,
+                });
+              })
+              .catch(e => {
+                console.log(e);
+              });
+          }
         });
       })
       .catch(e => {
@@ -49,7 +53,7 @@ const ConfirmTeamCreation = props => {
 
   return (
     <Box w="100%" h="100%" alignItems="flex-start">
-      <Button bg="white" onClick={decrementPage} _focus={{ boxShadow: 'white' }}>
+      <Button color="black" onClick={decrementPage} _focus={{ boxShadow: 'white' }} variant="link">
         {'< Back'}
       </Button>
       <Heading alignSelf="flex-start" size="h1" as="h1" marginTop={2} marginBottom={8}>
@@ -100,7 +104,7 @@ const ConfirmTeamCreation = props => {
         </VStack>
       </HStack>
       <Flex marginTop={4} justify="flex-end">
-        <Button size="lg" _focus={{ boxShadow: 'white' }} onClick={executeQuery}>
+        <Button size="lg" isLoading={loadingCreateTeam || loadingJoinTeam} onClick={executeQuery}>
           Confirm
         </Button>
       </Flex>
