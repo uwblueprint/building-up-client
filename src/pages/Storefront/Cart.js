@@ -54,13 +54,13 @@ const Cart = () => {
               {`${products.length} ITEMS`}
             </Heading>
           </Flex>
-          <Divider />
+          <Divider borderColor="brand.gray" />
           {/* TO DO: The products here should be the line-items in the Shopify Checkout, also need to add unique key */}
           {products &&
             products.map(product => (
-              <Box w="100%" py="10px">
+              <Box w="100%" pt="28px">
                 <CartItem key={product.id} product={product} />
-                <Divider py="12px" />
+                <Divider borderColor="brand.gray" pb="36px" />
               </Box>
             ))}
           <HStack py="30px">
@@ -97,8 +97,7 @@ const Cart = () => {
                 <Text fontWeight="semibold">$200</Text>
               </Flex>
             </VStack>
-            <Divider />
-            {/* Need to make the dividers thiccer */}
+            <Divider borderColor="brand.gray" />
             <Flex w="100%" justifyContent="space-between">
               <Heading as="h4" size="subtitle" color="brand.black">
                 ESTIMATED TOTAL
