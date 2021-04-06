@@ -1,20 +1,7 @@
 import React, { useEffect } from 'react';
 import { useShopify } from '../../hooks/useShopify';
 import { CartItem } from 'components/storefront';
-import { CloseIcon } from '@chakra-ui/icons';
-import {
-  Box,
-  HStack,
-  VStack,
-  Heading,
-  Divider,
-  Flex,
-  FormControl,
-  Text,
-  Button,
-  Input,
-  IconButton,
-} from '@chakra-ui/react';
+import { Box, HStack, VStack, Heading, Divider, Flex, FormControl, Text, Button, Input } from '@chakra-ui/react';
 
 import { useSelector, shallowEqual } from 'react-redux';
 import { selectors as teamSelectors } from '../../data/reducers/team';
@@ -71,13 +58,12 @@ const Cart = () => {
           {/* TO DO: change to 36px in between the pictures */}
           {/* The products here should be the line-items in the Shopify Checkout */}
           {/* Will need to specify a key here */}
+
+          {/* Need to consider if the quantity picker should be inside the CartItem component */}
           {products &&
             products.map(product => (
               <Box w="100%" py="10px">
-                {/* <Flex w="100%" justifyContent="space-between"> */}
                 <CartItem key={product.id} product={product} />
-                {/* <IconButton variant="unstyled" aria-label="Remove from cart" icon={<CloseIcon />} /> */}
-                {/* </Flex> */}
                 <Divider py="12px" />
               </Box>
             ))}
