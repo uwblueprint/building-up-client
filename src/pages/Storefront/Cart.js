@@ -12,7 +12,7 @@ const CartItems = ({ productsData, cartCount }) => {
   };
 
   return (
-    <VStack flex={1} alignItems="flex-start" py={16} pr={12}>
+    <VStack flex={1} alignItems="flex-start" spacing={8} py={16} pr={12}>
       {/* Add spacing to this VStack */}
       <Flex w="100%" justifyContent="space-between">
         <Heading as="h4" size="subtitle">
@@ -25,16 +25,19 @@ const CartItems = ({ productsData, cartCount }) => {
           {`${cartCount} ITEMS`}
         </Heading>
       </Flex>
-      <Divider borderColor="brand.gray" />
+
       {/* TO DO: The products here should be the line-items in the Shopify Checkout, also need to add unique key */}
-      {productsData &&
-        productsData.map(product => (
-          <Box w="100%" pt={6}>
-            <CartItem key={product.id} product={product} />
-            <Divider borderColor="brand.gray" pb={8} />
-          </Box>
-        ))}
-      <HStack py={8}>
+      <VStack w="100%" spacing={8}>
+        <Divider borderColor="brand.gray" />
+        {productsData &&
+          productsData.map(product => (
+            <Box w="100%">
+              <CartItem key={product.id} product={product} />
+              <Divider borderColor="brand.gray" pb={8} />
+            </Box>
+          ))}
+      </VStack>
+      <Flex justifyContent="space-between">
         <FormControl w="50%">
           <Input
             type="text"
@@ -46,7 +49,7 @@ const CartItems = ({ productsData, cartCount }) => {
         <Button size="sm" onClick={applyCoupon}>
           APPLY COUPON
         </Button>
-      </HStack>
+      </Flex>
     </VStack>
   );
 };
@@ -62,7 +65,7 @@ const OrderSummary = ({ checkoutData }) => {
   };
 
   return (
-    <VStack alignItems="flex-start" pt="92px">
+    <Flex direction="column" alignItems="flex-start" pt="116px">
       <VStack alignItems="flex-start" bg="brand.lightgray" spacing={10} p={8} w="409px" mb={6}>
         {/* TO DO: refactor to store titles & prices in array & map through to render */}
         <Heading as="h4" size="subtitle">
@@ -95,7 +98,7 @@ const OrderSummary = ({ checkoutData }) => {
       <Button size="md" onClick={openCheckout}>
         PROCEED TO CHECKOUT
       </Button>
-    </VStack>
+    </Flex>
   );
 };
 
