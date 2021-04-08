@@ -1,5 +1,5 @@
 import React from 'react';
-import { useShopify } from '../../hooks/useShopify';
+import { useShopify } from 'hooks/useShopify';
 import { CartItem } from 'components/storefront';
 import { Box, HStack, VStack, Heading, Divider, Flex, FormControl, Text, Button, Input, Link } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
