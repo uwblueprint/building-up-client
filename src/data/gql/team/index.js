@@ -4,6 +4,7 @@ export const GET_ALL_TEAMS = gql`
   query getAllTeams {
     getAllTeams {
       id
+      name
     }
   }
 `;
