@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Heading, Flex, Image, useNumberInput, IconButton, VStack, Spacer } from '@chakra-ui/react';
+import { Heading, Flex, Image, useNumberInput, IconButton, VStack } from '@chakra-ui/react';
 import QuantityPicker from '../ProductDetails/QuantityPicker';
 import { CloseIcon } from '@chakra-ui/icons';
 
@@ -22,25 +22,25 @@ const CartItem = ({ product }) => {
   };
 
   return (
-    <Flex>
-      <Flex direction="column">
-        <Image boxSize="200" objectFit="cover" border="1px solid black" src={productImage} alt={title} />
+    <Flex justifyContent="space-between">
+      <Flex>
+        <Flex direction="column">
+          <Image boxSize="200" objectFit="cover" border="1px solid black" src={productImage} alt={title} />
+        </Flex>
+        <VStack alignItems="flex-start" w="250px" pl={6}>
+          <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.gray">
+            {`Item #${productSku}`}
+          </Heading>
+          <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.darkgray">
+            {title}
+          </Heading>
+          <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.darkgray">
+            {`${productQuantity} X $${productPrice}`}
+          </Heading>
+          {/* Does not show colour + variant at the moment */}
+        </VStack>
       </Flex>
-      <VStack alignItems="flex-start" w="250px" pl={6}>
-        <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.gray">
-          {`Item #${productSku}`}
-        </Heading>
-        <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.darkgray">
-          {title}
-        </Heading>
-        <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.darkgray">
-          {`${productQuantity} X $${productPrice}`}
-        </Heading>
-        {/* Does not show colour + variant at the moment */}
-      </VStack>
-      <Spacer />
       <QuantityPicker {...quantityPickerProps} />
-      <Spacer />
       <IconButton
         size="xs"
         color="brand.gray"
