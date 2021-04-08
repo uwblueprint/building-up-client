@@ -27,7 +27,7 @@ const CartItem = ({ product }) => {
         <Flex direction="column">
           <Image boxSize="200" objectFit="cover" border="1px solid black" src={productImage} alt={title} />
         </Flex>
-        <VStack alignItems="flex-start" w="250px" pl={6}>
+        <VStack alignItems="flex-start" w={64} pl={6}>
           <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.gray">
             {`Item #${productSku}`}
           </Heading>

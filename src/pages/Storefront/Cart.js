@@ -12,7 +12,7 @@ const CartItems = ({ productsData, cartCount }) => {
   };
 
   return (
-    <VStack flex={1} alignItems="flex-start" py="64px" pr="45px">
+    <VStack flex={1} alignItems="flex-start" py={16} pr={12}>
       {/* Add spacing to this VStack */}
       <Flex w="100%" justifyContent="space-between">
         <Heading as="h4" size="subtitle">
@@ -29,12 +29,12 @@ const CartItems = ({ productsData, cartCount }) => {
       {/* TO DO: The products here should be the line-items in the Shopify Checkout, also need to add unique key */}
       {productsData &&
         productsData.map(product => (
-          <Box w="100%" pt="28px">
+          <Box w="100%" pt={6}>
             <CartItem key={product.id} product={product} />
-            <Divider borderColor="brand.gray" pb="36px" />
+            <Divider borderColor="brand.gray" pb={8} />
           </Box>
         ))}
-      <HStack py="30px">
+      <HStack py={8}>
         <FormControl w="50%">
           <Input
             type="text"
@@ -63,12 +63,12 @@ const OrderSummary = ({ checkoutData }) => {
 
   return (
     <VStack alignItems="flex-start" pt="92px">
-      <VStack alignItems="flex-start" bg="brand.lightgray" spacing="40px" p="36px" w="409px" mb="24px">
+      <VStack alignItems="flex-start" bg="brand.lightgray" spacing={10} p={8} w="409px" mb={6}>
         {/* TO DO: refactor to store titles & prices in array & map through to render */}
         <Heading as="h4" size="subtitle">
           ORDER SUMMARY
         </Heading>
-        <VStack w="100%" alignItems="flex-start" spacing="30px">
+        <VStack w="100%" alignItems="flex-start" spacing={8}>
           <Flex w="100%" justifyContent="space-between">
             <Text>SUBTOTAL</Text>
             <Text fontWeight="semibold">$1545</Text>
