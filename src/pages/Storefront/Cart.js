@@ -9,7 +9,11 @@ import { Link as RouterLink } from 'react-router-dom';
 // Cart page that shows the user the items in their cart, allows them to change quantity, and proceed to checkout
 
 const Cart = () => {
-  const { products, checkoutState } = useShopify();
+  const {
+    products: { loading: productsLoading, data: productsData },
+    checkout: { loading: checkoutLoading, data: checkoutData },
+    cartCount,
+  } = useShopify();
   // const team = useSelector(teamSelectors.selectTeam, shallowEqual);
 
   /* previous code that might be userful
@@ -26,11 +30,11 @@ const Cart = () => {
 
   // Temporary checkout code from last term, will need to udpate
   const openCheckout = () => {
-    if (checkoutState.webUrl) {
+    if (checkoutData.webUrl) {
       console.log('webUrl exists');
     }
     // window.open(checkoutState.webUrl) // opens checkout in a new window
-    window.location.replace(checkoutState.webUrl); // opens checkout in same window
+    window.location.replace(checkoutData.webUrl); // opens checkout in same window
   };
 
   const applyCoupon = () => {
@@ -55,13 +59,13 @@ const Cart = () => {
             </Heading>
             <Heading as="h4" color="brand.gray" size="subtitle" textTransform="uppercase">
               {/* TO DO: update this to be the length of the line items in cart */}
-              {`${products.length} ITEMS`}
+              {`${cartCount} ITEMS`}
             </Heading>
           </Flex>
           <Divider borderColor="brand.gray" />
           {/* TO DO: The products here should be the line-items in the Shopify Checkout, also need to add unique key */}
-          {products &&
-            products.map(product => (
+          {productsData &&
+            productsData.map(product => (
               <Box w="100%" pt="28px">
                 <CartItem key={product.id} product={product} />
                 <Divider borderColor="brand.gray" pb="36px" />
