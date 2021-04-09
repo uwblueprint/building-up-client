@@ -4,6 +4,7 @@ import { Box, HStack, Skeleton, SkeletonText } from '@chakra-ui/react';
 
 import { useShopify } from 'hooks/useShopify';
 import { ProductDetails } from '../../components/storefront';
+import { Container } from '@chakra-ui/react';
 import PageNotFound from './PageNotFound';
 
 const ProductSkeleton = () => (
@@ -26,9 +27,13 @@ const Product = () => {
   const product = productsData.find(product => product.id === id);
 
   return productsLoading || checkoutLoading ? (
-    <ProductSkeleton />
+    <Container maxW="container.xl" display="flex" flexDirection="column" flex="1" py={20} px={24}>
+      <ProductSkeleton />
+    </Container>
   ) : product ? (
-    <ProductDetails product={product} />
+    <Container maxW="container.xl" display="flex" flexDirection="column" flex="1" py={20} px={24}>
+      <ProductDetails product={product} />
+    </Container>
   ) : (
     <PageNotFound />
   );
