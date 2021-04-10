@@ -21,19 +21,6 @@ const ResetPassword = props => {
     setEmail(e.target.value);
   };
 
-  // const onSubmitForm = e => {
-  //   try {
-  //     SendPasswordRequest({
-  //       variables: { email },
-  //     }).then(data => {
-  //       console.log(data);
-  //       toggleSubmitted(true);
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   return (
     <Center minW="35%" borderRadius="lg" borderWidth="1px" bg="white">
       {submitted === false ? (
