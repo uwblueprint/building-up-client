@@ -1,23 +1,39 @@
 import * as React from 'react';
-import { Heading, HStack, VStack } from '@chakra-ui/react';
+import { Heading, HStack, VStack, Skeleton } from '@chakra-ui/react';
 import { useShopify } from 'hooks/useShopify';
 import Item from '../Item/Item';
 
+const IMAGE_SQUARE_SIZE = 80;
+
+const BestSellersSkeleton = () => (
+  <>
+    <Skeleton h={IMAGE_SQUARE_SIZE} w={IMAGE_SQUARE_SIZE} />
+    <Skeleton h={IMAGE_SQUARE_SIZE} w={IMAGE_SQUARE_SIZE} />
+    <Skeleton h={IMAGE_SQUARE_SIZE} w={IMAGE_SQUARE_SIZE} />
+  </>
+);
+
 const BestSellers = () => {
-  const { collections } = useShopify();
-  const bestSellersCollection = collections.find(({ handle }) => handle === 'frontpage');
-  // Replace predicate with handle === 'bestsellers' once we have that in place
+  const {
+    collections: { loading, data },
+  } = useShopify();
+  const bestSellersCollection = data.find(({ handle }) => handle === 'best-sellers');
+
   return (
-    <VStack p={24}>
+    <VStack>
       <Heading as="h4" size="subtitle" color="brand.red">
         DON'T MISS OUT
       </Heading>
       <Heading mb={4}>BEST SELLERS</Heading>
       <HStack spacing={8}>
-        {bestSellersCollection &&
+        {loading ? (
+          <BestSellersSkeleton />
+        ) : (
+          bestSellersCollection &&
           bestSellersCollection.products.map(({ id, title, images, variants }) => (
-            <Item key={id} name={title} image={images && images[0].src} price={variants && variants[0].price} />
-          ))}
+            <Item key={id} id={id} name={title} image={images && images[0].src} price={variants && variants[0].price} />
+          ))
+        )}
       </HStack>
     </VStack>
   );

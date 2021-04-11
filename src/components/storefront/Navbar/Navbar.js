@@ -24,6 +24,7 @@ const Navbar = () => (
     templateColumns="repeat(3, 1fr)"
     alignItems="center"
     color="white"
+    zIndex="1"
   >
     <GridItem as={Image} src={Logo} maxH="85px" alt="Raising The Roof Logo" colStart={2} justifySelf="center" />
     <GridItem

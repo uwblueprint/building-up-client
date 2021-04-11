@@ -16,16 +16,37 @@ const Input = {
         borderRadius: 'none',
       },
     },
+    quantity: {
+      field: {
+        width: '90px',
+        height: '52px',
+        borderRadius: 'none',
+      },
+    },
   },
   variants: {
     outline: {
       field: {
         borderColor: 'brand.gray',
         _hover: {
-          borderColor: 'brand.lightred',
+          borderColor: 'black',
         },
         _focus: {
-          borderColor: 'brand.lightred',
+          borderColor: 'black',
+        },
+      },
+    },
+    quantity: {
+      field: {
+        textAlign: 'center',
+        padding: '4',
+        border: '1px solid',
+        borderColor: 'brand.gray',
+        _hover: {
+          borderColor: 'black',
+        },
+        _focus: {
+          borderColor: 'black',
         },
       },
     },
