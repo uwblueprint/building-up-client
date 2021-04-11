@@ -1,28 +1,31 @@
 import { Flex, Text, useDisclosure } from '@chakra-ui/react';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
-import StorefrontModal from '../Modal/Modal';
+import NoTeamAssociationModal from '../Modal/Modal';
 
 const TeamBanner = props => {
-  const { isLoading, isValidTeam, bannerText } = props;
+  const { loading, error, data } = props;
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Flex w="100%" h="34" justify="center" bg={isLoading || isValidTeam ? '#E8E8E8' : '#C70E0E'}>
-      <Text
-        color={isLoading || isValidTeam ? 'black' : '#FAFAFA'}
-        textTransform="uppercase"
-        alignSelf="center"
-        fontWeight="bold"
-      >
-        {!isLoading && isValidTeam && 'Team '}
-        {bannerText}
+    <Flex
+      onClick={!loading && (error || !data) ? onOpen : null}
+      cursor={!loading && (error || !data) ? 'pointer' : null}
+      w="100%"
+      h="34"
+      justify="center"
+      bg={loading || data ? 'brand.lightgray' : 'brand.red'}
+    >
+      <Text color={loading || data ? 'black' : 'white'} textTransform="uppercase" alignSelf="center" fontWeight="bold">
+        {!loading && data && 'Team ' + data.getTeam.name}
+        {!loading && (error || !data) && 'Please note that your purchase will not be attributed to a team'}
+        {loading && 'Loading...'}
       </Text>
-      {!isLoading && !isValidTeam && (
+      {!loading && (error || !data) && (
         <Flex>
-          <InfoOutlineIcon onClick={onOpen} cursor="pointer" color="#FAFAFA" marginLeft="8px" alignSelf="center" />
+          <InfoOutlineIcon color="white" marginLeft="8px" alignSelf="center" />
         </Flex>
       )}
-      <StorefrontModal isOpen={isOpen} onClose={onClose} />
+      <NoTeamAssociationModal isOpen={isOpen} onClose={onClose} />
     </Flex>
   );
 };

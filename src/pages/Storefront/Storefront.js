@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { ChakraProvider } from '@chakra-ui/react';
-import { GET_ALL_TEAMS } from 'data/gql/team';
-import { useQuery } from '@apollo/client';
+import { GET_TEAM_INFO } from 'data/gql/team';
+import { useLazyQuery } from '@apollo/client';
+import { useLocation } from 'react-router-dom';
 
 import { Navbar, BestSellers, ItemListings, Footer, TeamBanner } from 'components/storefront';
 import { useShopify } from 'hooks/useShopify';
@@ -17,38 +18,22 @@ const Store = () => {
     createCheckout();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const { error: getAllTeamsError, data: getAllTeamsData } = useQuery(GET_ALL_TEAMS);
-  const [teamIdIsValid, setTeamIdIsValid] = useState(false);
-  const [loadingTeamId, setLoadingTeamId] = useState(true);
-  const [teamName, setTeamName] = useState('');
+  const [getTeam, { loading: getTeamLoading, error: getTeamError, data: getTeamData }] = useLazyQuery(GET_TEAM_INFO);
+  const { search } = useLocation();
   useEffect(() => {
-    if (getAllTeamsData) {
-      const queries = new URLSearchParams(window.location.search);
+    if (search) {
+      const queries = new URLSearchParams(search);
       const teamId = queries.get('team');
-      const match = getAllTeamsData.getAllTeams.filter(team => team.id === teamId);
-      if (match.length !== 0) setTeamName(match[0].name);
-      setTeamIdIsValid(match.length !== 0);
-      setLoadingTeamId(false);
-    } else if (getAllTeamsError) {
-      setTeamIdIsValid(false);
-      setLoadingTeamId(false);
+      if (teamId) {
+        getTeam({ variables: { id: teamId } });
+      }
     }
-  }, [getAllTeamsError, getAllTeamsData]);
+  }, [search, getTeam]);
 
   return (
     <ChakraProvider theme={storeTheme}>
       <Navbar />
-      <TeamBanner
-        isLoading={loadingTeamId}
-        isValidTeam={teamIdIsValid}
-        bannerText={
-          loadingTeamId
-            ? 'Loading...'
-            : teamIdIsValid
-            ? teamName
-            : 'Please note that your purchase will not be attributed to a team'
-        }
-      />
+      <TeamBanner loading={getTeamLoading} error={getTeamError} data={getTeamData} />
       <BestSellers />
       <ItemListings />
       <Footer />

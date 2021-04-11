@@ -9,23 +9,21 @@ import {
   Text,
 } from '@chakra-ui/react';
 
-const StorefrontModal = props => {
+const NoTeamAssociationModal = props => {
   const { isOpen, onClose } = props;
 
   return (
-    <Modal isCentered isOpen={isOpen} onClose={onClose} size="2xl">
+    <Modal isCentered closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose} size="2xl">
       <ModalOverlay />
-      <ModalContent borderRadius="0">
-        <ModalHeader mt="26" ml="26">
-          The link that you followed has not led you to the correct team storefront.
-        </ModalHeader>
+      <ModalContent pl="26px">
+        <ModalHeader mt="26px">The link that you followed has not led you to the correct team storefront.</ModalHeader>
         <ModalCloseButton />
-        <ModalBody ml="26">
+        <ModalBody>
           <Text>
             If you’d like to purchase through the correct team storefront, please ask your point of contact for another
             link to their storefront.
           </Text>
-          <Button size="sm" h="43" mt="22" mb="42" borderRadius="md" onClick={onClose}>
+          <Button size="sm" h="43px" mt="22px" mb="42px" onClick={onClose}>
             Continue Shopping
           </Button>
         </ModalBody>
@@ -34,4 +32,4 @@ const StorefrontModal = props => {
   );
 };
 
-export default StorefrontModal;
+export default NoTeamAssociationModal;
