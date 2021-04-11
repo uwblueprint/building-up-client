@@ -1,7 +1,7 @@
 import React from 'react';
 import { useMutation } from '@apollo/client';
 import { useSelector } from 'react-redux';
-import { Box, Flex, Text, Image, Button } from '@chakra-ui/react';
+import { Box, Flex, Text, Image, Button, Heading } from '@chakra-ui/react';
 
 import { SEND_VERIFICATION_EMAIL } from 'data/gql/user';
 import logo from 'assets/images/logo-black.png';
@@ -32,9 +32,9 @@ const EmailVerificationSent = props => {
       <Flex justify="center">
         <Image src={logo} w="350px" />
       </Flex>
-      <Text fontSize="3xl" height="52px" mt="42px">
+      <Heading size="h1" as="h1" mt="42px">
         Verify your email
-      </Text>
+      </Heading>
       <Text fontSize="xl" w="50%" line-height="35px" mt="16px">
         You will need to verify your email to access your dashboard.
       </Text>
