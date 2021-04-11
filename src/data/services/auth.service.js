@@ -8,6 +8,7 @@ const REGISTER_MUTATION = gql`
       lastName
       email
       id
+      isVerified
     }
   }
 `;
@@ -20,6 +21,7 @@ const LOGIN_MUTATION = gql`
       email
       id
       teamId
+      isVerified
     }
   }
 `;
@@ -38,6 +40,7 @@ const CURRENT_USER = gql`
       lastName
       id
       teamId
+      isVerified
     }
   }
 `;

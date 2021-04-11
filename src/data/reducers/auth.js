@@ -9,6 +9,7 @@ import {
   GET_TEAM_FAIL,
   UPDATE_USER,
   UPDATE_USERS_TEAM,
+  UPDATE_USER_VERIFICATION,
 } from '../actions/type';
 
 const initialState = {
@@ -90,6 +91,14 @@ const authReducer = (state = initialState, action) => {
         user: {
           ...state.user,
           teamId: payload,
+        },
+      };
+    case UPDATE_USER_VERIFICATION:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          isVerified: payload,
         },
       };
     default:
