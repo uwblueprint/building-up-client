@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import { Redirect, useParams, NavLink } from 'react-router-dom';
 import { VERIFY_ACCOUNT } from 'data/gql/user';
 import { useMutation } from '@apollo/client';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Center, Heading, Spinner, Text, VStack } from '@chakra-ui/react';
+import { Box, Center, Heading, Spinner, Text, VStack, Flex, Image, Button } from '@chakra-ui/react';
 import { UPDATE_USER_VERIFICATION } from 'data/actions/type';
+import logo from 'assets/images/logo-black.png';
 
 function EmailVerify(props) {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ function EmailVerify(props) {
   const {
     user: { userId: id },
   } = useSelector(state => state.auth);
-  const [shouldRedirect, setShouldRedirect] = useState(false);
+  const [isValidLink, setValidLink] = useState(false);
 
   const [
     verifyAccount,
@@ -32,28 +33,43 @@ function EmailVerify(props) {
       } = verifyAccountData;
       dispatch({ type: UPDATE_USER_VERIFICATION, payload: isVerified });
       if (isVerified) {
-        setShouldRedirect(true);
+        setValidLink(true);
       }
     }
   }, [dispatch, verifyAccountData]);
-  return shouldRedirect ? (
-    <Redirect to="/home" />
-  ) : verifyAccountLoading ? (
+
+  return verifyAccountLoading ? (
     <Center h="100%">
       <Spinner size="xl" />
     </Center>
   ) : (
-    <VStack spacing={4} align="left">
+    <Box w="100%" justify="center" align="center">
+      <Flex justify="center">
+        <Image src={logo} w="350px" />
+      </Flex>
       <Box>
-        <Heading size="h1" as="h1">
-          Invalid verification link
+        <Heading size="h1" as="h1" mt="75px">
+          {isValidLink ? 'Email Verified' : "Oops! The link you've followed is invalid."}
         </Heading>
       </Box>
-      <Text>
-        Oops, it looks like your verification link isn't correct. Try double checking you copied the link correctly.
+      <Text fontSize="2xl" mt="32px">
+        {isValidLink
+          ? 'Your email has been verified successfully.'
+          : 'Please check your email for the correct verification link.'}
       </Text>
-      {verifyAccountError && <Text>Error: {verifyAccountError.graphQLErrors.map(err => err.message)}</Text>}
-    </VStack>
+      <Button
+        sice="lg"
+        textColor="white"
+        bg="black"
+        _hover={{ bg: 'gray.800' }}
+        _active={{ bg: 'gray.700' }}
+        my="46px"
+        as={NavLink}
+        to="/home"
+      >
+        Return to Home
+      </Button>
+    </Box>
   );
 }
 

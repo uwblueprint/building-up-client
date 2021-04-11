@@ -45,7 +45,15 @@ const EmailVerificationSent = props => {
         An email has been sent to {email} with a link to verify your account. If you have not received the email after a
         few minutes, please check your spam folder.
       </Text>
-      <Button size="lg" _focus={{ boxShadow: 'white' }} my="43px" onClick={handleResendEmail}>
+      <Button
+        sice="lg"
+        textColor="white"
+        bg="black"
+        _hover={{ bg: 'gray.800' }}
+        _active={{ bg: 'gray.700' }}
+        my="43px"
+        onClick={handleResendEmail}
+      >
         Resend Email
       </Button>
     </Box>
