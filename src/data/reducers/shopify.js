@@ -59,19 +59,20 @@ const shopifyReducer = (state = initialState, action) => {
       return { ...state, checkout: { loading: false, data: action.payload } };
     case SHOP_FOUND:
       return { ...state, shop: action.payload };
-    case UPDATE_CART_ATTRIBUTE:
+    case UPDATE_CART_ATTRIBUTE: // maybe we need to change this too, might take out
       return { ...state, checkout: action.payload };
     case ADD_VARIANT_TO_CART:
-      return { ...state, checkout: action.payload };
+      return { ...state, checkout: { ...state.checkout, data: action.payload } };
     case UPDATE_QUANTITY_IN_CART:
-      return { ...state, checkout: action.payload };
+      return { ...state, checkout: { ...state.checkout, data: action.payload } };
     case REMOVE_LINE_ITEM_IN_CART:
-      return { ...state, checkout: action.payload };
+      return { ...state, checkout: { ...state.checkout, data: action.payload } };
+    // Might remove these
     case OPEN_CART:
       return { ...state, isCartOpen: true };
     case CLOSE_CART:
       return { ...state, isCartOpen: false };
-    case CART_COUNT:
+    case CART_COUNT: // doesn't make sense
       return { ...state, cartCount: action.payload };
     default:
       return state;
@@ -173,6 +174,7 @@ const updateCartCustomAttributes = (checkoutId, attributes) => {
   };
 };
 
+// TO DO: Consider removing this
 // Updates the cart popover count
 const updateCartItemCount = amount => {
   return async dispatch => {
@@ -183,8 +185,8 @@ const updateCartItemCount = amount => {
   };
 };
 
-// Adds variants to cart/checkout
-const addVariantToCart = (checkoutId, lineItemsToAdd) => {
+// Adds lineItems to cart/checkout
+const addLineItemsToCart = (checkoutId, lineItemsToAdd) => {
   return async dispatch => {
     const res = await client.checkout.addLineItems(checkoutId, lineItemsToAdd);
     dispatch({
@@ -220,6 +222,8 @@ const removeLineItemInCart = (checkoutId, lineItemId) => {
     });
   };
 };
+
+// TODO: Consider removing these
 
 // To close the cart
 const handleCartClose = () => {
@@ -263,7 +267,7 @@ export const useShopify = () => {
 
   const updateCartCount = amount => dispatch(updateCartItemCount(amount));
   const updateCartAttributes = (checkoutId, attributes) => dispatch(updateCartCustomAttributes(checkoutId, attributes));
-  const addVariant = (checkoutId, lineItemsToAdd) => dispatch(addVariantToCart(checkoutId, lineItemsToAdd));
+  const addLineItems = (checkoutId, lineItemsToAdd) => dispatch(addLineItemsToCart(checkoutId, lineItemsToAdd));
   const updateQuantity = (lineItemId, quantity, checkoutID) =>
     dispatch(updateQuantityInCart(lineItemId, quantity, checkoutID));
   const removeLineItem = (checkoutId, lineItemId) => dispatch(removeLineItemInCart(checkoutId, lineItemId));
@@ -278,7 +282,7 @@ export const useShopify = () => {
     shopDetails,
     updateCartCount,
     updateCartAttributes,
-    addVariant,
+    addLineItems,
     fetchProducts,
     fetchProduct,
     fetchCollections,

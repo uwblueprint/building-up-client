@@ -1,19 +1,35 @@
 import React from 'react';
 import { useShopify } from 'hooks/useShopify';
-import { CartItem } from 'components/storefront';
-import { Box, HStack, VStack, Heading, Divider, Flex, FormControl, Text, Button, Input, Link } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
+import { CartItem } from 'components/storefront';
+import {
+  Box,
+  HStack,
+  VStack,
+  Heading,
+  Divider,
+  Flex,
+  FormControl,
+  Text,
+  Button,
+  Input,
+  Link,
+  Skeleton,
+} from '@chakra-ui/react';
 // import { useSelector, shallowEqual } from 'react-redux';
 // import { selectors as teamSelectors } from '../../data/reducers/team';
 
-const CartItems = ({ productsData, cartCount }) => {
+const CartItems = ({ checkoutData }) => {
+  const { id: checkoutId, lineItems } = checkoutData;
+  const cartItemsCount = lineItems.reduce((acc, cur) => acc + cur.quantity, 0);
+
+  // TO DO: May remove coupon & just let Shopify handle
   const applyCoupon = () => {
     alert('To be implemented');
   };
 
   return (
     <VStack flex={1} alignItems="flex-start" spacing={8} py={16} pr={12}>
-      {/* Add spacing to this VStack */}
       <Flex w="100%" justifyContent="space-between">
         <Heading as="h4" size="subtitle">
           <Link as={RouterLink} to={`/store`}>
@@ -21,18 +37,24 @@ const CartItems = ({ productsData, cartCount }) => {
           </Link>
         </Heading>
         <Heading as="h4" color="brand.gray" size="subtitle" textTransform="uppercase">
-          {/* TO DO: update this to be the length of the line items in cart */}
-          {`${cartCount} ITEMS`}
+          {`${cartItemsCount} ITEMS`}
         </Heading>
       </Flex>
-
-      {/* TO DO: The products here should be the line-items in the Shopify Checkout, also need to add unique key */}
       <VStack w="100%" spacing={8}>
         <Divider borderColor="brand.gray" />
-        {productsData &&
-          productsData.map(product => (
-            <Box w="100%">
-              <CartItem key={product.id} product={product} />
+        {/* TO DO: Handle empty cart state */}
+        {lineItems &&
+          lineItems.map(({ id, title, quantity, variant: { sku, image, price } }) => (
+            <Box w="100%" key={id}>
+              <CartItem
+                title={title}
+                quantity={quantity}
+                sku={sku}
+                image={image.src}
+                price={price}
+                lineItemId={id}
+                checkoutId={checkoutId}
+              />
               <Divider borderColor="brand.gray" pb={8} />
             </Box>
           ))}
@@ -54,14 +76,36 @@ const CartItems = ({ productsData, cartCount }) => {
   );
 };
 
+// TO DO: Update these skeletons & loading state
+const CartItemsSkeleton = () => {
+  return (
+    <>
+      <Skeleton h={20} w={20} />
+      <Skeleton h={20} w={20} />
+      <Skeleton h={20} w={20} />
+    </>
+  );
+};
+
+const OrderSummarySkeleton = () => {
+  return (
+    <>
+      <Skeleton h={20} w={20} />
+      <Skeleton h={20} w={20} />
+      <Skeleton h={20} w={20} />
+    </>
+  );
+};
+
 const OrderSummary = ({ checkoutData }) => {
-  // Temporary checkout code from last term, will need to udpate
+  const { totalPrice, subtotalPrice, totalTax, webUrl } = checkoutData;
+
   const openCheckout = () => {
-    if (checkoutData.webUrl) {
+    if (webUrl) {
       console.log('webUrl exists');
     }
-    // window.open(checkoutState.webUrl) // opens checkout in a new window
-    window.location.replace(checkoutData.webUrl); // opens checkout in same window
+    // window.open(webUrl) // opens checkout in a new window
+    window.location.replace(webUrl); // opens checkout in same window
   };
 
   return (
@@ -74,15 +118,16 @@ const OrderSummary = ({ checkoutData }) => {
         <VStack w="100%" alignItems="flex-start" spacing={8}>
           <Flex w="100%" justifyContent="space-between">
             <Text>SUBTOTAL</Text>
-            <Text fontWeight="semibold">$1545</Text>
+            <Text fontWeight="semibold">{`$${subtotalPrice}`}</Text>
           </Flex>
           <Flex w="100%" justifyContent="space-between">
             <Text>SHIPPING ESTIMATE</Text>
-            <Text fontWeight="semibold">$5</Text>
+            <Text fontWeight="semibold">$0.00</Text>
+            {/* not sure where to get shipping estimate from */}
           </Flex>
           <Flex w="100%" justifyContent="space-between">
             <Text>TAXES ESTIMATE</Text>
-            <Text fontWeight="semibold">$200</Text>
+            <Text fontWeight="semibold">{`$${totalTax}`}</Text>
           </Flex>
         </VStack>
         <Divider borderColor="brand.gray" />
@@ -91,7 +136,7 @@ const OrderSummary = ({ checkoutData }) => {
             ESTIMATED TOTAL
           </Heading>
           <Heading as="h4" size="subtitle">
-            $1750
+            {`$${totalPrice}`}
           </Heading>
         </Flex>
       </VStack>
@@ -105,9 +150,7 @@ const OrderSummary = ({ checkoutData }) => {
 // Cart page that shows the user the items in their cart, allows them to change quantity, and proceed to checkout
 const Cart = () => {
   const {
-    products: { /* loading: productsLoading, */ data: productsData },
-    checkout: { /* loading: checkoutLoading, */ data: checkoutData },
-    cartCount,
+    checkout: { loading, data },
   } = useShopify();
   // const team = useSelector(teamSelectors.selectTeam, shallowEqual);
 
@@ -131,8 +174,17 @@ const Cart = () => {
         </Heading>
       </Box>
       <HStack w="100%" h="100%" justifyContent="space-between" alignItems="flex-start" px="105px">
-        <CartItems productsData={productsData} cartCount={cartCount} />
-        <OrderSummary checkoutData={checkoutData} />
+        {loading ? (
+          <>
+            <CartItemsSkeleton />
+            <OrderSummarySkeleton />
+          </>
+        ) : (
+          <>
+            <CartItems checkoutData={data} />
+            <OrderSummary checkoutData={data} />
+          </>
+        )}
       </HStack>
     </>
   );

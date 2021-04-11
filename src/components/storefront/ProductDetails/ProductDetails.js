@@ -2,14 +2,27 @@ import * as React from 'react';
 import { Heading, Flex, Image, Text, Button, useNumberInput } from '@chakra-ui/react';
 import AdditionalContent from './AdditionalContent';
 import QuantityPicker from './QuantityPicker';
+import { useShopify } from 'hooks/useShopify';
+import { useHistory } from 'react-router';
 
-const ProductDetails = ({ product }) => {
+const ProductDetails = ({ product, checkout }) => {
+  const { id: checkoutId } = checkout;
   const { images, title, description, variants } = product;
-  const productSku = variants[0].sku;
-  const productPrice = variants[0].price;
+  const { id: variantId, sku: variantSku, price: variantPrice } = variants[0];
+  const { addLineItems } = useShopify();
+  const history = useHistory();
 
-  const handleAddToShoppingBag = () => {
-    alert('To be implemented');
+  const handleAddToShoppingBag = async () => {
+    const lineItemsToAdd = [
+      {
+        variantId: variantId,
+        quantity: quantityPickerProps.valueAsNumber,
+        // customAttributes for teamId?
+      },
+    ];
+    // TO DO: Consider adding error handling
+    await addLineItems(checkoutId, lineItemsToAdd);
+    history.push('/store/cart');
   };
 
   const quantityPickerProps = useNumberInput({
@@ -28,13 +41,13 @@ const ProductDetails = ({ product }) => {
       </Flex>
       <Flex direction="column" w="100%" pl={10}>
         <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.gray">
-          {`Item #${productSku}`}
+          {`Item #${variantSku}`}
         </Heading>
         <Heading as="h3" size="h3" textTransform="uppercase" my={5}>
           {title}
         </Heading>
         <Heading as="h3" size="h3" color="brand.red">
-          {`$${productPrice}`}
+          {`$${variantPrice}`}
         </Heading>
         <Text my={5}>{description}</Text>
         <QuantityPicker {...quantityPickerProps} />
