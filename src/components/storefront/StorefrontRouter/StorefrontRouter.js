@@ -6,7 +6,7 @@ import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import { ChakraProvider, Flex } from '@chakra-ui/react';
 import storeTheme from 'themes/store';
 import { useShopify } from '../../../hooks/useShopify';
-import { Navbar, Footer, TeamBanner } from '../';
+import { Navbar, Footer } from '../';
 
 import Home from 'pages/Storefront/Home';
 import Product from 'pages/Storefront/Product';
@@ -42,8 +42,7 @@ const StorefrontRouter = () => {
   return (
     <ChakraProvider theme={storeTheme}>
       <Flex direction="column" minHeight="100vh">
-        <Navbar />
-        <TeamBanner loading={getTeamLoading} error={getTeamError} data={getTeamData} />
+        <Navbar loading={getTeamLoading} error={getTeamError} data={getTeamData} />
         <Switch>
           <Route exact path={path}>
             <Home />
