@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect, useParams, NavLink } from 'react-router-dom';
+import { useParams, NavLink } from 'react-router-dom';
 import { VERIFY_ACCOUNT } from 'data/gql/user';
 import { useMutation } from '@apollo/client';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Center, Heading, Spinner, Text, VStack, Flex, Image, Button } from '@chakra-ui/react';
+import { Box, Center, Heading, Spinner, Text, Flex, Image, Button } from '@chakra-ui/react';
 import { UPDATE_USER_VERIFICATION } from 'data/actions/type';
 import logo from 'assets/images/logo-black.png';
 
@@ -15,10 +15,7 @@ function EmailVerify(props) {
   } = useSelector(state => state.auth);
   const [isValidLink, setValidLink] = useState(false);
 
-  const [
-    verifyAccount,
-    { loading: verifyAccountLoading, data: verifyAccountData, error: verifyAccountError },
-  ] = useMutation(VERIFY_ACCOUNT);
+  const [verifyAccount, { loading: verifyAccountLoading, data: verifyAccountData }] = useMutation(VERIFY_ACCOUNT);
 
   useEffect(() => {
     if (id && hash) {
