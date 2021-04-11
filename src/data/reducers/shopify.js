@@ -4,7 +4,6 @@ import { SHOPIFY_KEY } from '../../config/config';
 
 // Actions/reducers/selectors for shopify related data in the store
 // Creates the client with Shopify-Buy and store info
-//
 const client = Client.buildClient({
   storefrontAccessToken: SHOPIFY_KEY,
   domain: 'raising-the-roof-chez-toit.myshopify.com',
