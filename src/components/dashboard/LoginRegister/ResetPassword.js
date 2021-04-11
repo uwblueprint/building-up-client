@@ -6,14 +6,17 @@ import { SEND_PASSWORD_RESET } from '../../../data/gql/user';
 const ResetPassword = props => {
   const { setLoginRegister } = props;
   const [email, setEmail] = useState('');
-  const [submitted, toggleSubmitted] = useState(false);
+  const [status, setStatus] = useState('UNSUBMITTED');
   const [SendPasswordRequest] = useLazyQuery(SEND_PASSWORD_RESET, {
     variables: {
       email,
     },
     onCompleted: d => {
-      console.log(d.sendPasswordEmail);
-      toggleSubmitted(true);
+      if (d.sendPasswordEmail) {
+        setStatus('SUCCESS');
+      } else {
+        setStatus('FAIL');
+      }
     },
   });
 
@@ -23,7 +26,7 @@ const ResetPassword = props => {
 
   return (
     <Center minW="35%" borderRadius="lg" borderWidth="1px" bg="white">
-      {submitted === false ? (
+      {status !== 'SUCCESS' ? (
         <Flex alignItems="flex-start" flexDirection="column" w="87%">
           <Button
             bg="white"
@@ -52,6 +55,7 @@ const ResetPassword = props => {
             isRequired
             marginBottom="26px"
           />
+          {status === 'FAIL' && <Text marginBottom="8px">Something went wrong, please try again later</Text>}
           <Button onClick={SendPasswordRequest} marginBottom="79px">
             Email me a recovery link
           </Button>
