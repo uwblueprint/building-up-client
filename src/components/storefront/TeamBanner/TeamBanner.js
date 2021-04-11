@@ -1,6 +1,6 @@
 import { Flex, Text, useDisclosure } from '@chakra-ui/react';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
-import NoTeamAssociationModal from '../Modal/Modal';
+import NoTeamAssociationModal from '../NoTeamAssociationModal/NoTeamAssociationModal';
 
 const TeamBanner = props => {
   const { loading, error, data } = props;
