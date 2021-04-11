@@ -15,6 +15,7 @@ import Leaderboard from 'pages/Leaderboard/Leaderboard';
 import LoginRegister from 'pages/LoginRegister/LoginRegister';
 import TeamOverview from 'pages/TeamOverview/TeamOverview';
 import EmailVerificationSent from 'pages/EmailVerification/EmailVerificationSent';
+import EmailVerify from 'pages/EmailVerify';
 
 import PageContainer from '../PageContainer/PageContainer';
 import Navbar, { NAVBAR_WIDTH } from '../Navbar/Navbar';
@@ -74,10 +75,13 @@ const DashboardRouter = () => {
                   <PageContainer>
                     <Switch>
                       <ProtectedRoute exact path="/home">
-                        <Dashboard team={teamData} />
+                        {user?.isVerified ? <Dashboard team={teamData} /> : <EmailVerificationSent />}
+                      </ProtectedRoute>
+                      <ProtectedRoute exact path="/verify/:hash">
+                        <EmailVerify />
                       </ProtectedRoute>
                       <ProtectedRoute exact path="/invite/:teamId">
-                        <Invite />
+                        {user?.isVerified ? <Invite /> : <EmailVerificationSent />}
                       </ProtectedRoute>
                       {teamData && (
                         <ProtectedRoute exact path="/leaderboard">
@@ -89,9 +93,7 @@ const DashboardRouter = () => {
                           <TeamOverview team={teamData} />
                         </ProtectedRoute>
                       )}
-                      <ProtectedRoute exact path="/verify">
-                        <EmailVerificationSent team={teamData} />
-                      </ProtectedRoute>
+
                       <Route path="/">
                         <Redirect to="/home" />
                       </Route>
