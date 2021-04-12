@@ -42,7 +42,7 @@ const InputPassword = props => {
             console.log(error);
           });
       } else {
-        setState('UNMATCHING');
+        setState('PWS_DO_NOT_MATCH');
       }
     } catch (error) {
       console.log(error);
@@ -76,7 +76,9 @@ const InputPassword = props => {
         isRequired
         marginBottom={submitState === 'INPUT' ? '20px' : '12px'}
       />
-      {submitState === 'UNMATCHING' && <Text alignSelf="flex-start">The passwords you entered do not match </Text>}
+      {submitState === 'PWS_DO_NOT_MATCH' && (
+        <Text alignSelf="flex-start">The passwords you entered do not match </Text>
+      )}
       {submitState === 'FAIL' && <Text alignSelf="flex-start">Something went wrong,please try again later </Text>}
       <Button onClick={onSubmitForm} marginTop={submitState === 'INPUT' ? '20px' : '12px'} marginBottom="50px">
         Change Password
@@ -101,8 +103,7 @@ const ConfirmPage = props => {
         }}
         marginBottom="50px"
       >
-        {' '}
-        Return to Login{' '}
+        Return to Login
       </Button>
     </Flex>
   );
@@ -113,11 +114,11 @@ const ResetPassword = () => {
   const content = {
     INPUT: <InputPassword submitState={submitState} setState={setState} />,
     FAIL: <InputPassword submitState={submitState} setState={setState} />,
-    UNMATCHING: <InputPassword submitState={submitState} setState={setState} />,
+    PWS_DO_NOT_MATCH: <InputPassword submitState={submitState} setState={setState} />,
     SUBMITTED: <ConfirmPage setState={setState} />,
     CONFIRMED: <Redirect to="/login" />,
   };
-  return submitState !== 'CONFIRMED' ? (
+  return (
     <Flex minHeight="100vh" h="100%" w="100vw" justify="center" bg="background.login">
       <Box minW="35%" marginBottom="50px">
         <Flex justify="center" marginTop="36px" marginBottom="36px">
@@ -128,8 +129,6 @@ const ResetPassword = () => {
         </Center>
       </Box>
     </Flex>
-  ) : (
-    content[submitState]
   );
 };
 
