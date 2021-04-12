@@ -50,8 +50,8 @@ export const SEND_VERIFICATION_EMAIL = gql`
 `;
 
 export const SEND_PASSWORD_RESET = gql`
-  query sendPasswordEmail($email: String!) {
-    sendPasswordEmail(email: $email)
+  query sendResetPasswordEmail($email: String!) {
+    sendResetPasswordEmail(email: $email)
   }
 `;
 

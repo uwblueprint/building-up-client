@@ -12,7 +12,8 @@ const ResetPassword = props => {
       email,
     },
     onCompleted: d => {
-      if (d.sendPasswordEmail) {
+      console.log(d);
+      if (d.sendResetPasswordEmail) {
         setStatus('SUCCESS');
       } else {
         setStatus('FAIL');
