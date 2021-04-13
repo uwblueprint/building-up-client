@@ -16,7 +16,13 @@ const TeamBanner = props => {
       align="center"
       bg={loading || data ? 'brand.lightgray' : 'brand.red'}
     >
-      <Text color={loading || data ? 'black' : 'white'} textTransform="uppercase" fontWeight="bold">
+      <Text
+        color={loading || data ? 'black' : 'white'}
+        textTransform="uppercase"
+        fontWeight="bold"
+        fontFamily="heading"
+        fontSize="sm"
+      >
         {loading ? (
           <Spinner size="sm" />
         ) : data ? (

@@ -15,15 +15,17 @@ const NoTeamAssociationModal = props => {
   return (
     <Modal isCentered isOpen={isOpen} onClose={onClose} size="2xl">
       <ModalOverlay />
-      <ModalContent pl="26px">
-        <ModalHeader mt="26px">The link that you followed has not led you to the correct team storefront.</ModalHeader>
+      <ModalContent pl="26px" fontFamily="heading">
+        <ModalHeader mt="26px" textStyle="h3" fontSize="2xl">
+          The link that you followed has not led you to the correct team storefront.
+        </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Text>
             If you’d like to purchase through the correct team storefront, please ask your point of contact for another
             link to their storefront.
           </Text>
-          <Button size="sm" h="43px" mt="22px" mb="42px" onClick={onClose}>
+          <Button size="sm" mt={7} mb={10} onClick={onClose}>
             Continue Shopping
           </Button>
         </ModalBody>
