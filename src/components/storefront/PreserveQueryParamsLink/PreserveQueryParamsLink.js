@@ -1,17 +1,17 @@
 import { Link, withRouter } from 'react-router-dom';
 
 const PreserveQueryParamsLink = props => {
-  var { search, to, ...rest } = props;
+  const { location, to, className, children } = props;
 
   return (
     <Link
       to={{
-        pathname: props.to,
-        search: props.location.search,
+        pathname: to,
+        search: location.search,
       }}
-      {...rest}
+      className={className}
     >
-      {props.children}
+      {children}
     </Link>
   );
 };

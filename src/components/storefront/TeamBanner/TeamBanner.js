@@ -16,25 +16,21 @@ const TeamBanner = props => {
       align="center"
       bg={loading || data ? 'brand.lightgray' : 'brand.red'}
     >
-      <Text
-        color={loading || data ? 'black' : 'white'}
-        textTransform="uppercase"
-        fontWeight="bold"
-        fontFamily="heading"
-        fontSize="sm"
-      >
-        {loading ? (
-          <Spinner size="sm" />
-        ) : data ? (
-          `Team ${data.getTeam.name}`
-        ) : (
-          'Please note that your purchase will not be attributed to a team'
-        )}
-      </Text>
-      {!loading && (error || !data) && (
-        <Flex>
-          <InfoOutlineIcon color="white" marginLeft="8px" />
-        </Flex>
+      {loading ? (
+        <Spinner size="sm" />
+      ) : (
+        <>
+          <Text
+            color={loading || data ? 'black' : 'white'}
+            textTransform="uppercase"
+            fontWeight="bold"
+            fontFamily="heading"
+            fontSize="sm"
+          >
+            {data ? `Team ${data.getTeam.name}` : 'Please note that your purchase will not be attributed to a team'}
+          </Text>
+          {(error || !data) && <InfoOutlineIcon color="white" marginLeft="8px" />}
+        </>
       )}
       <NoTeamAssociationModal isOpen={isOpen} onClose={onClose} />
     </Flex>
