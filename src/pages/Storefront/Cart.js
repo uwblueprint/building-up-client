@@ -126,11 +126,6 @@ const Cart = () => {
 
   return (
     <>
-      <Box bg="black" px="105px">
-        <Heading color="white" py={6}>
-          MY SHOPPING BAG
-        </Heading>
-      </Box>
       <HStack w="100%" h="100%" justifyContent="space-between" alignItems="flex-start" px="105px">
         <CartItems productsData={productsData} cartCount={cartCount} />
         <OrderSummary checkoutData={checkoutData} />
