@@ -2,7 +2,8 @@ import React from 'react';
 import { useShopify } from 'hooks/useShopify';
 import { CartItem } from 'components/storefront';
 import { Box, HStack, VStack, Heading, Divider, Flex, FormControl, Text, Button, Input, Link } from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import PreserveQueryParamsLink from 'components/storefront/PreserveQueryParamsLink/PreserveQueryParamsLink';
+
 // import { useSelector, shallowEqual } from 'react-redux';
 // import { selectors as teamSelectors } from '../../data/reducers/team';
 
@@ -16,7 +17,7 @@ const CartItems = ({ productsData, cartCount }) => {
       {/* Add spacing to this VStack */}
       <Flex w="100%" justifyContent="space-between">
         <Heading as="h4" size="subtitle">
-          <Link as={RouterLink} to={`/store`}>
+          <Link as={PreserveQueryParamsLink} to={`/store`}>
             CONTINUE SHOPPING
           </Link>
         </Heading>

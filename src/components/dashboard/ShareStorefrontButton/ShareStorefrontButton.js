@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { Button, useClipboard, useToast } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
 import Toast from '../Toast/Toast';
 
 const ShareStorefrontButton = () => {
   const toast = useToast();
-  const { hasCopied, onCopy } = useClipboard(`${window.location.origin}/store`);
-
+  const { user } = useSelector(state => state.auth);
+  const { hasCopied, onCopy } = useClipboard(`${window.location.origin}/store?team=${user.teamId}`);
   useEffect(() => {
     if (hasCopied) {
       toast({
