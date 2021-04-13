@@ -18,7 +18,10 @@ const NavLink = chakra(Link, {
 const Navbar = props => (
   <Box position="sticky" top="0" zIndex="1">
     <Grid bg="black" w="100%" h="126px" templateColumns="repeat(3, 1fr)" alignItems="center" color="white">
-      <GridItem as={Image} src={Logo} maxH="85px" alt="Raising The Roof Logo" colStart={2} justifySelf="center" />
+      <GridItem as={PreserveQueryParamsLink} to="/store" colStart={2} justifySelf="center">
+        <Image src={Logo} alt="Raising The Roof/Chez Toit Logo" maxH="85px" />
+      </GridItem>
+
       <GridItem
         as={HStack}
         spacing={[2, 4, 6, 8, '56px']}
