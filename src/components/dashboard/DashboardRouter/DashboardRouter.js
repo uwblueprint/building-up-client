@@ -14,7 +14,6 @@ import Invite from 'pages/Invite/Invite';
 import Leaderboard from 'pages/Leaderboard/Leaderboard';
 import LoginRegister from 'pages/LoginRegister/LoginRegister';
 import TeamOverview from 'pages/TeamOverview/TeamOverview';
-import EmailVerificationSent from 'pages/EmailVerification/EmailVerificationSent';
 import EmailVerify from 'pages/EmailVerify';
 
 import PageContainer from '../PageContainer/PageContainer';
@@ -46,7 +45,6 @@ const DashboardRouter = () => {
 
   return (
     <ChakraProvider theme={dashboardTheme}>
-      {/* Show spinner while authenticating */}
       {authenticating ? (
         <Center h="100vh">
           <Spinner size="xl" />
@@ -60,7 +58,7 @@ const DashboardRouter = () => {
           <Route exact path="/login">
             {user ? <Redirect to={location.state?.from?.pathname ?? '/'} /> : <LoginRegister />}
           </Route>
-          <ProtectedRoute path="/">
+          <ProtectedRoute disableEmailVerify path="/">
             <Grid templateColumns={`${NAVBAR_WIDTH} 1fr`} templateRows="100vh" h="100vh">
               <Box borderRight="2px solid black" w="100%" h="100%">
                 {/** Navbar width is set manually to keep the position fixed */}
@@ -75,13 +73,13 @@ const DashboardRouter = () => {
                   <PageContainer>
                     <Switch>
                       <ProtectedRoute exact path="/home">
-                        {user?.isVerified ? <Dashboard team={teamData} /> : <EmailVerificationSent />}
+                        <Dashboard team={teamData} />
                       </ProtectedRoute>
-                      <ProtectedRoute exact path="/verify/:hash">
+                      <ProtectedRoute disableEmailVerify exact path="/verify/:hash">
                         <EmailVerify />
                       </ProtectedRoute>
                       <ProtectedRoute exact path="/invite/:teamId">
-                        {user?.isVerified ? <Invite /> : <EmailVerificationSent />}
+                        <Invite />
                       </ProtectedRoute>
                       {teamData && (
                         <ProtectedRoute exact path="/leaderboard">
