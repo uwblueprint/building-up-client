@@ -2,11 +2,16 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 
-/* 
-  A wrapper for <Route> that redirects to the login
-  screen if you're not yet authenticated.
-*/
-const ProtectedRoute = ({ children, ...rest }) => {
+import EmailVerificationRequired from 'pages/EmailVerificationRequired/EmailVerificationRequired';
+
+/**
+ * A wrapper on <Route> that:
+ * - Redirects to the login screen if the user is not authenticated.
+ * - Displays the `EmailVerificationRequired` component if user is authenticated but email isn't verified
+ *
+ * The email verification component can be disabled for a given route with the `disableEmailVerify` prop
+ */
+const ProtectedRoute = ({ children, disableEmailVerify, ...rest }) => {
   const { user } = useSelector(state => state.auth);
 
   return (
@@ -14,7 +19,11 @@ const ProtectedRoute = ({ children, ...rest }) => {
       {...rest}
       render={({ location }) => {
         return user ? (
-          children
+          user.isVerified || disableEmailVerify ? (
+            children
+          ) : (
+            <EmailVerificationRequired />
+          )
         ) : (
           <Redirect
             to={{

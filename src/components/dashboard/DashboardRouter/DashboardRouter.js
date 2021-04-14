@@ -14,6 +14,7 @@ import Invite from 'pages/Invite/Invite';
 import Leaderboard from 'pages/Leaderboard/Leaderboard';
 import LoginRegister from 'pages/LoginRegister/LoginRegister';
 import TeamOverview from 'pages/TeamOverview/TeamOverview';
+import EmailVerify from 'pages/EmailVerify/EmailVerify';
 
 import PageContainer from '../PageContainer/PageContainer';
 import Navbar, { NAVBAR_WIDTH } from '../Navbar/Navbar';
@@ -44,7 +45,6 @@ const DashboardRouter = () => {
 
   return (
     <ChakraProvider theme={dashboardTheme}>
-      {/* Show spinner while authenticating */}
       {authenticating ? (
         <Center h="100vh">
           <Spinner size="xl" />
@@ -58,7 +58,7 @@ const DashboardRouter = () => {
           <Route exact path="/login">
             {user ? <Redirect to={location.state?.from?.pathname ?? '/'} /> : <LoginRegister />}
           </Route>
-          <ProtectedRoute path="/">
+          <ProtectedRoute disableEmailVerify path="/">
             <Grid templateColumns={`${NAVBAR_WIDTH} 1fr`} templateRows="100vh" h="100vh">
               <Box borderRight="2px solid black" w="100%" h="100%">
                 {/** Navbar width is set manually to keep the position fixed */}
@@ -75,6 +75,9 @@ const DashboardRouter = () => {
                       <ProtectedRoute exact path="/home">
                         <Dashboard team={teamData} />
                       </ProtectedRoute>
+                      <ProtectedRoute disableEmailVerify exact path="/verify/:hash">
+                        <EmailVerify />
+                      </ProtectedRoute>
                       <ProtectedRoute exact path="/invite/:teamId">
                         <Invite />
                       </ProtectedRoute>
@@ -88,6 +91,7 @@ const DashboardRouter = () => {
                           <TeamOverview team={teamData} />
                         </ProtectedRoute>
                       )}
+
                       <Route path="/">
                         <Redirect to="/home" />
                       </Route>
