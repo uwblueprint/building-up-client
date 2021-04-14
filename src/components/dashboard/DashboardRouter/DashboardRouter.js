@@ -14,7 +14,7 @@ import Invite from 'pages/Invite/Invite';
 import Leaderboard from 'pages/Leaderboard/Leaderboard';
 import LoginRegister from 'pages/LoginRegister/LoginRegister';
 import TeamOverview from 'pages/TeamOverview/TeamOverview';
-import EmailVerify from 'pages/EmailVerify';
+import EmailVerify from 'pages/EmailVerify/EmailVerify';
 
 import PageContainer from '../PageContainer/PageContainer';
 import Navbar, { NAVBAR_WIDTH } from '../Navbar/Navbar';

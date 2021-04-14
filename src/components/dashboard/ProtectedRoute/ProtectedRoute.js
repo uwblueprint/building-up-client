@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 
-import EmailVerificationSent from 'pages/EmailVerification/EmailVerificationSent';
+import EmailVerificationRequired from 'pages/EmailVerificationRequired/EmailVerificationRequired';
 
 /**
  * A wrapper on <Route> that:
@@ -22,7 +22,7 @@ const ProtectedRoute = ({ children, disableEmailVerify, ...rest }) => {
           user.isVerified || disableEmailVerify ? (
             children
           ) : (
-            <EmailVerificationSent />
+            <EmailVerificationRequired />
           )
         ) : (
           <Redirect

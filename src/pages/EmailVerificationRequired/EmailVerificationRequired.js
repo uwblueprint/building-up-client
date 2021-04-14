@@ -8,7 +8,7 @@ import Toast from 'components/dashboard/Toast/Toast';
 import logo from 'assets/images/logo-black.png';
 import mailbox from 'assets/images/mailbox.png';
 
-const EmailVerificationSent = props => {
+const EmailVerificationRequired = props => {
   const {
     user: { userId, email },
   } = useSelector(state => state.auth);
@@ -64,4 +64,4 @@ const EmailVerificationSent = props => {
   );
 };
 
-export default EmailVerificationSent;
+export default EmailVerificationRequired;
