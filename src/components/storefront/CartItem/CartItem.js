@@ -20,7 +20,7 @@ const CartItem = ({ title, sku, image, price, quantity, lineItemId, checkoutId }
 
   useEffect(() => {
     updateQuantity(lineItemId, quantityPickerProps.valueAsNumber, checkoutId);
-  }, [quantityPickerProps.valueAsNumber]);
+  }, [quantityPickerProps.valueAsNumber]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Flex justifyContent="space-between">
