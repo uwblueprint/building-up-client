@@ -14,6 +14,19 @@ const Button = {
         bg: 'brand.200',
       },
     },
+    black: {
+      bg: 'black',
+      color: 'white',
+      _hover: {
+        bg: 'gray.800',
+        _disabled: {
+          bg: 'black',
+        },
+      },
+      _active: {
+        bg: 'gray.700',
+      },
+    },
   },
   // The default button prop values
   defaultProps: {

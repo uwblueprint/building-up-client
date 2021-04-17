@@ -16,6 +16,8 @@ import {
   Link,
   Skeleton,
 } from '@chakra-ui/react';
+import PreserveQueryParamsLink from 'components/storefront/PreserveQueryParamsLink/PreserveQueryParamsLink';
+
 // import { useSelector, shallowEqual } from 'react-redux';
 // import { selectors as teamSelectors } from '../../data/reducers/team';
 
@@ -32,7 +34,7 @@ const CartItems = ({ checkoutData }) => {
     <VStack flex={1} alignItems="flex-start" spacing={8} py={16} pr={12}>
       <Flex w="100%" justifyContent="space-between">
         <Heading as="h4" size="subtitle">
-          <Link as={RouterLink} to={`/store`}>
+          <Link as={PreserveQueryParamsLink} to={`/store`}>
             CONTINUE SHOPPING
           </Link>
         </Heading>
@@ -168,11 +170,6 @@ const Cart = () => {
 
   return (
     <>
-      <Box bg="black" px="105px">
-        <Heading color="white" py={6}>
-          MY SHOPPING BAG
-        </Heading>
-      </Box>
       <HStack w="100%" h="100%" justifyContent="space-between" alignItems="flex-start" px="105px">
         {loading ? (
           <>

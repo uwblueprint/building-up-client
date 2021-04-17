@@ -79,15 +79,7 @@ function Invite(props) {
           </Text>
           <Text>If you join this team, you will leave your current team.</Text>
           <ButtonGroup size="lg" spacing={2}>
-            <Button
-              isLoading={joinTeamLoading}
-              variant="solid"
-              textColor="white"
-              bg="black"
-              _hover={{ bg: 'gray.800' }}
-              _active={{ bg: 'gray.700' }}
-              onClick={handleJoinTeam}
-            >
+            <Button isLoading={joinTeamLoading} variant="black" onClick={handleJoinTeam}>
               Accept
             </Button>
             <Button

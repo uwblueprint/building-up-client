@@ -14,7 +14,7 @@ import AuthService from '../services/auth.service';
 export const register = (firstName, lastName, email, password, client) => dispatch => {
   return AuthService.register(firstName, lastName, email, password, client).then(
     res => {
-      const { firstName, lastName, email, id, teamId } = res.data.register;
+      const { firstName, lastName, email, id, teamId, isVerified } = res.data.register;
       console.log(res);
       dispatch({
         type: REGISTER_SUCCESS,
@@ -24,6 +24,7 @@ export const register = (firstName, lastName, email, password, client) => dispat
           email,
           userId: id,
           teamId,
+          isVerified,
         },
       });
       return Promise.resolve(true);
@@ -43,7 +44,7 @@ export const login = (email, password, client) => dispatch => {
     res => {
       //login successful
       if (res.data.login !== null) {
-        const { firstName, lastName, email, id, teamId } = res.data.login;
+        const { firstName, lastName, email, id, teamId, isVerified } = res.data.login;
         dispatch({
           type: LOGIN_SUCCESS,
           payload: {
@@ -52,6 +53,7 @@ export const login = (email, password, client) => dispatch => {
             email,
             userId: id,
             teamId,
+            isVerified,
           },
         });
         return Promise.resolve(true);
@@ -102,7 +104,7 @@ export const currentUser = client => dispatch => {
   return AuthService.getCurrentUser(client).then(
     res => {
       if (res.data.getActiveUser !== null) {
-        const { firstName, lastName, email, id, teamId } = res.data.getActiveUser;
+        const { firstName, lastName, email, id, teamId, isVerified } = res.data.getActiveUser;
         dispatch({
           type: LOGIN_SUCCESS,
           payload: {
@@ -111,6 +113,7 @@ export const currentUser = client => dispatch => {
             email,
             userId: id,
             teamId,
+            isVerified,
           },
         });
         return Promise.resolve(teamId);
