@@ -1,6 +1,5 @@
 import React from 'react';
 import { useShopify } from 'hooks/useShopify';
-import { Link as RouterLink } from 'react-router-dom';
 import { CartItem } from 'components/storefront';
 import {
   Box,
@@ -17,9 +16,6 @@ import {
   Skeleton,
 } from '@chakra-ui/react';
 import PreserveQueryParamsLink from 'components/storefront/PreserveQueryParamsLink/PreserveQueryParamsLink';
-
-// import { useSelector, shallowEqual } from 'react-redux';
-// import { selectors as teamSelectors } from '../../data/reducers/team';
 
 const CartItems = ({ checkoutData }) => {
   const { id: checkoutId, lineItems } = checkoutData;

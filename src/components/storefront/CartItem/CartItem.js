@@ -1,11 +1,12 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import { Heading, Flex, Image, useNumberInput, IconButton, VStack } from '@chakra-ui/react';
 import QuantityPicker from '../ProductDetails/QuantityPicker';
 import { CloseIcon } from '@chakra-ui/icons';
 import { useShopify } from 'hooks/useShopify';
 
 const CartItem = ({ title, sku, image, price, quantity, lineItemId, checkoutId }) => {
-  const { removeLineItem } = useShopify();
+  const { removeLineItem, updateQuantity } = useShopify();
   const removeFromCart = () => {
     removeLineItem(checkoutId, lineItemId);
   };
@@ -16,6 +17,10 @@ const CartItem = ({ title, sku, image, price, quantity, lineItemId, checkoutId }
     min: 1,
     max: 999,
   });
+
+  useEffect(() => {
+    updateQuantity(lineItemId, quantityPickerProps.valueAsNumber, checkoutId);
+  }, [quantityPickerProps.valueAsNumber]);
 
   return (
     <Flex justifyContent="space-between">
