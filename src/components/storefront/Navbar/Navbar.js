@@ -1,12 +1,10 @@
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import { Box, Divider, Grid, GridItem, Heading, HStack, Image, Link, chakra } from '@chakra-ui/react';
-
-import BagIcon from 'components/storefront/BagIcon/BagIcon';
+import BagIconWithIndicator from 'components/storefront/BagIcon/BagIcon';
 import PreserveQueryParamsLink from 'components/storefront/PreserveQueryParamsLink/PreserveQueryParamsLink';
 import Logo from 'assets/images/logoWhite.png';
 import { TeamBanner } from '../';
-import BagIconWithIndicator from 'components/storefront/BagIcon/BagIcon';
 
 const NavLink = chakra(Link, {
   baseStyle: {
