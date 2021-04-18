@@ -142,19 +142,6 @@ const Cart = () => {
   const {
     checkout: { loading, data },
   } = useShopify();
-  // const team = useSelector(teamSelectors.selectTeam, shallowEqual);
-
-  /* previous code that might be userful
-  useEffect(() => {
-    const userID = sessionStorage.getItem('userID');
-    updateCartAttributes(checkoutState.id, [
-      { key: 'userID', value: userID ? userID.toString() : '1' }, // Temporary, so that page doesn't crash
-      // Remove once user info is added to redux
-      { key: 'teamID', value: team.id.toString() },
-      { key: 'teamName', value: team.name },
-    ]);
-  }, [checkoutState.id, team.id, team.name]); // eslint-disable-line react-hooks/exhaustive-deps
-  */
 
   return (
     <>

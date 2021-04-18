@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
 import { GET_TEAM_INFO } from 'data/gql/team';
@@ -14,7 +14,14 @@ import PageNotFound from 'pages/Storefront/PageNotFound';
 import Cart from 'pages/Storefront/Cart';
 
 const StorefrontRouter = () => {
-  const { createShop, initializeCheckout, fetchProducts, fetchCollections } = useShopify();
+  const {
+    createShop,
+    initializeCheckout,
+    fetchProducts,
+    fetchCollections,
+    checkout,
+    updateCartAttributes,
+  } = useShopify();
   const { path } = useRouteMatch();
 
   useEffect(() => {
@@ -29,6 +36,9 @@ const StorefrontRouter = () => {
   const [getTeam, { loading: getTeamLoading, error: getTeamError, data: getTeamData }] = useLazyQuery(GET_TEAM_INFO);
   const { search } = useLocation();
 
+  // Keep track of the current checkout ID in a ref
+  const checkoutId = useRef(null);
+
   useEffect(() => {
     if (search) {
       const queries = new URLSearchParams(search);
@@ -38,6 +48,18 @@ const StorefrontRouter = () => {
       }
     }
   }, [search, getTeam]);
+
+  // After the checkout is loaded AND the getTeam query succeeds, update the checkout with our team ID
+  useEffect(() => {
+    // Only update when teamId is available AND checkout ID changes
+    if (getTeamData && checkout.data && checkout.data.id !== checkoutId.current) {
+      updateCartAttributes(checkout.data.id, [
+        { key: 'teamID', value: getTeamData.getTeam.id },
+        { key: 'teamName', value: getTeamData.getTeam.name },
+      ]);
+      checkoutId.current = checkout.data.id;
+    }
+  }, [getTeamData, checkout.data, updateCartAttributes]);
 
   return (
     <ChakraProvider theme={storeTheme}>
