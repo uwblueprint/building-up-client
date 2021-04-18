@@ -7,12 +7,11 @@ const ResetPassword = props => {
   const { setLoginRegister } = props;
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('UNSUBMITTED');
-  const [SendPasswordRequest] = useLazyQuery(SEND_PASSWORD_RESET, {
+  const [sendPasswordRequest] = useLazyQuery(SEND_PASSWORD_RESET, {
     variables: {
       email,
     },
     onCompleted: d => {
-      console.log(d);
       if (d.sendResetPasswordEmail) {
         setStatus('SUCCESS');
       } else {
@@ -42,7 +41,7 @@ const ResetPassword = props => {
             {'< Return to Login'}
           </Button>
           <Box marginBottom="24px">
-            <Heading size="h1" as="h1" textTransform="capitalize">
+            <Heading size="h1" as="h1">
               Change Password
             </Heading>
           </Box>
@@ -57,14 +56,14 @@ const ResetPassword = props => {
             marginBottom="26px"
           />
           {status === 'FAIL' && <Text marginBottom="8px">Something went wrong, please try again later</Text>}
-          <Button onClick={SendPasswordRequest} marginBottom="79px">
+          <Button onClick={sendPasswordRequest} marginBottom="79px">
             Email me a recovery link
           </Button>
         </Flex>
       ) : (
         <Flex alignItems="flex-start" flexDirection="column" w="87%" marginTop="40px">
           <Box marginBottom="24px">
-            <Heading size="h1" as="h1" textTransform="capitalize">
+            <Heading size="h1" as="h1">
               Change Password
             </Heading>
           </Box>

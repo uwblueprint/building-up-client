@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useApolloClient } from '@apollo/client';
 import { useDispatch } from 'react-redux';
-import { Input, Button, Heading, Text, VStack, FormControl, FormLabel } from '@chakra-ui/react';
+import { Input, Button, Heading, Text, VStack, FormControl, FormLabel, Link } from '@chakra-ui/react';
 
 import { login } from 'data/actions/auth';
 
@@ -62,14 +62,9 @@ const LoginInput = props => {
             isRequired
           />
         </FormControl>
-        <Button
-          bg="white"
-          onClick={() => setLoginRegister('RESET')}
-          focus={{ boxShadow: 'white' }}
-          alignSelf="flex-start"
-        >
+        <Link onClick={() => setLoginRegister('RESET')} alignSelf="flex-start">
           Forgot Password?
-        </Button>
+        </Link>
         {submitState === 'FAIL' && <Text alignSelf="flex-start">Oops! Check your credentials and try again.</Text>}
         <Button role="link" width="131px" height="43px" type="submit">
           Sign In
