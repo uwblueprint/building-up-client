@@ -21,7 +21,7 @@ const Product = () => {
   const { id } = useParams();
   const {
     products: { loading: productsLoading, data: productsData },
-    checkout: { loading: checkoutLoading },
+    checkout: { loading: checkoutLoading, data: checkoutData },
   } = useShopify();
 
   const product = productsData.find(product => product.id === id);
@@ -32,7 +32,7 @@ const Product = () => {
     </Container>
   ) : product ? (
     <Container maxW="container.xl" display="flex" flexDirection="column" flex="1" py={20} px={24}>
-      <ProductDetails product={product} />
+      <ProductDetails product={product} checkout={checkoutData} />
     </Container>
   ) : (
     <PageNotFound />
