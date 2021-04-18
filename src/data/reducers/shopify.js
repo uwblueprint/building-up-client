@@ -21,9 +21,6 @@ const UPDATE_CART_ATTRIBUTE = 'shopify/UPDATE_CART_ATTRIBUTE';
 const ADD_VARIANT_TO_CART = 'shopify/ADD_VARIANT_TO_CART';
 const UPDATE_QUANTITY_IN_CART = 'shopify/UPDATE_QUANTITY_IN_CART';
 const REMOVE_LINE_ITEM_IN_CART = 'shopify/REMOVE_LINE_ITEM_IN_CART';
-const OPEN_CART = 'shopify/OPEN_CART';
-const CLOSE_CART = 'shopify/CLOSE_CART';
-const CART_COUNT = 'shopify/CART_COUNT';
 
 const CHECKOUT_ID_LOCAL_STORAGE_KEY = 'SHOPIFY_CHECKOUT_ID';
 const CHECKOUT_ID_FROM_LOCAL_STORAGE = window.localStorage.getItem(CHECKOUT_ID_LOCAL_STORAGE_KEY);
@@ -66,13 +63,6 @@ const shopifyReducer = (state = initialState, action) => {
       return { ...state, checkout: { ...state.checkout, data: action.payload } };
     case REMOVE_LINE_ITEM_IN_CART:
       return { ...state, checkout: { ...state.checkout, data: action.payload } };
-    // Might remove these
-    case OPEN_CART:
-      return { ...state, isCartOpen: true };
-    case CLOSE_CART:
-      return { ...state, isCartOpen: false };
-    case CART_COUNT: // doesn't make sense
-      return { ...state, cartCount: action.payload };
     default:
       return state;
   }
@@ -173,17 +163,6 @@ const updateCartCustomAttributes = (checkoutId, attributes) => {
   };
 };
 
-// TO DO: Consider removing this
-// Updates the cart popover count
-const updateCartItemCount = amount => {
-  return async dispatch => {
-    dispatch({
-      type: CART_COUNT,
-      payload: amount,
-    });
-  };
-};
-
 // Adds lineItems to cart/checkout
 const addLineItemsToCart = (checkoutId, lineItemsToAdd) => {
   return async dispatch => {
@@ -222,30 +201,6 @@ const removeLineItemInCart = (checkoutId, lineItemId) => {
   };
 };
 
-// TODO: Consider removing these
-
-// To close the cart
-const handleCartClose = () => {
-  return {
-    type: CLOSE_CART,
-  };
-};
-
-// To make the cart visible
-const handleCartOpen = () => {
-  return {
-    type: OPEN_CART,
-  };
-};
-
-// Set the count of items in the cart
-const handleSetCount = count => {
-  return {
-    type: CART_COUNT,
-    payload: count,
-  };
-};
-
 export const useShopify = () => {
   const dispatch = useDispatch();
   const cartStatus = useSelector(state => state.shopifyState.isCartOpen);
@@ -260,11 +215,7 @@ export const useShopify = () => {
   const fetchCollections = () => dispatch(getCollections());
   const initializeCheckout = () => dispatch(initCheckout());
   const createShop = () => dispatch(shopInfo());
-  const closeCart = () => dispatch(handleCartClose());
-  const openCart = () => dispatch(handleCartOpen());
-  const setCount = count => dispatch(handleSetCount(count));
 
-  const updateCartCount = amount => dispatch(updateCartItemCount(amount));
   const updateCartAttributes = (checkoutId, attributes) => dispatch(updateCartCustomAttributes(checkoutId, attributes));
   const addLineItems = (checkoutId, lineItemsToAdd) => dispatch(addLineItemsToCart(checkoutId, lineItemsToAdd));
   const updateQuantity = (lineItemId, quantity, checkoutID) =>
@@ -279,7 +230,6 @@ export const useShopify = () => {
     checkout,
     cartCount,
     shopDetails,
-    updateCartCount,
     updateCartAttributes,
     addLineItems,
     fetchProducts,
@@ -287,11 +237,8 @@ export const useShopify = () => {
     fetchCollections,
     initializeCheckout,
     createShop,
-    closeCart,
-    openCart,
     updateQuantity,
     removeLineItem,
-    setCount,
   };
 };
 
