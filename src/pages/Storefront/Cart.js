@@ -27,14 +27,14 @@ const CartItems = ({ checkoutData }) => {
   };
 
   return (
-    <VStack flex={1} alignItems="flex-start" spacing={8} py={16} pr={12}>
+    <VStack flex={1} alignItems="flex-start" spacing={8} pr={12}>
       <Flex w="100%" justifyContent="space-between">
-        <Heading as="h4" size="subtitle">
+        <Heading size="subtitle">
           <Link as={PreserveQueryParamsLink} to={`/store`}>
             CONTINUE SHOPPING
           </Link>
         </Heading>
-        <Heading as="h4" color="brand.gray" size="subtitle" textTransform="uppercase">
+        <Heading color="brand.gray" size="subtitle" textTransform="uppercase">
           {`${cartItemsCount} ITEMS`}
         </Heading>
       </Flex>
@@ -111,12 +111,10 @@ const OrderSummary = ({ checkoutData }) => {
   const { totalPrice, subtotalPrice, webUrl } = checkoutData;
 
   return (
-    <Flex direction="column" alignItems="flex-start" pt="116px">
+    <Flex direction="column" alignItems="flex-start" pt="52px">
       <VStack alignItems="flex-start" bg="brand.lightgray" spacing={10} p={8} w="409px" mb={6}>
         {/* TO DO: refactor to store titles & prices in array & map through to render */}
-        <Heading as="h4" size="subtitle">
-          ORDER SUMMARY
-        </Heading>
+        <Heading size="subtitle">ORDER SUMMARY</Heading>
         <VStack w="100%" alignItems="flex-start" spacing={8}>
           <Flex w="100%" justifyContent="space-between">
             <Text>SUBTOTAL</Text>
@@ -131,12 +129,8 @@ const OrderSummary = ({ checkoutData }) => {
         </VStack>
         <Divider borderColor="brand.gray" />
         <Flex w="100%" justifyContent="space-between">
-          <Heading as="h4" size="subtitle">
-            ESTIMATED TOTAL
-          </Heading>
-          <Heading as="h4" size="subtitle">
-            {`$${totalPrice}`}
-          </Heading>
+          <Heading size="subtitle">ESTIMATED TOTAL</Heading>
+          <Heading size="subtitle">{`$${totalPrice}`}</Heading>
         </Flex>
       </VStack>
       <Link href={webUrl}>
@@ -167,7 +161,7 @@ const Cart = () => {
 
   return (
     <>
-      <HStack w="100%" h="100%" justifyContent="space-between" alignItems="flex-start" px="105px">
+      <HStack w="100%" h="100%" justifyContent="space-between" alignItems="flex-start" px="105px" py={16}>
         {loading ? (
           <>
             <CartItemsSkeleton />
