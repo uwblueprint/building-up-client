@@ -6,6 +6,7 @@ import BagIcon from 'components/storefront/BagIcon/BagIcon';
 import PreserveQueryParamsLink from 'components/storefront/PreserveQueryParamsLink/PreserveQueryParamsLink';
 import Logo from 'assets/images/logoWhite.png';
 import { TeamBanner } from '../';
+import BagIconWithIndicator from 'components/storefront/BagIcon/BagIcon';
 
 const NavLink = chakra(Link, {
   baseStyle: {
@@ -52,7 +53,7 @@ const Navbar = props => {
           </NavLink>
           <Divider orientation="vertical" h="60%" opacity={1} />
           <NavLink as={PreserveQueryParamsLink} to="/store/cart">
-            <BagIcon height="28px" width="28px" />
+            <BagIconWithIndicator />
           </NavLink>
         </GridItem>
       </Grid>
