@@ -23,6 +23,13 @@ const Input = {
         borderRadius: 'none',
       },
     },
+    checkout: {
+      field: {
+        width: '52px',
+        height: '40px',
+        borderRadius: 'none',
+      },
+    },
   },
   variants: {
     outline: {

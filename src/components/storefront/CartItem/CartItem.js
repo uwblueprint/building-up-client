@@ -47,7 +47,7 @@ const CartItem = ({ title, sku, image, price, quantity, lineItemId, checkoutId }
           {/* Does not show colour + variant at the moment */}
         </VStack>
       </Flex>
-      <QuantityPicker {...quantityPickerProps} />
+      <QuantityPicker size="checkout" {...quantityPickerProps} />
       <IconButton
         size="xs"
         color="brand.gray"

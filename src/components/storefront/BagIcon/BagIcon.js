@@ -26,18 +26,18 @@ const BagIcon = createIcon({
 
 const BagIconWithIndicator = () => {
   const {
-    checkout: {
-      data: { lineItems },
-    },
+    checkout: { data },
   } = useShopify();
-  const cartItemsCount = lineItems.reduce((acc, cur) => acc + cur.quantity, 0);
+  const cartItemsCount = data?.lineItems.reduce((acc, cur) => acc + cur.quantity, 0);
 
   return (
     <Box pos="relative">
       <BagIcon height="28px" width="28px" />
-      <Circle size="25px" bg="brand.red" color="white" pos="absolute" top="15px" left="15px">
-        {cartItemsCount <= 9 ? cartItemsCount : '9+'}
-      </Circle>
+      {cartItemsCount > 0 && (
+        <Circle size="25px" bg="brand.red" color="white" pos="absolute" top="15px" left="15px">
+          {cartItemsCount <= 9 ? cartItemsCount : '9+'}
+        </Circle>
+      )}
     </Box>
   );
 };

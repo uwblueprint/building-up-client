@@ -50,7 +50,7 @@ const ProductDetails = ({ product, checkout }) => {
           {`$${variantPrice}`}
         </Heading>
         <Text my={5}>{description}</Text>
-        <QuantityPicker {...quantityPickerProps} />
+        <QuantityPicker size="quantity" {...quantityPickerProps} />
         <Button textTransform="uppercase" mt={5} mb={10} onClick={handleAddToShoppingBag}>
           {'Add to shopping bag'}
         </Button>
