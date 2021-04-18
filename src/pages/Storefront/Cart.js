@@ -40,8 +40,7 @@ const CartItems = ({ checkoutData }) => {
       </Flex>
       <VStack w="100%" spacing={8}>
         <Divider borderColor="brand.gray" />
-        {/* TO DO: Handle empty cart state */}
-        {lineItems &&
+        {lineItems.length > 0 ? (
           lineItems.map(({ id, title, quantity, variant: { sku, image, price } }) => (
             <Box w="100%" key={id}>
               <CartItem
@@ -55,21 +54,34 @@ const CartItems = ({ checkoutData }) => {
               />
               <Divider borderColor="brand.gray" pb={8} />
             </Box>
-          ))}
+          ))
+        ) : (
+          <VStack spacing={8}>
+            <Heading size="h3" color="black" py={0}>
+              YOUR BAG IS EMPTY
+            </Heading>
+            <Text>Looks like your bag is empty! Why not add something?</Text>
+            <Link as={PreserveQueryParamsLink} to={`/store`}>
+              <Button size="md">CONTINUE SHOPPING</Button>
+            </Link>
+          </VStack>
+        )}
       </VStack>
-      <Flex justifyContent="space-between">
-        <FormControl w="50%">
-          <Input
-            type="text"
-            name="coupon"
-            placeholder="COUPON CODE"
-            // onChange={e => handleInputChange(e, i)}
-          />
-        </FormControl>
-        <Button size="sm" onClick={applyCoupon}>
-          APPLY COUPON
-        </Button>
-      </Flex>
+      {lineItems.length > 0 && (
+        <Flex justifyContent="space-between">
+          <FormControl w="50%">
+            <Input
+              type="text"
+              name="coupon"
+              placeholder="COUPON CODE"
+              // onChange={e => handleInputChange(e, i)}
+            />
+          </FormControl>
+          <Button size="sm" onClick={applyCoupon}>
+            APPLY COUPON
+          </Button>
+        </Flex>
+      )}
     </VStack>
   );
 };
@@ -96,7 +108,7 @@ const OrderSummarySkeleton = () => {
 };
 
 const OrderSummary = ({ checkoutData }) => {
-  const { totalPrice, subtotalPrice, totalTax, webUrl } = checkoutData;
+  const { totalPrice, subtotalPrice, webUrl } = checkoutData;
 
   return (
     <Flex direction="column" alignItems="flex-start" pt="116px">
@@ -111,14 +123,11 @@ const OrderSummary = ({ checkoutData }) => {
             <Text fontWeight="semibold">{`$${subtotalPrice}`}</Text>
           </Flex>
           <Flex w="100%" justifyContent="space-between">
-            <Text>SHIPPING ESTIMATE</Text>
+            <Text>COUPON DISCOUNT</Text>
             <Text fontWeight="semibold">$0.00</Text>
-            {/* not sure where to get shipping estimate from */}
+            {/* TO DO: Coupon discount to be implemented in next PR */}
           </Flex>
-          <Flex w="100%" justifyContent="space-between">
-            <Text>TAXES ESTIMATE</Text>
-            <Text fontWeight="semibold">{`$${totalTax}`}</Text>
-          </Flex>
+          <Text>SHIPPING & TAXES TO BE CALCULATED AT CHECKOUT.</Text>
         </VStack>
         <Divider borderColor="brand.gray" />
         <Flex w="100%" justifyContent="space-between">
@@ -167,7 +176,7 @@ const Cart = () => {
         ) : (
           <>
             <CartItems checkoutData={data} />
-            <OrderSummary checkoutData={data} />
+            {data.lineItems.length > 0 && <OrderSummary checkoutData={data} />}
           </>
         )}
       </HStack>

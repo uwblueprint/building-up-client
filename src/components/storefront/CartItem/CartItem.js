@@ -35,13 +35,13 @@ const CartItem = ({ title, sku, image, price, quantity, lineItemId, checkoutId }
           <Image boxSize="200" objectFit="cover" border="1px solid black" src={image} alt={title} />
         </Flex>
         <VStack alignItems="flex-start" w={64} pl={6}>
-          <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.gray">
+          <Heading size="subtitle" textTransform="uppercase" color="brand.gray">
             {`Item #${sku}`}
           </Heading>
-          <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.darkgray">
+          <Heading size="subtitle" textTransform="uppercase" color="brand.darkgray">
             {title}
           </Heading>
-          <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.darkgray">
+          <Heading size="subtitle" textTransform="uppercase" color="brand.darkgray">
             {`${quantity} X $${price}`}
           </Heading>
           {/* Does not show colour + variant at the moment */}
