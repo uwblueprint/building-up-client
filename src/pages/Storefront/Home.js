@@ -1,12 +1,19 @@
 import * as React from 'react';
+import { Box } from '@chakra-ui/react';
 import { BestSellers, ItemListings } from '../../components/storefront';
-import { Container } from '@chakra-ui/react';
+import { PageContainer } from 'components/storefront/PageContainer/PageContainer';
 
 const Home = () => (
-  <Container maxW="container.xl" display="flex" flexDirection="column" flex="1" py={20} px={24}>
-    <BestSellers />
-    <ItemListings />
-  </Container>
+  <Box>
+    <PageContainer>
+      <BestSellers />
+    </PageContainer>
+    <Box bg="black">
+      <PageContainer bg="black">
+        <ItemListings />
+      </PageContainer>
+    </Box>
+  </Box>
 );
 
 export default Home;

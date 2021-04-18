@@ -1,17 +1,9 @@
 import * as React from 'react';
-import { Heading, HStack, VStack, Skeleton } from '@chakra-ui/react';
+import { Heading, Grid, VStack } from '@chakra-ui/react';
 import { useShopify } from 'hooks/useShopify';
+
 import Item from '../Item/Item';
-
-const IMAGE_SQUARE_SIZE = 80;
-
-const BestSellersSkeleton = () => (
-  <>
-    <Skeleton h={IMAGE_SQUARE_SIZE} w={IMAGE_SQUARE_SIZE} />
-    <Skeleton h={IMAGE_SQUARE_SIZE} w={IMAGE_SQUARE_SIZE} />
-    <Skeleton h={IMAGE_SQUARE_SIZE} w={IMAGE_SQUARE_SIZE} />
-  </>
-);
+import ItemGridSkeleton from '../ItemGridSkeleton/ItemGridSkeleton';
 
 const BestSellers = () => {
   const {
@@ -20,21 +12,21 @@ const BestSellers = () => {
   const bestSellersCollection = data.find(({ handle }) => handle === 'best-sellers');
 
   return (
-    <VStack>
+    <VStack textAlign="center">
       <Heading as="h4" size="subtitle" color="brand.red">
         DON'T MISS OUT
       </Heading>
       <Heading mb={4}>BEST SELLERS</Heading>
-      <HStack spacing={8}>
+      <Grid minH={40} gap={8} templateColumns={{ base: 'repeat(1, 1fr)', sm: 'repeat(3, 1fr)' }} w="100%">
         {loading ? (
-          <BestSellersSkeleton />
+          <ItemGridSkeleton />
         ) : (
           bestSellersCollection &&
           bestSellersCollection.products.map(({ id, title, images, variants }) => (
             <Item key={id} id={id} name={title} image={images && images[0].src} price={variants && variants[0].price} />
           ))
         )}
-      </HStack>
+      </Grid>
     </VStack>
   );
 };
