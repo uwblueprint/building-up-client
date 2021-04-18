@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
+
 import { Heading, Flex, Image, useNumberInput, IconButton, VStack } from '@chakra-ui/react';
 import QuantityPicker from '../ProductDetails/QuantityPicker';
 import { CloseIcon } from '@chakra-ui/icons';
@@ -18,8 +18,14 @@ const CartItem = ({ title, sku, image, price, quantity, lineItemId, checkoutId }
     max: 999,
   });
 
+  const prevQuantity = useRef(quantity);
+
   useEffect(() => {
-    updateQuantity(lineItemId, quantityPickerProps.valueAsNumber, checkoutId);
+    const { valueAsNumber } = quantityPickerProps;
+    if (prevQuantity.current !== valueAsNumber) {
+      updateQuantity(lineItemId, valueAsNumber, checkoutId);
+      prevQuantity.current = valueAsNumber;
+    }
   }, [quantityPickerProps.valueAsNumber]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (

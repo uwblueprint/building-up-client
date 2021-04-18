@@ -98,14 +98,6 @@ const OrderSummarySkeleton = () => {
 const OrderSummary = ({ checkoutData }) => {
   const { totalPrice, subtotalPrice, totalTax, webUrl } = checkoutData;
 
-  const openCheckout = () => {
-    if (webUrl) {
-      console.log('webUrl exists');
-    }
-    // window.open(webUrl) // opens checkout in a new window
-    window.location.replace(webUrl); // opens checkout in same window
-  };
-
   return (
     <Flex direction="column" alignItems="flex-start" pt="116px">
       <VStack alignItems="flex-start" bg="brand.lightgray" spacing={10} p={8} w="409px" mb={6}>
@@ -138,9 +130,9 @@ const OrderSummary = ({ checkoutData }) => {
           </Heading>
         </Flex>
       </VStack>
-      <Button size="md" onClick={openCheckout}>
-        PROCEED TO CHECKOUT
-      </Button>
+      <Link href={webUrl}>
+        <Button size="md">PROCEED TO CHECKOUT</Button>
+      </Link>
     </Flex>
   );
 };
