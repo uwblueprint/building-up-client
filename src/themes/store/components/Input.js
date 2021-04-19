@@ -56,18 +56,18 @@ const Input = {
           borderColor: 'black',
         },
       },
-      checkout: {
-        field: {
-          textAlign: 'center',
-          padding: '4',
-          border: '1px solid',
+    },
+    checkout: {
+      field: {
+        textAlign: 'center',
+        padding: '4',
+        border: '1px solid',
+        borderColor: 'black',
+        _hover: {
           borderColor: 'black',
-          _hover: {
-            borderColor: 'black',
-          },
-          _focus: {
-            borderColor: 'black',
-          },
+        },
+        _focus: {
+          borderColor: 'black',
         },
       },
     },
