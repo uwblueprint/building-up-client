@@ -3,7 +3,7 @@ const Input = {
   baseStyle: {
     field: {
       textTransform: 'uppercase',
-      color: 'brand.gray',
+      color: 'black',
       textStyle: 'subtitle',
     },
   },
@@ -34,7 +34,7 @@ const Input = {
   variants: {
     outline: {
       field: {
-        borderColor: 'brand.gray',
+        borderColor: 'black',
         _hover: {
           borderColor: 'black',
         },
@@ -48,12 +48,26 @@ const Input = {
         textAlign: 'center',
         padding: '4',
         border: '1px solid',
-        borderColor: 'brand.gray',
+        borderColor: 'black',
         _hover: {
           borderColor: 'black',
         },
         _focus: {
           borderColor: 'black',
+        },
+      },
+      checkout: {
+        field: {
+          textAlign: 'center',
+          padding: '4',
+          border: '1px solid',
+          borderColor: 'black',
+          _hover: {
+            borderColor: 'black',
+          },
+          _focus: {
+            borderColor: 'black',
+          },
         },
       },
     },
