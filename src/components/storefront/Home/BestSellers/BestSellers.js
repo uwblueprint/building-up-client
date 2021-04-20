@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Heading, Grid, VStack } from '@chakra-ui/react';
+import { VStack } from '@chakra-ui/react';
 import { useShopify } from 'hooks/useShopify';
 
 import Item from '../Item/Item';
-import ItemGridSkeleton from '../ItemGridSkeleton/ItemGridSkeleton';
+import { ItemGrid, ItemGridSkeleton, SectionHeader } from '../Layout/Layout';
 
 const BestSellers = () => {
   const {
@@ -13,11 +13,8 @@ const BestSellers = () => {
 
   return (
     <VStack textAlign="center">
-      <Heading as="h4" size="subtitle" color="brand.red">
-        DON'T MISS OUT
-      </Heading>
-      <Heading mb={4}>BEST SELLERS</Heading>
-      <Grid minH={40} gap={8} templateColumns={{ base: 'repeat(1, 1fr)', sm: 'repeat(3, 1fr)' }} w="100%">
+      <SectionHeader title="Best Sellers" subtitle="Don't Miss Out" />
+      <ItemGrid>
         {loading ? (
           <ItemGridSkeleton />
         ) : (
@@ -26,7 +23,7 @@ const BestSellers = () => {
             <Item key={id} id={id} name={title} image={images && images[0].src} price={variants && variants[0].price} />
           ))
         )}
-      </Grid>
+      </ItemGrid>
     </VStack>
   );
 };

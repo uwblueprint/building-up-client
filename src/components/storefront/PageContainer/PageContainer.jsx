@@ -8,6 +8,7 @@ export const PADDING_Y = { base: 6, lg: 8, xl: 12 };
 /**
  * PageContainer with responsive padding for the storefront pages
  *
+ * Composes Chakra's `Container` component
  */
 export const PageContainer = forwardRef((props, ref) => {
   const { ...rest } = props;

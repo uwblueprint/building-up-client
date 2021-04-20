@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Box } from '@chakra-ui/react';
-import { BestSellers, ItemListings } from '../../components/storefront';
+import { BestSellers, AllItems } from 'components/storefront';
 import { PageContainer } from 'components/storefront/PageContainer/PageContainer';
 
 const Home = () => (
@@ -10,7 +10,7 @@ const Home = () => (
     </PageContainer>
     <Box bg="black">
       <PageContainer bg="black">
-        <ItemListings />
+        <AllItems />
       </PageContainer>
     </Box>
   </Box>
