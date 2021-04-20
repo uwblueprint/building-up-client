@@ -6,6 +6,7 @@ import PreserveQueryParamsLink from 'components/storefront/PreserveQueryParamsLi
 
 const Item = ({ id, name, image, price }) => {
   const { path } = useRouteMatch();
+  console.log('id', id);
 
   return (
     <VStack>

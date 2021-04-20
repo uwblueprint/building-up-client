@@ -1,12 +1,18 @@
 import React, { useEffect, useRef } from 'react';
-
-import { Heading, Flex, Image, useNumberInput, IconButton, VStack } from '@chakra-ui/react';
+import { Heading, Flex, Image, useNumberInput, IconButton, VStack, Link } from '@chakra-ui/react';
 import QuantityPicker from '../ProductDetails/QuantityPicker';
 import { CloseIcon } from '@chakra-ui/icons';
 import { useShopify } from 'hooks/useShopify';
+import PreserveQueryParamsLink from 'components/storefront/PreserveQueryParamsLink/PreserveQueryParamsLink';
 
 const CartItem = ({ title, sku, image, price, quantity, lineItemId, checkoutId }) => {
-  const { removeLineItem, updateQuantity } = useShopify();
+  const {
+    removeLineItem,
+    updateQuantity,
+    collections: { data },
+  } = useShopify();
+  // Retrieves the slug from "All Items" collection since id in checkout is different than id in "All Items"
+  const slug = data[2].products.find(product => product.title === title).id;
   const removeFromCart = () => {
     removeLineItem(checkoutId, lineItemId);
   };
@@ -32,7 +38,9 @@ const CartItem = ({ title, sku, image, price, quantity, lineItemId, checkoutId }
     <Flex justifyContent="space-between">
       <Flex>
         <Flex direction="column">
-          <Image boxSize="200" objectFit="cover" border="1px solid black" src={image} alt={title} />
+          <Link as={PreserveQueryParamsLink} to={`products/${slug}`}>
+            <Image boxSize="200" objectFit="cover" border="1px solid black" src={image} alt={title} />
+          </Link>
         </Flex>
         <VStack alignItems="flex-start" w={64} pl={6}>
           <Heading size="subtitle" textTransform="uppercase" color="brand.gray">

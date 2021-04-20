@@ -20,6 +20,7 @@ import PreserveQueryParamsLink from 'components/storefront/PreserveQueryParamsLi
 const CartItems = ({ checkoutData }) => {
   const { id: checkoutId, lineItems } = checkoutData;
   const cartItemsCount = lineItems.reduce((acc, cur) => acc + cur.quantity, 0);
+  console.log('lineItems', lineItems);
 
   // TO DO: May remove coupon & just let Shopify handle
   const applyCoupon = () => {
