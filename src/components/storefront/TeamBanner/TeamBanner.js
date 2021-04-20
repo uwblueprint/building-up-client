@@ -12,6 +12,7 @@ const TeamBanner = props => {
       cursor={!loading && (error || !data) ? 'pointer' : null}
       w="100%"
       h="34px"
+      px={3}
       justify="center"
       align="center"
       bg={loading || data ? 'brand.lightgray' : 'brand.red'}
@@ -26,6 +27,7 @@ const TeamBanner = props => {
             fontWeight="bold"
             fontFamily="heading"
             fontSize="sm"
+            isTruncated
           >
             {data ? `Team ${data.getTeam.name}` : 'Please note that your purchase will not be attributed to a team'}
           </Text>
