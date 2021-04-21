@@ -30,7 +30,7 @@ const Item = ({ title, panel }) => {
                 color: 'black',
               }}
             >
-              <Heading as="h4" size="subtitle" textTransform="uppercase">
+              <Heading as="h4" size="subtitle" textTransform="uppercase" textAlign="left">
                 {title}
               </Heading>
               <Spacer />

@@ -19,8 +19,15 @@ const BestSellers = () => {
           <ItemGridSkeleton />
         ) : (
           bestSellersCollection &&
-          bestSellersCollection.products.map(({ id, title, images, variants }) => (
-            <Item key={id} id={id} name={title} image={images && images[0].src} price={variants && variants[0].price} />
+          bestSellersCollection.products.map(({ id, title, images, variants, availableForSale }) => (
+            <Item
+              key={id}
+              id={id}
+              name={title}
+              image={images && images[0].src}
+              price={variants && variants[0].price}
+              availableForSale={availableForSale}
+            />
           ))
         )}
       </ItemGrid>
