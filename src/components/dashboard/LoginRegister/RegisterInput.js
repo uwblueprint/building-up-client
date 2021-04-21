@@ -54,7 +54,7 @@ const RegisterInput = () => {
             name="firstName"
             placeholder="Enter first name"
             value={firstName}
-            placeholderonChange={onChangeFirstName}
+            onChange={onChangeFirstName}
             isRequired
           />
         </FormControl>
@@ -88,6 +88,7 @@ const RegisterInput = () => {
             value={password}
             onChange={onChangePass}
             isRequired
+            minLength={8}
           />
         </FormControl>
         {submitState === 'FAIL' && <Text alignSelf="flex-start">Unable to register, please try again.</Text>}
