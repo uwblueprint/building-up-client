@@ -40,11 +40,26 @@ const LoginInput = () => {
         </Heading>
         <FormControl id="email">
           <FormLabel>Email</FormLabel>
-          <Input type="email" name="email" value={email} onChange={onChangeEmail} isRequired />
+          <Input
+            type="email"
+            name="email"
+            placeholder="Enter email address"
+            value={email}
+            onChange={onChangeEmail}
+            isRequired
+          />
         </FormControl>
         <FormControl id="password">
           <FormLabel>Password</FormLabel>
-          <Input type="password" name="password" value={password} onChange={onChangePass} mb="8px" isRequired />
+          <Input
+            type="password"
+            name="password"
+            placeholder="Enter password"
+            value={password}
+            onChange={onChangePass}
+            mb="8px"
+            isRequired
+          />
         </FormControl>
         <Link alignSelf="flex-start">Forgot Password?</Link>
         {submitState === 'FAIL' && <Text alignSelf="flex-start">Oops! Check your credentials and try again.</Text>}

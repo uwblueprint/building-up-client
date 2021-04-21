@@ -50,19 +50,45 @@ const RegisterInput = () => {
         </Heading>
         <FormControl id="firstName">
           <FormLabel>First Name</FormLabel>
-          <Input name="firstName" value={firstName} onChange={onChangeFirstName} isRequired />
+          <Input
+            name="firstName"
+            placeholder="Enter first name"
+            value={firstName}
+            placeholderonChange={onChangeFirstName}
+            isRequired
+          />
         </FormControl>
         <FormControl id="lastName">
           <FormLabel>Last Name</FormLabel>
-          <Input name="lastName" value={lastName} onChange={onChangeLastName} isRequired />
+          <Input
+            name="lastName"
+            placeholder="Enter last name"
+            value={lastName}
+            onChange={onChangeLastName}
+            isRequired
+          />
         </FormControl>
         <FormControl id="email">
           <FormLabel>Email</FormLabel>
-          <Input type="email" name="email" value={email} onChange={onChangeEmail} isRequired />
+          <Input
+            type="email"
+            name="email"
+            placeholder="Enter email address"
+            value={email}
+            onChange={onChangeEmail}
+            isRequired
+          />
         </FormControl>
         <FormControl id="password">
           <FormLabel>Password</FormLabel>
-          <Input type="password" name="password" value={password} onChange={onChangePass} isRequired />
+          <Input
+            type="password"
+            placeholder="8+ characters"
+            name="password"
+            value={password}
+            onChange={onChangePass}
+            isRequired
+          />
         </FormControl>
         {submitState === 'FAIL' && <Text alignSelf="flex-start">Unable to register, please try again.</Text>}
         <Button role="link" width="131px" height="43px" type="submit">
