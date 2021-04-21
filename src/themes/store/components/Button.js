@@ -28,6 +28,9 @@ const Button = {
       bg: 'black',
       _hover: {
         bg: 'brand.darkgray',
+        _disabled: {
+          bg: 'black',
+        },
       },
       _active: {
         bg: 'brand.darkgray',
@@ -39,6 +42,9 @@ const Button = {
       _hover: {
         color: 'white',
         bg: 'brand.darkgray',
+        _disabled: {
+          bg: 'white',
+        },
       },
       _active: {
         color: 'white',
