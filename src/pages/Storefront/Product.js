@@ -3,9 +3,9 @@ import { useParams } from 'react-router-dom';
 import { Box, HStack, Skeleton, SkeletonText } from '@chakra-ui/react';
 
 import { useShopify } from 'hooks/useShopify';
-import { ProductDetails } from '../../components/storefront';
-import { Container } from '@chakra-ui/react';
 import PageNotFound from './PageNotFound';
+import { ProductDetails } from 'components/storefront';
+import { PageContainer } from 'components/storefront/PageContainer/PageContainer';
 
 const ProductSkeleton = () => (
   <HStack flex="0.5" spacing={8} align="flex-start">
@@ -26,16 +26,16 @@ const Product = () => {
 
   const product = productsData.find(product => product.id === id);
 
-  return productsLoading || checkoutLoading ? (
-    <Container maxW="container.xl" display="flex" flexDirection="column" flex="1" py={20} px={24}>
-      <ProductSkeleton />
-    </Container>
-  ) : product ? (
-    <Container maxW="container.xl" display="flex" flexDirection="column" flex="1" py={20} px={24}>
-      <ProductDetails product={product} checkout={checkoutData} />
-    </Container>
-  ) : (
-    <PageNotFound />
+  return (
+    <PageContainer>
+      {productsLoading || checkoutLoading ? (
+        <ProductSkeleton />
+      ) : product ? (
+        <ProductDetails product={product} checkout={checkoutData} />
+      ) : (
+        <PageNotFound />
+      )}
+    </PageContainer>
   );
 };
 
