@@ -3,7 +3,7 @@ const Input = {
   baseStyle: {
     field: {
       textTransform: 'uppercase',
-      color: 'black',
+      color: 'brand.gray',
       textStyle: 'subtitle',
     },
   },
