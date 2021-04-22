@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Heading, Flex, Image, useNumberInput, IconButton, VStack, Link, Text } from '@chakra-ui/react';
+import { Heading, Flex, Image, useNumberInput, IconButton, VStack, Link } from '@chakra-ui/react';
 import QuantityPicker from '../ProductDetails/QuantityPicker';
 import { CloseIcon } from '@chakra-ui/icons';
 import { useShopify } from 'hooks/useShopify';
