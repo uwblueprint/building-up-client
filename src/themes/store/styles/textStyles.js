@@ -39,9 +39,8 @@ export const textStyles = {
   },
   lightCaption: {
     ...headingsBase,
-    fontSize: 'xs',
-    lineHeight: '18px',
+    fontSize: 'sm',
+    lineHeight: '17px',
     letterSpacing: 'wider',
-    fontWeight: 'normal',
   },
 };

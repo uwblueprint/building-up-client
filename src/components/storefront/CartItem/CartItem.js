@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Heading, Flex, Image, useNumberInput, IconButton, VStack, Link } from '@chakra-ui/react';
+import { Heading, Flex, Image, useNumberInput, IconButton, VStack, Link, Text } from '@chakra-ui/react';
 import QuantityPicker from '../ProductDetails/QuantityPicker';
 import { CloseIcon } from '@chakra-ui/icons';
 import { useShopify } from 'hooks/useShopify';
@@ -43,7 +43,7 @@ const CartItem = ({ title, sku, image, price, quantity, lineItemId, checkoutId }
           </Link>
         </Flex>
         <VStack alignItems="flex-start" w={64} pl={6}>
-          <Heading size="subtitle" textTransform="uppercase" color="brand.gray">
+          <Heading size="lightCaption" textTransform="uppercase" color="brand.gray">
             {`Item #${sku}`}
           </Heading>
           <Heading size="subtitle" textTransform="uppercase" color="brand.darkgray">

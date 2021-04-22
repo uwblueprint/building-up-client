@@ -20,7 +20,6 @@ import PreserveQueryParamsLink from 'components/storefront/PreserveQueryParamsLi
 const CartItems = ({ checkoutData }) => {
   const { id: checkoutId, lineItems } = checkoutData;
   const cartItemsCount = lineItems.reduce((acc, cur) => acc + cur.quantity, 0);
-  console.log('lineItems', lineItems);
 
   // TO DO: May remove coupon & just let Shopify handle
   const applyCoupon = () => {
@@ -114,19 +113,20 @@ const OrderSummary = ({ checkoutData }) => {
   return (
     <Flex direction="column" alignItems="flex-start" pt="52px">
       <VStack alignItems="flex-start" bg="brand.lightgray" spacing={10} p={8} w="409px" mb={6}>
-        {/* TO DO: refactor to store titles & prices in array & map through to render */}
         <Heading size="subtitle">ORDER SUMMARY</Heading>
         <VStack w="100%" alignItems="flex-start" spacing={8}>
           <Flex w="100%" justifyContent="space-between">
-            <Text>SUBTOTAL</Text>
-            <Text fontWeight="semibold">{`$${subtotalPrice}`}</Text>
+            <Heading size="lightCaption">SUBTOTAL</Heading>
+            <Heading size="lightCaption" fontWeight="semibold">{`$${subtotalPrice}`}</Heading>
           </Flex>
           <Flex w="100%" justifyContent="space-between">
-            <Text>COUPON DISCOUNT</Text>
-            <Text fontWeight="semibold">$0.00</Text>
+            <Heading size="lightCaption">COUPON DISCOUNT</Heading>
+            <Heading size="lightCaption" fontWeight="semibold">
+              $0.00
+            </Heading>
             {/* TO DO: Coupon discount to be implemented in next PR */}
           </Flex>
-          <Text>SHIPPING & TAXES TO BE CALCULATED AT CHECKOUT.</Text>
+          <Heading size="lightCaption">SHIPPING & TAXES TO BE CALCULATED AT CHECKOUT.</Heading>
         </VStack>
         <Divider borderColor="brand.gray" />
         <Flex w="100%" justifyContent="space-between">

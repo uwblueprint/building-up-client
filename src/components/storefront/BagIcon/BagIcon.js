@@ -1,6 +1,6 @@
 // https://chakra-ui.com/docs/media-and-icons/icon#using-the-createicon-function
 import React from 'react';
-import { createIcon, Circle, Box } from '@chakra-ui/react';
+import { createIcon, Circle, Box, Heading } from '@chakra-ui/react';
 import { useShopify } from 'hooks/useShopify';
 
 const BagIcon = createIcon({
@@ -34,8 +34,8 @@ const BagIconWithIndicator = () => {
     <Box pos="relative">
       <BagIcon height="28px" width="28px" />
       {cartItemsCount > 0 && (
-        <Circle size="25px" bg="brand.red" color="white" pos="absolute" top="15px" left="15px">
-          {cartItemsCount <= 9 ? cartItemsCount : '9+'}
+        <Circle size="22px" bg="brand.red" color="white" pos="absolute" top="15px" left="15px">
+          <Heading size="lightCaption">{cartItemsCount <= 9 ? cartItemsCount : '9+'}</Heading>
         </Circle>
       )}
     </Box>
