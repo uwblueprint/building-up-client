@@ -62,7 +62,7 @@ const DashboardRouter = () => {
           <Route exact path="/resetPassword/:token">
             <ResetPassword />
           </Route>
-          <ProtectedRoute path="/">
+          <ProtectedRoute disableEmailVerify path="/">
             <Grid templateColumns={`${NAVBAR_WIDTH} 1fr`} templateRows="100vh" h="100vh">
               <Box borderRight="2px solid black" w="100%" h="100%">
                 {/** Navbar width is set manually to keep the position fixed */}
