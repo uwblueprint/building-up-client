@@ -48,3 +48,15 @@ export const SEND_VERIFICATION_EMAIL = gql`
     sendVerificationEmail(id: $id)
   }
 `;
+
+export const SEND_PASSWORD_RESET = gql`
+  query sendResetPasswordEmail($email: String!) {
+    sendResetPasswordEmail(email: $email)
+  }
+`;
+
+export const RESET_PASSWORD_MUTATION = gql`
+  mutation resetPassword($jwtToken: String!, $password: String!) {
+    resetPassword(jwtToken: $jwtToken, password: $password)
+  }
+`;

@@ -3,6 +3,7 @@ import { Box, Flex, Button, Image } from '@chakra-ui/react';
 
 import LoginInput from 'components/dashboard/LoginRegister/LoginInput';
 import RegisterInput from 'components/dashboard/LoginRegister/RegisterInput';
+import ResetPassword from 'components/dashboard/LoginRegister/ResetPassword';
 import logo from 'assets/images/logo-black.png';
 
 const TabButton = props => {
@@ -36,26 +37,34 @@ function LoginRegister() {
         <Flex justify="center" marginTop="36px" marginBottom="36px">
           <Image src={logo} w="350px" />
         </Flex>
-        <Box minW="35%" borderRadius="lg" borderWidth="1px" bg="white">
-          <Flex direction="row" justify="space-between" margin="20px 100px 24px 100px">
-            <Box>
-              <TabButton opacity={loginRegister === 'LOGIN' ? '1' : '0.5'} onClick={() => setLoginRegister('LOGIN')}>
-                Sign In
-              </TabButton>
-              {loginRegister === 'LOGIN' && <TabUnderline />}
+        {loginRegister === 'RESET' ? (
+          <Box minW="35%" borderRadius="lg" borderWidth="1px" bg="white">
+            <ResetPassword setLoginRegister={setLoginRegister} />
+          </Box>
+        ) : (
+          <Box minW="35%" borderRadius="lg" borderWidth="1px" bg="white">
+            <Flex direction="row" justify="space-between" margin="20px 100px 24px 100px">
+              <Box>
+                <TabButton opacity={loginRegister === 'LOGIN' ? '1' : '0.5'} onClick={() => setLoginRegister('LOGIN')}>
+                  Sign In
+                </TabButton>
+                {loginRegister === 'LOGIN' && <TabUnderline />}
+              </Box>
+              <Box>
+                <TabButton
+                  opacity={loginRegister === 'REGISTER' ? '1' : '0.5'}
+                  onClick={() => setLoginRegister('REGISTER')}
+                >
+                  Join
+                </TabButton>
+                {loginRegister === 'REGISTER' && <TabUnderline />}
+              </Box>
+            </Flex>
+            <Box margin="0px 48px 40px 48px">
+              {loginRegister === 'LOGIN' ? <LoginInput setLoginRegister={setLoginRegister} /> : <RegisterInput />}
             </Box>
-            <Box>
-              <TabButton
-                opacity={loginRegister === 'REGISTER' ? '1' : '0.5'}
-                onClick={() => setLoginRegister('REGISTER')}
-              >
-                Join
-              </TabButton>
-              {loginRegister === 'REGISTER' && <TabUnderline />}
-            </Box>
-          </Flex>
-          <Box margin="0px 48px 40px 48px">{loginRegister === 'LOGIN' ? <LoginInput /> : <RegisterInput />}</Box>
-        </Box>
+          </Box>
+        )}
       </Box>
     </Flex>
   );

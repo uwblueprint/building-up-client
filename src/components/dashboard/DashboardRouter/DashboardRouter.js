@@ -15,6 +15,7 @@ import Leaderboard from 'pages/Leaderboard/Leaderboard';
 import LoginRegister from 'pages/LoginRegister/LoginRegister';
 import TeamOverview from 'pages/TeamOverview/TeamOverview';
 import EmailVerify from 'pages/EmailVerify/EmailVerify';
+import ResetPassword from 'pages/ResetPassword/ResetPassword';
 
 import PageContainer from '../PageContainer/PageContainer';
 import Navbar, { NAVBAR_WIDTH } from '../Navbar/Navbar';
@@ -57,6 +58,9 @@ const DashboardRouter = () => {
           */}
           <Route exact path="/login">
             {user ? <Redirect to={location.state?.from?.pathname ?? '/'} /> : <LoginRegister />}
+          </Route>
+          <Route exact path="/resetPassword/:token">
+            <ResetPassword />
           </Route>
           <ProtectedRoute disableEmailVerify path="/">
             <Grid templateColumns={`${NAVBAR_WIDTH} 1fr`} templateRows="100vh" h="100vh">
