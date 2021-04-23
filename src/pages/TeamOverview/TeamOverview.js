@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { Box, Heading, Text, useToast } from '@chakra-ui/react';
 
 import { GET_USERS_FOR_TEAM, SEND_INVITE_EMAILS } from 'data/gql/team';
-import { LEAVE_TEAM } from 'data/gql/user';
+import { LEAVE_TEAM, UPDATE_USER } from 'data/gql/user';
 
 import InviteTeamMembers from 'components/dashboard/InviteTeamMembers/InviteTeamMembers';
 import PageHeading from 'components/dashboard/PageHeading/PageHeading';
@@ -13,9 +13,10 @@ import TeamMembersTable from 'components/dashboard/TeamMembersTable/TeamMembersT
 import Toast from 'components/dashboard/Toast/Toast';
 
 const TeamOverview = ({ team }) => {
+  const dispatch = useDispatch();
   const [inviteEmails, setInviteEmails] = useState(['']);
   const {
-    user: { teamId },
+    user: { userId, teamId },
   } = useSelector(state => state.auth);
   const toast = useToast();
 
@@ -25,7 +26,11 @@ const TeamOverview = ({ team }) => {
 
   const [leaveTeam, { loading: loadingRemove, data: leaveTeamData }] = useMutation(LEAVE_TEAM);
   const handleRemove = id => {
-    leaveTeam({ variables: { id } });
+    leaveTeam({ variables: { id } }).then(() => {
+      if (id === userId) {
+        dispatch({ type: UPDATE_USER, payload: { teamId } });
+      }
+    });
   };
 
   const [inviteUsersToTeam, { loading: loadingInvite, error, data }] = useMutation(SEND_INVITE_EMAILS);
@@ -78,6 +83,7 @@ const TeamOverview = ({ team }) => {
         ) : (
           <TeamMembersTable
             members={members}
+            teamName={team.teamName}
             loadingMembers={loadingMembers}
             handleRemove={handleRemove}
             loadingRemove={loadingRemove}

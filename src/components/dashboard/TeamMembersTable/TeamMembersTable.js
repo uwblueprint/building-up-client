@@ -3,9 +3,78 @@ import { useSelector } from 'react-redux';
 import { useTable, useSortBy } from 'react-table';
 
 import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
-import { Box, Button, Heading, Skeleton, Table, Thead, Tbody, Tr, Th, Td, chakra } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Heading,
+  Skeleton,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  chakra,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  useDisclosure,
+} from '@chakra-ui/react';
 
-const TeamMembersTable = ({ members, loadingMembers, handleRemove, loadingRemove }) => {
+const LeaveTeamDialogue = ({ teamName, loadingRemove, handleRemove, value }) => {
+  const { isOpen: leaveDialogueOpen, onOpen: onLeaveDialogueOpen, onClose: onLeaveDialogueClose } = useDisclosure();
+  const cancelRef = React.useRef();
+
+  return (
+    <>
+      <Button variant="link" disabled={loadingRemove} color="#C70E0E" onClick={onLeaveDialogueOpen}>
+        Leave Team
+      </Button>
+      <AlertDialog
+        motionPreset="slideInBottom"
+        leastDestructiveRef={cancelRef}
+        onClose={onLeaveDialogueOpen}
+        isOpen={leaveDialogueOpen}
+        isCentered
+      >
+        <AlertDialogOverlay />
+        <AlertDialogContent>
+          <AlertDialogHeader>Are you sure you want to leave Team {teamName}?</AlertDialogHeader>
+          <AlertDialogBody>
+            You will no longer be able to see information associated with this team’s fundraising.
+          </AlertDialogBody>
+          <AlertDialogFooter alignItems={'flex-start'} justifyContent={'flex-start'}>
+            <Button
+              colorScheme="red"
+              onClick={() => {
+                handleRemove(value);
+              }}
+              backgroundColor="black"
+              color="white"
+            >
+              Leave Team
+            </Button>
+            <Button
+              ref={cancelRef}
+              onClick={onLeaveDialogueClose}
+              variant={'ghost'}
+              ml={3}
+              borderColor="black"
+              borderWidth="2px"
+            >
+              Go Back
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
+  );
+};
+
+const TeamMembersTable = ({ members, teamName, loadingMembers, handleRemove, loadingRemove }) => {
   const {
     user: { userId },
   } = useSelector(state => state.auth);
@@ -46,10 +115,19 @@ const TeamMembersTable = ({ members, loadingMembers, handleRemove, loadingRemove
             >
               Remove
             </Button>
-          ) : null,
+          ) : (
+            <>
+              <LeaveTeamDialogue
+                teamName={teamName}
+                loadingRemove={loadingRemove}
+                handleRemove={handleRemove}
+                value={props.value}
+              />
+            </>
+          ),
       },
     ],
-    [handleRemove, loadingRemove, userId],
+    [handleRemove, loadingRemove, teamName, userId],
   );
 
   const renderSortIcon = column => {
