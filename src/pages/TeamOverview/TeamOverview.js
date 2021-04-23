@@ -27,17 +27,7 @@ const TeamOverview = ({ team }) => {
 
   const [leaveTeam, { loading: loadingRemove, data: leaveTeamData }] = useMutation(LEAVE_TEAM);
   const handleRemove = id => {
-    leaveTeam({ variables: { id } }).then(data => {
-      if (id === userId) {
-        dispatch({ type: UPDATE_USER, payload: { teamId: data.data.leaveTeam.teamId } });
-        toast({
-          position: 'top',
-          render: props => (
-            <Toast {...props} description={`You have successfully left Team ${team.teamName}`} isClosable />
-          ),
-        });
-      }
-    });
+    leaveTeam({ variables: { id } });
   };
 
   const [inviteUsersToTeam, { loading: loadingInvite, error, data }] = useMutation(SEND_INVITE_EMAILS);
@@ -71,15 +61,27 @@ const TeamOverview = ({ team }) => {
 
   useEffect(() => {
     if (leaveTeamData) {
-      updateQuery(previous => {
-        const ret = {};
-        ret.getUsersForTeam = previous.getUsersForTeam.filter(user => {
-          return user.id !== leaveTeamData.leaveTeam.id;
+      if (leaveTeamData.leaveTeam.id === userId) {
+        dispatch({ type: UPDATE_USER, payload: { teamId: null } });
+        toast({
+          position: 'top',
+          render: props => <Toast {...props} description="You have successfully left your team" isClosable />,
         });
-        return ret;
-      });
+      } else {
+        updateQuery(previous => {
+          const ret = {};
+          ret.getUsersForTeam = previous.getUsersForTeam.filter(user => {
+            return user.id !== leaveTeamData.leaveTeam.id;
+          });
+          return ret;
+        });
+        toast({
+          position: 'top',
+          render: props => <Toast {...props} description="Removed user from team" isClosable />,
+        });
+      }
     }
-  });
+  }, [dispatch, userId, leaveTeamData, updateQuery, toast]);
 
   return (
     <>

@@ -24,7 +24,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 
-const LeaveTeamModal = ({ isOpen, onClose, onLeave, teamName }) => {
+const LeaveTeamModal = ({ isOpen, onClose, onLeave, teamName, isLoading }) => {
   const cancelRef = React.useRef();
   return (
     <AlertDialog
@@ -33,25 +33,27 @@ const LeaveTeamModal = ({ isOpen, onClose, onLeave, teamName }) => {
       isOpen={isOpen}
       onClose={onClose}
       isCentered
+      size="xl"
     >
       <AlertDialogOverlay />
-      <AlertDialogContent>
+      <AlertDialogContent px={4} py={8}>
         <AlertDialogHeader>Are you sure you want to leave Team {teamName}?</AlertDialogHeader>
         <AlertDialogBody>
           You will no longer be able to see information associated with this team’s fundraising.
         </AlertDialogBody>
-        <AlertDialogFooter alignItems={'flex-start'} justifyContent={'flex-start'}>
-          <Button onClick={onLeave} variant="black">
+        <AlertDialogFooter align="flex-start" justifyContent="flex-start">
+          <Button onClick={onLeave} variant="black" isLoading={isLoading} size="lg">
             Leave Team
           </Button>
           <Button
             ref={cancelRef}
+            isLoading={isLoading}
             onClick={onClose}
             variant="outline"
             color="black"
             ml={3}
             borderColor="black"
-            borderWidth="2px"
+            size="lg"
           >
             Go Back
           </Button>
@@ -163,9 +165,10 @@ const TeamMembersTable = ({ members, teamName, loadingMembers, handleRemove, loa
         </Table>
         <LeaveTeamModal
           isOpen={isLeaveDialogueOpen}
+          isLoading={loadingRemove}
           onClose={onLeaveDialogueClose}
-          teamName={teamName}
           onLeave={() => handleRemove(userId)}
+          teamName={teamName}
         />
       </Box>
     </Skeleton>
