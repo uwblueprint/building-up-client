@@ -57,7 +57,7 @@ const DashboardRouter = () => {
           After signing in, redirect to the original path 
           */}
           <Route exact path="/login">
-            {user ? <Redirect to={location.state?.from?.pathname ?? '/'} /> : <LoginRegister />}
+            <LoginRegister />
           </Route>
           <Route exact path="/resetPassword/:token">
             <ResetPassword />
@@ -97,7 +97,7 @@ const DashboardRouter = () => {
                       )}
 
                       <Route path="/">
-                        <Redirect to="/home" />
+                        <Redirect to="/home" />;
                       </Route>
                     </Switch>
                   </PageContainer>
