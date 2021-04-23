@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useApolloClient } from '@apollo/client';
 import { useDispatch, useSelector } from 'react-redux';
-import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { Box, Center, ChakraProvider, Grid, Spinner } from '@chakra-ui/react';
 
@@ -27,8 +27,6 @@ const DashboardRouter = () => {
 
   const { authenticating, user, team } = useSelector(state => state.auth);
   const { loading: teamLoading, data: teamData } = team;
-
-  const location = useLocation();
 
   // Try to login the user on app init
   useEffect(() => {

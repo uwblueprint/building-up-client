@@ -3,7 +3,7 @@ import { Box, Flex, Button, Image, Spinner, Center, useToast } from '@chakra-ui/
 import { Redirect, useHistory, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import useInvite from 'hooks/use-invite';
+import { useInviteLazy } from 'hooks/use-invite';
 
 import LoginInput from 'components/dashboard/LoginRegister/LoginInput';
 import RegisterInput from 'components/dashboard/LoginRegister/RegisterInput';
@@ -130,7 +130,7 @@ const LoginRegister = () => {
   );
 
   // useInvite hook
-  const { joinTeamMutation, getTeamInfoQuery } = useInvite();
+  const { joinTeamMutation, getTeamInfoQuery } = useInviteLazy();
   const [getTeamInfo, teamInfoRes] = getTeamInfoQuery;
   const [, { data: joinTeamData, error: joinTeamError }] = joinTeamMutation;
 
