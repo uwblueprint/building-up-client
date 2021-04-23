@@ -5,7 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Box, Heading, Text, useToast } from '@chakra-ui/react';
 
 import { GET_USERS_FOR_TEAM, SEND_INVITE_EMAILS } from 'data/gql/team';
-import { LEAVE_TEAM, UPDATE_USER } from 'data/gql/user';
+import { LEAVE_TEAM } from 'data/gql/user';
+import { UPDATE_USER } from 'data/actions/type';
 
 import InviteTeamMembers from 'components/dashboard/InviteTeamMembers/InviteTeamMembers';
 import PageHeading from 'components/dashboard/PageHeading/PageHeading';
@@ -26,9 +27,15 @@ const TeamOverview = ({ team }) => {
 
   const [leaveTeam, { loading: loadingRemove, data: leaveTeamData }] = useMutation(LEAVE_TEAM);
   const handleRemove = id => {
-    leaveTeam({ variables: { id } }).then(() => {
+    leaveTeam({ variables: { id } }).then(data => {
       if (id === userId) {
-        dispatch({ type: UPDATE_USER, payload: { teamId } });
+        dispatch({ type: UPDATE_USER, payload: { teamId: data.data.leaveTeam.teamId } });
+        toast({
+          position: 'top',
+          render: props => (
+            <Toast {...props} description={`You have successfully left Team ${team.teamName}`} isClosable />
+          ),
+        });
       }
     });
   };
