@@ -24,53 +24,40 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 
-const LeaveTeamDialogue = ({ teamName, loadingRemove, handleRemove, value }) => {
-  const { isOpen: leaveDialogueOpen, onOpen: onLeaveDialogueOpen, onClose: onLeaveDialogueClose } = useDisclosure();
+const LeaveTeamModal = ({ isOpen, onClose, onLeave, teamName }) => {
   const cancelRef = React.useRef();
-
   return (
-    <>
-      <Button variant="link" disabled={loadingRemove} color="#C70E0E" onClick={onLeaveDialogueOpen}>
-        Leave Team
-      </Button>
-      <AlertDialog
-        motionPreset="slideInBottom"
-        leastDestructiveRef={cancelRef}
-        onClose={onLeaveDialogueOpen}
-        isOpen={leaveDialogueOpen}
-        isCentered
-      >
-        <AlertDialogOverlay />
-        <AlertDialogContent>
-          <AlertDialogHeader>Are you sure you want to leave Team {teamName}?</AlertDialogHeader>
-          <AlertDialogBody>
-            You will no longer be able to see information associated with this team’s fundraising.
-          </AlertDialogBody>
-          <AlertDialogFooter alignItems={'flex-start'} justifyContent={'flex-start'}>
-            <Button
-              colorScheme="red"
-              onClick={() => {
-                handleRemove(value);
-              }}
-              backgroundColor="black"
-              color="white"
-            >
-              Leave Team
-            </Button>
-            <Button
-              ref={cancelRef}
-              onClick={onLeaveDialogueClose}
-              variant={'ghost'}
-              ml={3}
-              borderColor="black"
-              borderWidth="2px"
-            >
-              Go Back
-            </Button>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    </>
+    <AlertDialog
+      motionPreset="slideInBottom"
+      leastDestructiveRef={cancelRef}
+      isOpen={isOpen}
+      onClose={onClose}
+      isCentered
+    >
+      <AlertDialogOverlay />
+      <AlertDialogContent>
+        <AlertDialogHeader>Are you sure you want to leave Team {teamName}?</AlertDialogHeader>
+        <AlertDialogBody>
+          You will no longer be able to see information associated with this team’s fundraising.
+        </AlertDialogBody>
+        <AlertDialogFooter alignItems={'flex-start'} justifyContent={'flex-start'}>
+          <Button onClick={onLeave} variant="black">
+            Leave Team
+          </Button>
+          <Button
+            ref={cancelRef}
+            onClick={onClose}
+            variant="outline"
+            color="black"
+            ml={3}
+            borderColor="black"
+            borderWidth="2px"
+          >
+            Go Back
+          </Button>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 };
 
@@ -78,6 +65,8 @@ const TeamMembersTable = ({ members, teamName, loadingMembers, handleRemove, loa
   const {
     user: { userId },
   } = useSelector(state => state.auth);
+
+  const { isOpen: isLeaveDialogueOpen, onOpen: onLeaveDialogueOpen, onClose: onLeaveDialogueClose } = useDisclosure();
 
   const data = useMemo(
     () =>
@@ -116,18 +105,13 @@ const TeamMembersTable = ({ members, teamName, loadingMembers, handleRemove, loa
               Remove
             </Button>
           ) : (
-            <>
-              <LeaveTeamDialogue
-                teamName={teamName}
-                loadingRemove={loadingRemove}
-                handleRemove={handleRemove}
-                value={props.value}
-              />
-            </>
+            <Button variant="link" disabled={loadingRemove} color="#C70E0E" onClick={onLeaveDialogueOpen}>
+              Leave Team
+            </Button>
           ),
       },
     ],
-    [handleRemove, loadingRemove, teamName, userId],
+    [handleRemove, loadingRemove, userId, onLeaveDialogueOpen],
   );
 
   const renderSortIcon = column => {
@@ -177,6 +161,12 @@ const TeamMembersTable = ({ members, teamName, loadingMembers, handleRemove, loa
             })}
           </Tbody>
         </Table>
+        <LeaveTeamModal
+          isOpen={isLeaveDialogueOpen}
+          onClose={onLeaveDialogueClose}
+          teamName={teamName}
+          onLeave={() => handleRemove(userId)}
+        />
       </Box>
     </Skeleton>
   );
