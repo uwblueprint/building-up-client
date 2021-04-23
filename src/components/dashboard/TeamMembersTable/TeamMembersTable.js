@@ -42,20 +42,19 @@ const LeaveTeamModal = ({ isOpen, onClose, onLeave, teamName, isLoading }) => {
           You will no longer be able to see information associated with this team’s fundraising.
         </AlertDialogBody>
         <AlertDialogFooter align="flex-start" justifyContent="flex-start">
-          <Button onClick={onLeave} variant="black" isLoading={isLoading} size="lg">
-            Leave Team
-          </Button>
           <Button
             ref={cancelRef}
             isLoading={isLoading}
             onClick={onClose}
             variant="outline"
             color="black"
-            ml={3}
             borderColor="black"
             size="lg"
           >
             Go Back
+          </Button>
+          <Button onClick={onLeave} ml={3} variant="black" isLoading={isLoading} size="lg">
+            Leave Team
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
