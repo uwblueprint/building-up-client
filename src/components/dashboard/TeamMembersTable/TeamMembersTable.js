@@ -3,12 +3,71 @@ import { useSelector } from 'react-redux';
 import { useTable, useSortBy } from 'react-table';
 
 import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
-import { Box, Button, Heading, Skeleton, Table, Thead, Tbody, Tr, Th, Td, chakra } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Heading,
+  Skeleton,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  chakra,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  useDisclosure,
+} from '@chakra-ui/react';
 
-const TeamMembersTable = ({ members, loadingMembers, handleRemove, loadingRemove }) => {
+const LeaveTeamModal = ({ isOpen, onClose, onLeave, teamName, isLoading }) => {
+  const cancelRef = React.useRef();
+  return (
+    <AlertDialog
+      motionPreset="slideInBottom"
+      leastDestructiveRef={cancelRef}
+      isOpen={isOpen}
+      onClose={onClose}
+      isCentered
+      size="xl"
+    >
+      <AlertDialogOverlay />
+      <AlertDialogContent px={4} py={8}>
+        <AlertDialogHeader>Are you sure you want to leave Team {teamName}?</AlertDialogHeader>
+        <AlertDialogBody>
+          You will no longer be able to see information associated with this team’s fundraising.
+        </AlertDialogBody>
+        <AlertDialogFooter align="flex-start" justifyContent="flex-start">
+          <Button
+            ref={cancelRef}
+            isLoading={isLoading}
+            onClick={onClose}
+            variant="outline"
+            color="black"
+            borderColor="black"
+            size="lg"
+          >
+            Go Back
+          </Button>
+          <Button onClick={onLeave} ml={3} variant="black" isLoading={isLoading} size="lg">
+            Leave Team
+          </Button>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
+
+const TeamMembersTable = ({ members, teamName, loadingMembers, handleRemove, loadingRemove }) => {
   const {
     user: { userId },
   } = useSelector(state => state.auth);
+
+  const { isOpen: isLeaveDialogueOpen, onOpen: onLeaveDialogueOpen, onClose: onLeaveDialogueClose } = useDisclosure();
 
   const data = useMemo(
     () =>
@@ -46,10 +105,14 @@ const TeamMembersTable = ({ members, loadingMembers, handleRemove, loadingRemove
             >
               Remove
             </Button>
-          ) : null,
+          ) : (
+            <Button variant="link" disabled={loadingRemove} color="#C70E0E" onClick={onLeaveDialogueOpen}>
+              Leave Team
+            </Button>
+          ),
       },
     ],
-    [handleRemove, loadingRemove, userId],
+    [handleRemove, loadingRemove, userId, onLeaveDialogueOpen],
   );
 
   const renderSortIcon = column => {
@@ -99,6 +162,13 @@ const TeamMembersTable = ({ members, loadingMembers, handleRemove, loadingRemove
             })}
           </Tbody>
         </Table>
+        <LeaveTeamModal
+          isOpen={isLeaveDialogueOpen}
+          isLoading={loadingRemove}
+          onClose={onLeaveDialogueClose}
+          onLeave={() => handleRemove(userId)}
+          teamName={teamName}
+        />
       </Box>
     </Skeleton>
   );

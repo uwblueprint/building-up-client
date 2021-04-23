@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { Box, Heading, Text, useToast } from '@chakra-ui/react';
 
 import { GET_USERS_FOR_TEAM, SEND_INVITE_EMAILS } from 'data/gql/team';
 import { LEAVE_TEAM } from 'data/gql/user';
+import { UPDATE_USER } from 'data/actions/type';
 
 import InviteTeamMembers from 'components/dashboard/InviteTeamMembers/InviteTeamMembers';
 import PageHeading from 'components/dashboard/PageHeading/PageHeading';
@@ -13,9 +14,10 @@ import TeamMembersTable from 'components/dashboard/TeamMembersTable/TeamMembersT
 import Toast from 'components/dashboard/Toast/Toast';
 
 const TeamOverview = ({ team }) => {
+  const dispatch = useDispatch();
   const [inviteEmails, setInviteEmails] = useState(['']);
   const {
-    user: { teamId },
+    user: { userId, teamId },
   } = useSelector(state => state.auth);
   const toast = useToast();
 
@@ -59,15 +61,27 @@ const TeamOverview = ({ team }) => {
 
   useEffect(() => {
     if (leaveTeamData) {
-      updateQuery(previous => {
-        const ret = {};
-        ret.getUsersForTeam = previous.getUsersForTeam.filter(user => {
-          return user.id !== leaveTeamData.leaveTeam.id;
+      if (leaveTeamData.leaveTeam.id === userId) {
+        dispatch({ type: UPDATE_USER, payload: { teamId: null } });
+        toast({
+          position: 'top',
+          render: props => <Toast {...props} description="You have successfully left your team" isClosable />,
         });
-        return ret;
-      });
+      } else {
+        updateQuery(previous => {
+          const ret = {};
+          ret.getUsersForTeam = previous.getUsersForTeam.filter(user => {
+            return user.id !== leaveTeamData.leaveTeam.id;
+          });
+          return ret;
+        });
+        toast({
+          position: 'top',
+          render: props => <Toast {...props} description="Removed user from team" isClosable />,
+        });
+      }
     }
-  });
+  }, [dispatch, userId, leaveTeamData, updateQuery, toast]);
 
   return (
     <>
@@ -78,6 +92,7 @@ const TeamOverview = ({ team }) => {
         ) : (
           <TeamMembersTable
             members={members}
+            teamName={team.teamName}
             loadingMembers={loadingMembers}
             handleRemove={handleRemove}
             loadingRemove={loadingRemove}
