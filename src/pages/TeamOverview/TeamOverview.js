@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Box, Heading, Text, useToast } from '@chakra-ui/react';
+import { Box, HStack, Button, Heading, Text, useToast } from '@chakra-ui/react';
 
 import { GET_USERS_FOR_TEAM, SEND_INVITE_EMAILS } from 'data/gql/team';
 import { LEAVE_TEAM } from 'data/gql/user';
@@ -11,11 +11,14 @@ import { UPDATE_USER } from 'data/actions/type';
 import InviteTeamMembers from 'components/dashboard/InviteTeamMembers/InviteTeamMembers';
 import PageHeading from 'components/dashboard/PageHeading/PageHeading';
 import TeamMembersTable from 'components/dashboard/TeamMembersTable/TeamMembersTable';
+import TeamEditInfo from 'components/dashboard/TeamMembersTable/TeamEditInfo';
 import Toast from 'components/dashboard/Toast/Toast';
 
 const TeamOverview = ({ team }) => {
   const dispatch = useDispatch();
   const [inviteEmails, setInviteEmails] = useState(['']);
+  const [onEditPage, setOnEditPage] = useState(false);
+
   const {
     user: { userId, teamId },
   } = useSelector(state => state.auth);
@@ -85,38 +88,54 @@ const TeamOverview = ({ team }) => {
 
   return (
     <>
-      <PageHeading teamName={team.teamName} title="Team Members" />
-      <Box w="100%">
-        {errorMembers ? (
-          `Error! ${errorMembers.message}`
-        ) : (
-          <TeamMembersTable
-            members={members}
-            teamName={team.teamName}
-            loadingMembers={loadingMembers}
-            handleRemove={handleRemove}
-            loadingRemove={loadingRemove}
-          />
-        )}
-      </Box>
-      <Box w="100%">
-        <Heading as="h3" size="h3" mb="8px">
-          Invite Team Members
-        </Heading>
-        <Text size="normal" mb="24px">
-          Enter the emails of the people you want to add
-        </Text>
-        <Box w="50%">
-          <InviteTeamMembers
-            inputList={inviteEmails}
-            setInputList={setInviteEmails}
-            handleSubmit={handleSubmit}
-            isEmailRequired
-            withSubmitButton
-            isSubmitLoading={loadingInvite}
-          />
-        </Box>
-      </Box>
+      {onEditPage ? (
+        <TeamEditInfo
+          teamId={team.teamId}
+          teamName={team.teamName}
+          teamAffiliation={team.affiliation}
+          setOnEditPage={setOnEditPage}
+        />
+      ) : (
+        <>
+          <HStack justifyContent="space-between" w="100%">
+            <PageHeading teamName={team.teamName} title="Team Members" />
+            <Button justifySelf="flex-end" alignSelf="flex-end" variant="black" onClick={() => setOnEditPage(true)}>
+              Edit Team Details
+            </Button>
+          </HStack>
+          <Box w="100%">
+            {errorMembers ? (
+              `Error! ${errorMembers.message}`
+            ) : (
+              <TeamMembersTable
+                members={members}
+                teamName={team.teamName}
+                loadingMembers={loadingMembers}
+                handleRemove={handleRemove}
+                loadingRemove={loadingRemove}
+              />
+            )}
+          </Box>
+          <Box w="100%">
+            <Heading as="h3" size="h3" mb="8px">
+              Invite Team Members
+            </Heading>
+            <Text size="normal" mb="24px">
+              Enter the emails of the people you want to add
+            </Text>
+            <Box w="50%">
+              <InviteTeamMembers
+                inputList={inviteEmails}
+                setInputList={setInviteEmails}
+                handleSubmit={handleSubmit}
+                isEmailRequired
+                withSubmitButton
+                isSubmitLoading={loadingInvite}
+              />
+            </Box>
+          </Box>
+        </>
+      )}
     </>
   );
 };
