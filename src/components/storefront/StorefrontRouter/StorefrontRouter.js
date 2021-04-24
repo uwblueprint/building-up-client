@@ -53,10 +53,7 @@ const StorefrontRouter = () => {
   useEffect(() => {
     // Only update when teamId is available AND checkout ID changes
     if (getTeamData && checkout.data && checkout.data.id !== checkoutId.current) {
-      updateCartAttributes(checkout.data.id, [
-        { key: 'teamID', value: getTeamData.getTeam.id },
-        { key: 'teamName', value: getTeamData.getTeam.name },
-      ]);
+      updateCartAttributes(checkout.data.id, [{ key: 'teamId', value: getTeamData.getTeam.id }]);
       checkoutId.current = checkout.data.id;
     }
   }, [getTeamData, checkout.data, updateCartAttributes]);
