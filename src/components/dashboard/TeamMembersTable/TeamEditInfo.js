@@ -29,8 +29,9 @@ const EditTeamInfo = ({ setOnEditPage, teamId, teamName, teamOrg }) => {
 
   useEffect(() => {
     if (dataTeamEdit) {
-      const organization = dataTeamEdit.updateTeamNameOrg.organization;
-      const name = dataTeamEdit.updateTeamNameOrg.name;
+      const {
+        updateTeamNameOrg: { organization, name },
+      } = dataTeamEdit;
       if (organization !== teamOrg) {
         dispatch({ type: UPDATE_USER_TEAM_ORGANIZATION, payload: organization });
         toast({
@@ -45,6 +46,12 @@ const EditTeamInfo = ({ setOnEditPage, teamId, teamName, teamOrg }) => {
           render: props => <Toast {...props} description="You have updated your team name" isClosable />,
         });
       }
+    }
+    if (errorTeamEdit) {
+      toast({
+        position: 'top',
+        render: props => <Toast {...props} description="There was an error with your request" isClosable />,
+      });
     }
   }, [dataTeamEdit, errorTeamEdit, dispatch, toast, teamName, teamOrg]);
 
