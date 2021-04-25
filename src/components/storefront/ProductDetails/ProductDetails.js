@@ -51,7 +51,7 @@ const ProductDetails = ({ product, checkout }) => {
         </Heading>
         <Text my={5}>{description}</Text>
         {availableForSale ? (
-          <QuantityPicker {...quantityPickerProps} />
+          <QuantityPicker size="quantity" {...quantityPickerProps} />
         ) : (
           <Heading as="h3" size="h3" textTransform="uppercase">
             Out of Stock

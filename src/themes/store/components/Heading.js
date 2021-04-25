@@ -16,7 +16,7 @@ const Heading = {
       textStyle: 'h1',
     },
     lightCaption: {
-      textStyle: 'h1',
+      textStyle: 'lightCaption',
     },
   },
   defaultProps: {

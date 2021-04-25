@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import { Box, Divider, Grid, GridItem, Heading, HStack, Image, Link, chakra } from '@chakra-ui/react';
-
-import BagIcon from 'components/storefront/BagIcon/BagIcon';
+import BagIconWithIndicator from 'components/storefront/BagIcon/BagIcon';
 import PreserveQueryParamsLink from 'components/storefront/PreserveQueryParamsLink/PreserveQueryParamsLink';
 import Logo from 'assets/images/logoWhite.png';
 import { TeamBanner } from '../';
@@ -52,7 +51,7 @@ const Navbar = props => {
           </NavLink>
           <Divider orientation="vertical" h="60%" opacity={1} />
           <NavLink as={PreserveQueryParamsLink} to="/store/cart">
-            <BagIcon height="28px" width="28px" />
+            <BagIconWithIndicator />
           </NavLink>
         </GridItem>
       </Grid>

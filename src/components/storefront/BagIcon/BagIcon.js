@@ -1,7 +1,7 @@
-// Abstracting this as its own component, it's going to need to access the state and render a "badge" with the # of items in the cart
 // https://chakra-ui.com/docs/media-and-icons/icon#using-the-createicon-function
 import React from 'react';
-import { createIcon } from '@chakra-ui/react';
+import { createIcon, Circle, Box, chakra } from '@chakra-ui/react';
+import { useShopify } from 'hooks/useShopify';
 
 const BagIcon = createIcon({
   displayName: 'BagIcon_',
@@ -24,4 +24,22 @@ const BagIcon = createIcon({
   ],
 });
 
-export default BagIcon;
+const BagIconWithIndicator = () => {
+  const {
+    checkout: { data },
+  } = useShopify();
+  const cartItemsCount = data?.lineItems.reduce((acc, cur) => acc + cur.quantity, 0);
+
+  return (
+    <Box pos="relative">
+      <BagIcon height="28px" width="28px" />
+      {cartItemsCount > 0 && (
+        <Circle size="22px" bg="brand.red" color="white" pos="absolute" top="15px" left="15px">
+          <chakra.h4 textStyle="lightCaption">{cartItemsCount <= 9 ? cartItemsCount : '9+'}</chakra.h4>
+        </Circle>
+      )}
+    </Box>
+  );
+};
+
+export default BagIconWithIndicator;

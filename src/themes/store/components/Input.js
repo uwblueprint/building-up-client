@@ -23,11 +23,18 @@ const Input = {
         borderRadius: 'none',
       },
     },
+    checkout: {
+      field: {
+        width: '52px',
+        height: '40px',
+        borderRadius: 'none',
+      },
+    },
   },
   variants: {
     outline: {
       field: {
-        borderColor: 'brand.gray',
+        borderColor: 'black',
         _hover: {
           borderColor: 'black',
         },
@@ -41,7 +48,21 @@ const Input = {
         textAlign: 'center',
         padding: '4',
         border: '1px solid',
-        borderColor: 'brand.gray',
+        borderColor: 'black',
+        _hover: {
+          borderColor: 'black',
+        },
+        _focus: {
+          borderColor: 'black',
+        },
+      },
+    },
+    checkout: {
+      field: {
+        textAlign: 'center',
+        padding: '4',
+        border: '1px solid',
+        borderColor: 'black',
         _hover: {
           borderColor: 'black',
         },
