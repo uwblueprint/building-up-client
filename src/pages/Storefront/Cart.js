@@ -109,6 +109,7 @@ const OrderSummarySkeleton = () => {
 
 const OrderSummary = ({ checkoutData }) => {
   const { totalPrice, subtotalPrice, webUrl } = checkoutData;
+  const couponVal = 0; // Temp placeholder for coupon/discount value
 
   return (
     <Flex direction="column" alignItems="flex-start" pt="52px">
@@ -123,16 +124,18 @@ const OrderSummary = ({ checkoutData }) => {
             </Heading>
             <Heading as="h4" size="lightCaption" fontWeight="semibold">{`$${subtotalPrice}`}</Heading>
           </Flex>
-          <Flex w="100%" justifyContent="space-between">
-            <Heading as="h4" size="lightCaption" textTransform="uppercase">
-              coupon discount
-            </Heading>
-            <Heading as="h4" size="lightCaption" fontWeight="semibold">
-              $0.00
-            </Heading>
-            {/* TO DO: Coupon discount to be implemented in next PR */}
-          </Flex>
-          <Heading as="h4" size="lightCaption" textTransform="uppercase">
+          {couponVal && (
+            <Flex w="100%" justifyContent="space-between">
+              <Heading as="h4" size="lightCaption" textTransform="uppercase">
+                coupon discount
+              </Heading>
+              <Heading as="h4" size="lightCaption" fontWeight="semibold">
+                -${couponVal}
+              </Heading>
+              {/* TO DO: Coupon discount to be implemented in next PR */}
+            </Flex>
+          )}
+          <Heading as="h4" size="lightCaption" textTransform="uppercase" fontStyle="italic">
             shipping & taxes calculated at checkout.
           </Heading>
         </VStack>
