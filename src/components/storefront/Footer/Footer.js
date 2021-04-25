@@ -67,7 +67,13 @@ const StayConnected = () => {
       <Text fontWeight="extrabold" letterSpacing="wider" fontFamily="Jost">
         STAY CONNECTED
       </Text>
-      <Input placeholder="YOUR EMAIL ADDRESS*" onChange={handleSubscriptionEmailChange} />
+      <Input
+        borderColor="brand.gray"
+        _hover={{ borderColor: 'brand.lightgray' }}
+        _focus={{ borderColor: 'brand.lightgray' }}
+        placeholder="YOUR EMAIL ADDRESS*"
+        onChange={handleSubscriptionEmailChange}
+      />
       <Text letterSpacing="wider" color="brand.gray">
         In case you want to join the list of recipients of our news and updates, please fill in your email.
       </Text>
