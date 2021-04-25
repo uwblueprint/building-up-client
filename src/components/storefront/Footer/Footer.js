@@ -11,7 +11,7 @@ import {
 import smallLogo from 'assets/images/building_up_footer_small_icon.png';
 
 const PADDING_X = { base: 10, md: 14, lg: 16, xl: '105px' };
-const PADDING_Y = { base: 8, md: 12, lg: 14, xl: '80px' };
+const PADDING_Y = { base: 8, md: 12, lg: 14, xl: '60px' };
 
 const GetInTouch = () => {
   return (
