@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Heading, Flex, Image, useNumberInput, IconButton, VStack, Link } from '@chakra-ui/react';
+import { Heading, Flex, Image, useNumberInput, IconButton, VStack, Link, chakra } from '@chakra-ui/react';
 import QuantityPicker from '../ProductDetails/QuantityPicker';
 import { CloseIcon } from '@chakra-ui/icons';
 import { useShopify } from 'hooks/useShopify';
@@ -9,10 +9,10 @@ const CartItem = ({ title, sku, image, price, quantity, lineItemId, checkoutId }
   const {
     removeLineItem,
     updateQuantity,
-    collections: { data },
+    products: { data },
   } = useShopify();
-  // Retrieves the slug from "All Items" collection since id in checkout is different than id in "All Items"
-  const slug = data[2].products.find(product => product.title === title).id;
+  // Retrieves the slug from "All Items" in products since id in checkout is different than id in "All Items"
+  const slug = data.find(product => product.title === title).id;
   const removeFromCart = () => {
     removeLineItem(checkoutId, lineItemId);
   };
@@ -43,9 +43,9 @@ const CartItem = ({ title, sku, image, price, quantity, lineItemId, checkoutId }
           </Link>
         </Flex>
         <VStack alignItems="flex-start" w={64} pl={6}>
-          <Heading as="h4" size="lightCaption" textTransform="uppercase" color="brand.gray">
+          <chakra.h4 textStyles="lightCaption" color="brand.gray">
             {`Item #${sku}`}
-          </Heading>
+          </chakra.h4>
           <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.darkgray">
             {title}
           </Heading>

@@ -38,8 +38,9 @@ export const textStyles = {
     letterSpacing: 'wider',
   },
   lightCaption: {
-    ...headingsBase,
     fontSize: 'sm',
+    textTransform: 'uppercase',
+    fontWeight: 400,
     lineHeight: '18px',
     letterSpacing: 'wider',
   },

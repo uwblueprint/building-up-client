@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, Heading, Input, Icon, Stack } from '@chakra-ui/react';
+import { Box, Button, Heading, Input, Icon, Stack, chakra } from '@chakra-ui/react';
 import { FaChevronCircleRight } from 'react-icons/fa';
 
 /* Temporary code for easily seeing Chakra stuff, will be removed later */
@@ -22,7 +22,7 @@ const ChakraExpoStore = () => {
         </Heading>
         <Heading size="subtitle">Subtitle</Heading>
         <Heading size="boldCaption">Bold Caption</Heading>
-        <Heading size="lightCaption">Light Caption</Heading>
+        <chakra.h4 textStyle="lightCaption">Light Caption</chakra.h4>
         <div>Here is some body text</div>
         <Button size="lg">
           <Heading size="subtitle">Large Button</Heading>

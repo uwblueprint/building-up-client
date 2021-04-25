@@ -14,6 +14,7 @@ import {
   Input,
   Link,
   Skeleton,
+  chakra,
 } from '@chakra-ui/react';
 import PreserveQueryParamsLink from 'components/storefront/PreserveQueryParamsLink/PreserveQueryParamsLink';
 
@@ -119,25 +120,21 @@ const OrderSummary = ({ checkoutData }) => {
         </Heading>
         <VStack w="100%" alignItems="flex-start" spacing={8}>
           <Flex w="100%" justifyContent="space-between">
-            <Heading as="h4" size="lightCaption" textTransform="uppercase">
-              subtotal
-            </Heading>
-            <Heading as="h4" size="lightCaption" fontWeight="semibold">{`$${subtotalPrice}`}</Heading>
+            <chakra.h4 textStyle="lightCaption">subtotal</chakra.h4>
+            <chakra.h4 textStyle="lightCaption" fontWeight="semibold">{`$${subtotalPrice}`}</chakra.h4>
           </Flex>
           {couponVal && (
             <Flex w="100%" justifyContent="space-between">
-              <Heading as="h4" size="lightCaption" textTransform="uppercase">
-                coupon discount
-              </Heading>
-              <Heading as="h4" size="lightCaption" fontWeight="semibold">
+              <chakra.h4 textStyle="lightCaption">coupon discount</chakra.h4>
+              <chakra.h4 textStyle="lightCaption" fontWeight="semibold">
                 -${couponVal}
-              </Heading>
+              </chakra.h4>
               {/* TO DO: Coupon discount to be implemented in next PR */}
             </Flex>
           )}
-          <Heading as="h4" size="lightCaption" textTransform="uppercase" fontStyle="italic">
+          <chakra.h4 textStyle="lightCaption" fontStyle="italic">
             shipping & taxes calculated at checkout.
-          </Heading>
+          </chakra.h4>
         </VStack>
         <Divider borderColor="brand.gray" />
         <Flex w="100%" justifyContent="space-between">
@@ -159,7 +156,8 @@ const OrderSummary = ({ checkoutData }) => {
 // Cart page that shows the user the items in their cart, allows them to change quantity, and proceed to checkout
 const Cart = () => {
   const {
-    checkout: { loading, data },
+    checkout: { loading: checkoutLoading, data: checkoutData },
+    products: { loading: productsLoading },
   } = useShopify();
   // const team = useSelector(teamSelectors.selectTeam, shallowEqual);
 
@@ -178,15 +176,15 @@ const Cart = () => {
   return (
     <>
       <HStack w="100%" h="100%" justifyContent="space-between" alignItems="flex-start" px="105px" py={16}>
-        {loading ? (
+        {checkoutLoading || productsLoading ? (
           <>
             <CartItemsSkeleton />
             <OrderSummarySkeleton />
           </>
         ) : (
           <>
-            <CartItems checkoutData={data} />
-            {data.lineItems.length > 0 && <OrderSummary checkoutData={data} />}
+            <CartItems checkoutData={checkoutData} />
+            {checkoutData.lineItems.length > 0 && <OrderSummary checkoutData={checkoutData} />}
           </>
         )}
       </HStack>

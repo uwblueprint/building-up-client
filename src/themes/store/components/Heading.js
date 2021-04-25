@@ -17,7 +17,6 @@ const Heading = {
     },
     lightCaption: {
       textStyle: 'lightCaption',
-      fontWeight: 400,
     },
   },
   defaultProps: {
