@@ -58,19 +58,11 @@ export const GET_GLOBAL_LEADERBOARD = gql`
   }
 `;
 
-export const UPDATE_TEAM_NAME = gql`
-  mutation updateTeamName($id: String!, $name: String!) {
-    updateTeamName(id: $id, name: $name) {
+export const UPDATE_TEAM_NAME_ORG = gql`
+  mutation updateTeamNameOrg($id: String!, $name: String, $organization: String) {
+    updateTeamNameOrg(id: $id, name: $name, organization: $organization) {
       id
       name
-    }
-  }
-`;
-
-export const UPDATE_TEAM_ORGANIZATION = gql`
-  mutation updateTeamOrganization($id: String!, $organization: String!) {
-    updateTeamOrganization(id: $id, organization: $organization) {
-      id
       organization
     }
   }
