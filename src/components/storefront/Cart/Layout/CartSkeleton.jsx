@@ -1,6 +1,8 @@
 import React from 'react';
 import { HStack, VStack, Skeleton, SkeletonText } from '@chakra-ui/react';
 
+const SKELETON_RESPONSIVE_SIZE = { base: '150px', md: '200px' };
+
 const CartItemsSkeleton = ({ numItems = 3 }) => {
   return (
     <VStack flex={1} h="100%" spacing={8} w={{ base: '100%', md: 'auto' }}>
@@ -8,8 +10,8 @@ const CartItemsSkeleton = ({ numItems = 3 }) => {
         .fill(0)
         .map((_, i) => (
           <HStack spacing={6} w="100%" key={i}>
-            <Skeleton h={{ base: '150px', md: '200px' }} w={{ base: '150px', md: '200px' }} />
-            <SkeletonText h={{ base: '150px', md: '200px' }} flex="1" noOfLines={8} />
+            <Skeleton h={SKELETON_RESPONSIVE_SIZE} w={SKELETON_RESPONSIVE_SIZE} />
+            <SkeletonText h={SKELETON_RESPONSIVE_SIZE} flex="1" noOfLines={8} />
           </HStack>
         ))}
     </VStack>
