@@ -58,28 +58,20 @@ export const GET_GLOBAL_LEADERBOARD = gql`
   }
 `;
 
-export const UPDATE_TEAM_INFO = gql`
-  mutation updateTeam(
-    $id: String!
-    $name: String
-    $organization: String
-    $amountRaised: Int
-    $itemsSold: Int
-    $isArchived: Boolean
-  ) {
-    updateTeam(
-      id: $id
-      name: $name
-      organization: $organization
-      amountRaised: $amountRaised
-      itemsSold: $itemsSold
-      isArchived: $isArchived
-    ) {
+export const UPDATE_TEAM_NAME = gql`
+  mutation updateTeamName($id: String!, $name: String!) {
+    updateTeamName(id: $id, name: $name) {
       id
       name
+    }
+  }
+`;
+
+export const UPDATE_TEAM_ORGANIZATION = gql`
+  mutation updateTeamOrganization($id: String!, $organization: String!) {
+    updateTeamOrganization(id: $id, organization: $organization) {
+      id
       organization
-      itemsSold
-      amountRaised
     }
   }
 `;
