@@ -2,10 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useMutation } from '@apollo/client';
 import { UPDATE_TEAM_NAME, UPDATE_TEAM_ORGANIZATION } from 'data/gql/team';
-import {
-  UPDATE_TEAM_NAME as UPDATE_TEAM_STATE_NAME,
-  UPDATE_TEAM_ORGANIZATION as UPDATE_TEAM_STATE_ORGANIZATION,
-} from 'data/actions/type';
+import { UPDATE_USER_TEAM_NAME, UPDATE_USER_TEAM_ORGANIZATION } from 'data/actions/type';
 import Toast from 'components/dashboard/Toast/Toast';
 
 import {
@@ -31,8 +28,8 @@ const EditTeamInfo = ({ setOnEditPage, teamId, teamName, teamOrg }) => {
 
   useEffect(() => {
     if (dataNameChange) {
-      const name = dataNameChange?.updateTeamName?.name;
-      dispatch({ type: UPDATE_TEAM_STATE_NAME, payload: name });
+      const name = dataNameChange.updateTeamName.name;
+      dispatch({ type: UPDATE_USER_TEAM_NAME, payload: name });
       toast({
         position: 'top',
         render: props => <Toast {...props} description="You have updated your team name" isClosable />,
@@ -42,8 +39,8 @@ const EditTeamInfo = ({ setOnEditPage, teamId, teamName, teamOrg }) => {
 
   useEffect(() => {
     if (dataOrgChange) {
-      const organization = dataOrgChange?.updateTeamName?.organization;
-      dispatch({ type: UPDATE_TEAM_STATE_ORGANIZATION, payload: organization });
+      const organization = dataOrgChange.updateTeamOrganization.organization;
+      dispatch({ type: UPDATE_USER_TEAM_ORGANIZATION, payload: organization });
       toast({
         position: 'top',
         render: props => <Toast {...props} description="You have updated your team affiliation" isClosable />,
@@ -95,7 +92,7 @@ const EditTeamInfo = ({ setOnEditPage, teamId, teamName, teamOrg }) => {
           <Heading alignSelf="flex-start" size="h2" as="h2" mb={1}>
             Team Details
           </Heading>
-          <Box>
+          <Box w="100%">
             <FormControl id="teamName">
               <FormLabel textTransform="uppercase" as="h4" size="subtitle" color="gray.500" mb="8px">
                 Team Name
@@ -103,19 +100,12 @@ const EditTeamInfo = ({ setOnEditPage, teamId, teamName, teamOrg }) => {
               <Input name="teamName" placeholder={teamName} value={newTeamName} onChange={onChangeTeamName} w="40%" />
             </FormControl>
           </Box>
-          <Box>
+          <Box w="100%">
             <FormControl id="teamOrg">
               <FormLabel textTransform="uppercase" as="h4" size="subtitle" color="gray.500" mb="8px">
                 Team Affiliation
               </FormLabel>
-              <Input
-                name="teamOrg"
-                w="40%"
-                placeholder={teamOrg}
-                value={newTeamOrg}
-                onChange={onChangeTeamOrg}
-                mb={8}
-              />
+              <Input name="teamOrg" w="40%" placeholder={teamOrg} value={newTeamOrg} onChange={onChangeTeamOrg} />
             </FormControl>
           </Box>
           <FormErrorMessage>Something went wrong, please try again later</FormErrorMessage>

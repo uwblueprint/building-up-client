@@ -10,8 +10,8 @@ import {
   UPDATE_USER,
   UPDATE_USERS_TEAM,
   UPDATE_USER_VERIFICATION,
-  UPDATE_TEAM_NAME,
-  UPDATE_TEAM_ORGANIZATION,
+  UPDATE_USER_TEAM_NAME,
+  UPDATE_USER_TEAM_ORGANIZATION,
 } from '../actions/type';
 
 const initialState = {
@@ -103,7 +103,7 @@ const authReducer = (state = initialState, action) => {
           isVerified: payload,
         },
       };
-    case UPDATE_TEAM_NAME:
+    case UPDATE_USER_TEAM_NAME:
       return {
         ...state,
         team: {
@@ -114,7 +114,7 @@ const authReducer = (state = initialState, action) => {
           },
         },
       };
-    case UPDATE_TEAM_ORGANIZATION:
+    case UPDATE_USER_TEAM_ORGANIZATION:
       return {
         ...state,
         team: {

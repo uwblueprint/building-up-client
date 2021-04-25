@@ -92,7 +92,7 @@ const TeamOverview = ({ team }) => {
         <TeamEditInfo
           teamId={team.teamId}
           teamName={team.teamName}
-          teamAffiliation={team.affiliation}
+          teamOrg={team.affiliation}
           setOnEditPage={setOnEditPage}
         />
       ) : (
