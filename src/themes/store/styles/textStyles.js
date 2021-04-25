@@ -40,7 +40,7 @@ export const textStyles = {
   lightCaption: {
     ...headingsBase,
     fontSize: 'sm',
-    lineHeight: '17px',
+    lineHeight: '18px',
     letterSpacing: 'wider',
   },
 };

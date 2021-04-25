@@ -113,29 +113,41 @@ const OrderSummary = ({ checkoutData }) => {
   return (
     <Flex direction="column" alignItems="flex-start" pt="52px">
       <VStack alignItems="flex-start" bg="brand.lightgray" spacing={10} p={8} w="409px" mb={6}>
-        <Heading size="subtitle">ORDER SUMMARY</Heading>
+        <Heading as="h4" size="subtitle" textTransform="uppercase">
+          order summary
+        </Heading>
         <VStack w="100%" alignItems="flex-start" spacing={8}>
           <Flex w="100%" justifyContent="space-between">
-            <Heading size="lightCaption">SUBTOTAL</Heading>
-            <Heading size="lightCaption" fontWeight="semibold">{`$${subtotalPrice}`}</Heading>
+            <Heading as="h4" size="lightCaption" textTransform="uppercase">
+              subtotal
+            </Heading>
+            <Heading as="h4" size="lightCaption" fontWeight="semibold">{`$${subtotalPrice}`}</Heading>
           </Flex>
           <Flex w="100%" justifyContent="space-between">
-            <Heading size="lightCaption">COUPON DISCOUNT</Heading>
-            <Heading size="lightCaption" fontWeight="semibold">
+            <Heading as="h4" size="lightCaption" textTransform="uppercase">
+              coupon discount
+            </Heading>
+            <Heading as="h4" size="lightCaption" fontWeight="semibold">
               $0.00
             </Heading>
             {/* TO DO: Coupon discount to be implemented in next PR */}
           </Flex>
-          <Heading size="lightCaption">SHIPPING & TAXES TO BE CALCULATED AT CHECKOUT.</Heading>
+          <Heading as="h4" size="lightCaption" textTransform="uppercase">
+            shipping & taxes calculated at checkout.
+          </Heading>
         </VStack>
         <Divider borderColor="brand.gray" />
         <Flex w="100%" justifyContent="space-between">
-          <Heading size="subtitle">ESTIMATED TOTAL</Heading>
-          <Heading size="subtitle">{`$${totalPrice}`}</Heading>
+          <Heading as="h4" size="subtitle" textTransform="uppercase">
+            estimated total
+          </Heading>
+          <Heading as="h4" size="subtitle">{`$${totalPrice}`}</Heading>
         </Flex>
       </VStack>
       <Link href={webUrl}>
-        <Button size="md">PROCEED TO CHECKOUT</Button>
+        <Button size="md" textTransform="uppercase">
+          proceed to checkout
+        </Button>
       </Link>
     </Flex>
   );
