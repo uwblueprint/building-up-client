@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
+import { __DEV__ } from '@chakra-ui/utils';
 
 import dashboardTheme from '../themes/dashboard';
 import storeTheme from '../themes/store';
@@ -15,17 +16,18 @@ function App() {
     <BrowserRouter>
       <Switch>
         {/* pages with Chakra components, helpful to reference when developing */}
-        <Route exact path="/chakraExpoDashboard">
-          <ChakraProvider theme={dashboardTheme}>
-            <ChakraExpoDashboard />
-          </ChakraProvider>
-        </Route>
-        <Route exact path="/chakraExpoStore">
-          <ChakraProvider theme={storeTheme}>
-            <ChakraExpoStore />
-          </ChakraProvider>
-        </Route>
-
+        {__DEV__ && [
+          <Route exact path="/chakraExpoDashboard" key="/chakraExpoDashboard">
+            <ChakraProvider theme={dashboardTheme}>
+              <ChakraExpoDashboard />
+            </ChakraProvider>
+          </Route>,
+          <Route exact path="/chakraExpoStore" key="/chakraExpoStore">
+            <ChakraProvider theme={storeTheme}>
+              <ChakraExpoStore />
+            </ChakraProvider>
+          </Route>,
+        ]}
         {/* All store pages are controlled by StorefrontRouter */}
         <Route path="/store">
           <StorefrontRouter />
