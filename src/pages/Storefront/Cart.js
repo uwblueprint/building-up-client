@@ -80,8 +80,8 @@ const CartItems = ({ checkoutData }) => {
               // onChange={e => handleInputChange(e, i)}
             />
           </FormControl>
-          <Button size="sm" onClick={applyCoupon}>
-            APPLY COUPON
+          <Button size="sm" onClick={applyCoupon} textTransform="uppercase">
+            Apply Coupon
           </Button>
         </Flex>
       )}
@@ -120,8 +120,8 @@ const OrderSummary = ({ checkoutData }) => {
               {/* TO DO: Coupon discount to be implemented in next PR */}
             </Flex>
           )}
-          <chakra.h4 textStyle="lightCaption" fontStyle="italic">
-            shipping & taxes calculated at checkout.
+          <chakra.h4 textStyles="lightCaption" fontStyle="italic">
+            Shipping & taxes calculated at checkout.
           </chakra.h4>
         </VStack>
         <Divider borderColor="brand.gray" />
@@ -134,7 +134,7 @@ const OrderSummary = ({ checkoutData }) => {
       </VStack>
       <Link href={webUrl} w="100%">
         <Button size="md" textTransform="uppercase" minW="100%">
-          proceed to checkout
+          Proceed to Checkout
         </Button>
       </Link>
     </Flex>

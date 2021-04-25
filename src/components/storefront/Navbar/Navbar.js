@@ -40,8 +40,8 @@ const SubHeading = () => {
     pathname === '/store/cart' && (
       <Box bg="black">
         <PageContainer maxW="container.xl" bg="black" py={{ base: 0, lg: 4 }}>
-          <Heading color="white" fontSize={['xl', '2xl', '3xl', '4xl', '5xl']}>
-            MY SHOPPING BAG
+          <Heading color="white" fontSize={['xl', '2xl', '3xl', '4xl', '5xl']} textTransform="uppercase">
+            My Shopping Bag
           </Heading>
         </PageContainer>
       </Box>
