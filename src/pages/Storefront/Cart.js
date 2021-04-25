@@ -3,6 +3,7 @@ import { useShopify } from 'hooks/useShopify';
 import { CartItem } from 'components/storefront';
 import {
   Box,
+  Stack,
   HStack,
   VStack,
   Heading,
@@ -13,10 +14,11 @@ import {
   Button,
   Input,
   Link,
-  Skeleton,
   chakra,
 } from '@chakra-ui/react';
 import PreserveQueryParamsLink from 'components/storefront/PreserveQueryParamsLink/PreserveQueryParamsLink';
+import { PageContainer } from 'components/storefront/PageContainer/PageContainer';
+import CartSkeleton from 'components/storefront/Cart/Layout/CartSkeleton';
 
 const CartItems = ({ checkoutData }) => {
   const { id: checkoutId, lineItems } = checkoutData;
@@ -28,7 +30,7 @@ const CartItems = ({ checkoutData }) => {
   };
 
   return (
-    <VStack flex={1} alignItems="flex-start" spacing={8} pr={12}>
+    <VStack flex={1} alignItems="flex-start" spacing={8} w="100%">
       <Flex w="100%" justifyContent="space-between">
         <Heading size="subtitle">
           <Link as={PreserveQueryParamsLink} to={`/store`}>
@@ -87,45 +89,31 @@ const CartItems = ({ checkoutData }) => {
   );
 };
 
-// TO DO: Update these skeletons & loading state
-const CartItemsSkeleton = () => {
-  return (
-    <>
-      <Skeleton h={20} w={20} />
-      <Skeleton h={20} w={20} />
-      <Skeleton h={20} w={20} />
-    </>
-  );
-};
-
-const OrderSummarySkeleton = () => {
-  return (
-    <>
-      <Skeleton h={20} w={20} />
-      <Skeleton h={20} w={20} />
-      <Skeleton h={20} w={20} />
-    </>
-  );
-};
-
 const OrderSummary = ({ checkoutData }) => {
   const { totalPrice, subtotalPrice, webUrl } = checkoutData;
   const couponVal = 0; // Temp placeholder for coupon/discount value
 
   return (
-    <Flex direction="column" alignItems="flex-start" pt="52px">
-      <VStack alignItems="flex-start" bg="brand.lightgray" spacing={10} p={8} w="409px" mb={6}>
+    <Flex
+      direction="column"
+      alignItems="flex-start"
+      pt={{ base: 0, md: '52px' }}
+      maxW={{ base: '100%', md: '30%' }}
+      minW="250px"
+      w={{ base: '100%', md: 'auto' }}
+    >
+      <VStack alignItems="flex-start" bg="brand.lightgray" spacing={[4, 6, 8, 10]} p={8} w="100%" mb={6}>
         <Heading as="h4" size="subtitle" textTransform="uppercase">
-          order summary
+          Order Summary
         </Heading>
         <VStack w="100%" alignItems="flex-start" spacing={8}>
           <Flex w="100%" justifyContent="space-between">
-            <chakra.h4 textStyle="lightCaption">subtotal</chakra.h4>
+            <chakra.h4 textStyle="lightCaption">Subtotal</chakra.h4>
             <chakra.h4 textStyle="lightCaption" fontWeight="semibold">{`$${subtotalPrice}`}</chakra.h4>
           </Flex>
           {couponVal && (
             <Flex w="100%" justifyContent="space-between">
-              <chakra.h4 textStyle="lightCaption">coupon discount</chakra.h4>
+              <chakra.h4 textStyle="lightCaption">Coupon Discount</chakra.h4>
               <chakra.h4 textStyle="lightCaption" fontWeight="semibold">
                 -${couponVal}
               </chakra.h4>
@@ -137,15 +125,15 @@ const OrderSummary = ({ checkoutData }) => {
           </chakra.h4>
         </VStack>
         <Divider borderColor="brand.gray" />
-        <Flex w="100%" justifyContent="space-between">
+        <HStack w="100%" justifyContent="space-between" spacing={4}>
           <Heading as="h4" size="subtitle" textTransform="uppercase">
-            estimated total
+            Estimated Total
           </Heading>
           <Heading as="h4" size="subtitle">{`$${totalPrice}`}</Heading>
-        </Flex>
+        </HStack>
       </VStack>
-      <Link href={webUrl}>
-        <Button size="md" textTransform="uppercase">
+      <Link href={webUrl} w="100%">
+        <Button size="md" textTransform="uppercase" minW="100%">
           proceed to checkout
         </Button>
       </Link>
@@ -174,21 +162,25 @@ const Cart = () => {
   */
 
   return (
-    <>
-      <HStack w="100%" h="100%" justifyContent="space-between" alignItems="flex-start" px="105px" py={16}>
+    <PageContainer>
+      <Stack
+        direction={{ base: 'column', md: 'row' }}
+        w="100%"
+        h="100%"
+        justifyContent="space-between"
+        alignItems="flex-start"
+        spacing={12}
+      >
         {checkoutLoading || productsLoading ? (
-          <>
-            <CartItemsSkeleton />
-            <OrderSummarySkeleton />
-          </>
+          <CartSkeleton />
         ) : (
           <>
             <CartItems checkoutData={checkoutData} />
             {checkoutData.lineItems.length > 0 && <OrderSummary checkoutData={checkoutData} />}
           </>
         )}
-      </HStack>
-    </>
+      </Stack>
+    </PageContainer>
   );
 };
 

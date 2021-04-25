@@ -12,6 +12,7 @@ const QuantityButton = ({ aria, icon, quantityProps, height, width }) => {
       borderRadius="none"
       aria-label={aria}
       icon={icon}
+      _hover={{ bg: 'black', color: 'white', _disabled: { color: 'initial', bg: 'initial' } }}
       {...quantityProps}
     />
   );
