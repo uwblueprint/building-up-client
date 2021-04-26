@@ -7,7 +7,7 @@ import { Box, Skeleton, Table, Thead, Tbody, Tr, Th, Td, chakra } from '@chakra-
 const SalesLogTable = ({ loading, data }) => {
   const sales = useMemo(
     () =>
-      data?.latestOrders?.map(order => ({
+      data?.getLatestOrders?.map(order => ({
         date: new Date(parseInt(order.createdAt, 10)).toDateString(),
         order: order.orderNumber,
         qty: order.numberOfItems,
