@@ -52,11 +52,11 @@ const StorefrontRouter = () => {
   // After the checkout is loaded AND the getTeam query succeeds, update the checkout with our team ID
   useEffect(() => {
     // Only update when teamId is available AND checkout ID changes
-    if (getTeamData && checkout.data && checkout.data.id !== checkoutId.current) {
-      updateCartAttributes(checkout.data.id, [{ key: 'teamId', value: getTeamData.getTeam.id }]);
+    if ((getTeamData || getTeamError) && checkout.data && checkout.data.id !== checkoutId.current) {
+      updateCartAttributes(checkout.data.id, getTeamError ? [] : [{ key: 'teamId', value: getTeamData.getTeam.id }]);
       checkoutId.current = checkout.data.id;
     }
-  }, [getTeamData, checkout.data, updateCartAttributes]);
+  }, [getTeamData, getTeamError, checkout.data, updateCartAttributes]);
 
   return (
     <ChakraProvider theme={storeTheme}>
