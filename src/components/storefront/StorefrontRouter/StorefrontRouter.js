@@ -49,11 +49,19 @@ const StorefrontRouter = () => {
     }
   }, [search, getTeam]);
 
-  // After the checkout is loaded AND the getTeam query succeeds, update the checkout with our team ID
+  // After the checkout is loaded AND the getTeam query succeeds, update the checkout with our team ID and team name
   useEffect(() => {
     // Only update when teamId is available AND checkout ID changes
     if ((getTeamData || getTeamError) && checkout.data && checkout.data.id !== checkoutId.current) {
-      updateCartAttributes(checkout.data.id, getTeamError ? [] : [{ key: 'teamId', value: getTeamData.getTeam.id }]);
+      updateCartAttributes(
+        checkout.data.id,
+        getTeamError
+          ? []
+          : [
+              { key: 'teamId', value: getTeamData.getTeam.id },
+              { key: 'teamName', value: getTeamData.getTeam.name },
+            ],
+      );
       checkoutId.current = checkout.data.id;
     }
   }, [getTeamData, getTeamError, checkout.data, updateCartAttributes]);
