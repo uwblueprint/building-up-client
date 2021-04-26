@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useApolloClient } from '@apollo/client';
 import { useDispatch } from 'react-redux';
-import { Text, Input, Button, Heading, VStack, FormControl, FormLabel, FormErrorMessage } from '@chakra-ui/react';
+import { Input, Button, Heading, VStack, FormControl, FormLabel, FormErrorMessage } from '@chakra-ui/react';
 
 import { register } from 'data/actions/auth';
 

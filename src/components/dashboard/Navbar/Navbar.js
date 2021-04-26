@@ -60,7 +60,9 @@ const Navbar = props => {
       {...props}
     >
       <VStack color="gray.400" spacing={10} align="flex-start">
-        <Image src={Logo} alt="Raising The Roof Logo" w="100%" />
+        <Link href="https://raisingtheroof.org/" isExternal>
+          <Image src={Logo} alt="Raising The Roof Logo" w="100%" />
+        </Link>
         <NavItem to={`${DASHBOARD_ROOT_PATH}/home`} icon={IoHomeOutline}>
           Home
         </NavItem>
@@ -76,7 +78,7 @@ const Navbar = props => {
         ) : null}
         {hasTeam && <ShareStorefrontButton />}
       </VStack>
-      <Link onClick={() => dispatch(logout(client))}>
+      <Link onClick={() => dispatch(logout(client))} textDecoration="none" _hover={{ opacity: 0.5 }} w="fit-content">
         <Heading as="span" color="white" size="h4">
           Log Out
         </Heading>
