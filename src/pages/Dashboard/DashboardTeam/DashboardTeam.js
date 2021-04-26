@@ -3,6 +3,10 @@ import { Box, Center, Flex, Heading, HStack } from '@chakra-ui/react';
 
 import PageHeading from 'components/dashboard/PageHeading/PageHeading';
 import ShareStorefrontButton from 'components/dashboard/ShareStorefrontButton/ShareStorefrontButton';
+import SalesLogTable from './SalesLogTable';
+
+import { useQuery } from '@apollo/client';
+import { GET_LATEST_ORDERS } from '../../../data/gql/team';
 
 const StorefrontButton = () => {
   return (
@@ -41,6 +45,10 @@ const NoSales = () => {
 };
 
 const DashboardTeam = ({ team }) => {
+  const { loading, error, data } = useQuery(GET_LATEST_ORDERS, {
+    variables: { id: team.teamId },
+  });
+
   return (
     <>
       <Flex w="100%" justify="space-between">
@@ -64,7 +72,13 @@ const DashboardTeam = ({ team }) => {
         <Heading as="h3" size="h3" mb="21px">
           Sales Log
         </Heading>
-        {team.itemsSold === 0 ? <NoSales /> : null}
+        {team.itemsSold === 0 ? (
+          <NoSales />
+        ) : error ? (
+          `Error! ${error.message}`
+        ) : (
+          <SalesLogTable loading={loading} data={data} />
+        )}
       </Box>
     </>
   );

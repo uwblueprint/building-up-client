@@ -57,3 +57,14 @@ export const GET_GLOBAL_LEADERBOARD = gql`
     }
   }
 `;
+
+export const GET_LATEST_ORDERS = gql`
+  query latestOrders($id: String!, $amountPrev: Int) {
+    latestOrders(id: $id, amountPrev: $amountPrev) {
+      orderNumber
+      numberOfItems
+      price
+      createdAt
+    }
+  }
+`;
