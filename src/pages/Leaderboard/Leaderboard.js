@@ -22,7 +22,7 @@ const composeTableHeader = (header, i) => {
 const TableRow = props => {
   const { bgColor, borderBottomWidth, rank, teamName, affiliation, amountRaised } = props;
   return (
-    <Tr borderBottomWidth={borderBottomWidth} borderColor="white" bg={bgColor} height="88px">
+    <Tr borderBottomWidth={borderBottomWidth} borderColor="white" bg={bgColor} height="88px" _hover={{}}>
       <Td>
         {rank <= 3 ? (
           <Text fontSize="40px">

@@ -78,7 +78,7 @@ function Invite() {
             {teamData.getTeam.organization}
           </Text>
           <Text>If you join this team, you will leave your current team.</Text>
-          <ButtonGroup size="lg" spacing={2}>
+          <ButtonGroup size="lg" spacing={6} pt={5}>
             <Button isLoading={joinTeamLoading} variant="black" onClick={handleJoinTeam}>
               Accept
             </Button>

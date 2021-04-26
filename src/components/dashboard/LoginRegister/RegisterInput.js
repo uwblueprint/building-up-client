@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useApolloClient } from '@apollo/client';
 import { useDispatch } from 'react-redux';
-import { Text, Input, Button, Heading, VStack, FormControl, FormLabel } from '@chakra-ui/react';
+import { Text, Input, Button, Heading, VStack, FormControl, FormLabel, FormErrorMessage } from '@chakra-ui/react';
 
 import { register } from 'data/actions/auth';
 
@@ -91,7 +91,9 @@ const RegisterInput = () => {
             minLength={8}
           />
         </FormControl>
-        {submitState === 'FAIL' && <Text alignSelf="flex-start">Unable to register, please try again.</Text>}
+        <FormControl isInvalid={submitState === 'FAIL'}>
+          <FormErrorMessage>Unable to register, please try again.</FormErrorMessage>
+        </FormControl>
         <Button role="link" width="131px" height="43px" type="submit">
           Create Account
         </Button>
