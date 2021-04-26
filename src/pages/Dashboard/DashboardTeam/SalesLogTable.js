@@ -8,7 +8,7 @@ const SalesLogTable = ({ loading, data }) => {
   const sales = useMemo(
     () =>
       data?.latestOrders?.map(order => ({
-        date: new Date(parseInt(data.latestOrders.createdAt, 10)).toDateString(),
+        date: new Date(parseInt(order.createdAt, 10)).toDateString(),
         order: order.orderNumber,
         qty: order.numberOfItems,
         price: '$' + order.price.toFixed(2),
