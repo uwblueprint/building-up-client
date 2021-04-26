@@ -43,7 +43,7 @@ const EmailVerificationRequired = props => {
   }, [data, toast]);
 
   return (
-    <Flex direction="column" h="100%" w="100%" align="center" textAlign="center">
+    <Flex direction="column" w="100%" align="center" textAlign="center">
       <Heading size="h1" as="h1" mt="42px">
         Verify your email
       </Heading>
