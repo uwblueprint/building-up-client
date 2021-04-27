@@ -56,7 +56,7 @@ const shopifyReducer = (state = initialState, action) => {
     case SHOP_FOUND:
       return { ...state, shop: action.payload };
     case UPDATE_CART_ATTRIBUTE: // maybe we need to change this too, might take out
-      return { ...state, checkout: action.payload };
+      return { ...state, checkout: { ...state.checkout, data: action.payload } };
     case ADD_VARIANT_TO_CART:
       return { ...state, checkout: { ...state.checkout, data: action.payload } };
     case UPDATE_QUANTITY_IN_CART:
@@ -122,12 +122,18 @@ const initCheckout = () => {
     if (CHECKOUT_ID_FROM_LOCAL_STORAGE) {
       client.checkout
         .fetch(CHECKOUT_ID_FROM_LOCAL_STORAGE)
-        .then(res =>
-          dispatch({
-            type: CHECKOUT_FOUND,
-            payload: res,
-          }),
-        )
+        .then(res => {
+          if (res.orderStatusUrl) {
+            // Once a checkout is completed, it can't be reused — create a new checkout
+            // res.orderStatusUrl is null if checkout is not completed yet
+            createCheckout(dispatch);
+          } else {
+            dispatch({
+              type: CHECKOUT_FOUND,
+              payload: res,
+            });
+          }
+        })
         .catch(err => createCheckout(dispatch));
     } else {
       createCheckout(dispatch);
