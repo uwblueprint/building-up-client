@@ -8,10 +8,11 @@ const SalesLogTable = ({ loading, data }) => {
   const sales = useMemo(
     () =>
       data?.getLatestOrders?.map(order => ({
-        date: new Date(parseInt(order.createdAt, 10)).toDateString(),
         order: order.orderNumber,
         qty: order.numberOfItems,
         price: '$' + order.price.toFixed(2),
+        donation: '$' + order.donationAmount.toFixed(2),
+        date: new Date(parseInt(order.createdAt, 10)).toDateString().substring(4),
       })) ?? [],
     [data],
   );
@@ -29,6 +30,10 @@ const SalesLogTable = ({ loading, data }) => {
       {
         Header: 'Amount Raised',
         accessor: 'price',
+      },
+      {
+        Header: 'Additional Donation',
+        accessor: 'donation',
       },
       {
         Header: 'Date',

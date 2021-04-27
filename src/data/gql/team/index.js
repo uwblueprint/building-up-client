@@ -64,6 +64,7 @@ export const GET_LATEST_ORDERS = gql`
       orderNumber
       numberOfItems
       price
+      donationAmount
       createdAt
     }
   }
