@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, CloseButton, Heading, Text, VStack } from '@chakra-ui/react';
+import { DASHBOARD_ROOT_PATH } from 'components/dashboard/DashboardRouter/DashboardRouter';
 
 const RedirectContextContent = ({ subtitle, title, description, onCancel }) => {
   return (
@@ -51,7 +52,7 @@ const EmailVerificationContext = () => (
 
 const RedirectContext = ({ fromPath, inviteTeamId, teamInfoData, teamInfoError, onCancel }) => {
   return fromPath ? (
-    fromPath.startsWith('/verify') ? (
+    fromPath.startsWith(`${DASHBOARD_ROOT_PATH}/verify`) ? (
       <EmailVerificationContext />
     ) : inviteTeamId ? (
       <InviteContext data={teamInfoData} error={teamInfoError} onCancel={onCancel} />

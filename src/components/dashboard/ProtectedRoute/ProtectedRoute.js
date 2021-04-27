@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 
 import EmailVerificationRequired from 'pages/EmailVerificationRequired/EmailVerificationRequired';
+import { DASHBOARD_ROOT_PATH } from 'components/dashboard/DashboardRouter/DashboardRouter';
 
 /**
  * A wrapper on <Route> that:
@@ -27,7 +28,7 @@ const ProtectedRoute = ({ children, disableEmailVerify, ...rest }) => {
         ) : (
           <Redirect
             to={{
-              pathname: '/login',
+              pathname: `${DASHBOARD_ROOT_PATH}/login`,
               state: { from: location },
             }}
           />
