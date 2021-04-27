@@ -79,38 +79,6 @@ const DashboardRouter = () => {
                 ) : (
                   <PageContainer>
                     <InnerRouter teamData={teamData} />
-                    {/* <Switch>
-                      <ProtectedRoute disableEmailVerify exact path="/verify/:hash">
-                        <EmailVerify />
-                      </ProtectedRoute>
-                      <ProtectedRoute exact path="/invite/:teamId">
-                        <Invite />
-                      </ProtectedRoute>
-                      <ProtectedRoute path={`${DASHBOARD_ROOT_PATH}`}>
-                        <Switch>
-                          <ProtectedRoute exact path={`${DASHBOARD_ROOT_PATH}/home`}>
-                            <Dashboard team={teamData} />
-                          </ProtectedRoute>
-                          {teamData && (
-                            <ProtectedRoute exact path={`${DASHBOARD_ROOT_PATH}/leaderboard`}>
-                              <Leaderboard team={teamData} />
-                            </ProtectedRoute>
-                          )}
-                          {teamData && (
-                            <ProtectedRoute exact path={`${DASHBOARD_ROOT_PATH}/team`}>
-                              <TeamOverview team={teamData} />
-                            </ProtectedRoute>
-                          )}
-                          <Route path="/">
-                            <Redirect to={`${DASHBOARD_ROOT_PATH}/home`} />
-                          </Route>
-                        </Switch>
-                      </ProtectedRoute>
-
-                      <Route path="/">
-                        <Redirect to="/store" />
-                      </Route>
-                    </Switch> */}
                   </PageContainer>
                 )}
               </Box>
@@ -153,10 +121,6 @@ export const InnerRouter = ({ teamData }) => {
           </Route>
         </Switch>
       </ProtectedRoute>
-      {/* Root level redirect is to the storefront */}
-      {/* <Route path="/">
-        <Redirect to="/store" />
-      </Route> */}
     </Switch>
   );
 };

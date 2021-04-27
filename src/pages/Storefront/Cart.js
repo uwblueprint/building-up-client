@@ -120,7 +120,7 @@ const OrderSummary = ({ checkoutData }) => {
               {/* TO DO: Coupon discount to be implemented in next PR */}
             </Flex>
           )}
-          <chakra.h4 textStyles="lightCaption" fontStyle="italic">
+          <chakra.h4 textStyle="lightCaption" fontStyle="italic">
             Shipping & taxes calculated at checkout.
           </chakra.h4>
         </VStack>
