@@ -17,7 +17,6 @@ const ProductDetails = ({ product, checkout }) => {
       {
         variantId: variantId,
         quantity: quantityPickerProps.valueAsNumber,
-        // customAttributes for teamId?
       },
     ];
     // TO DO: Consider adding error handling

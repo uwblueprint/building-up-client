@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink, Redirect, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import { Box, Button, ButtonGroup, Center, Heading, Spinner, Text, VStack, useToast } from '@chakra-ui/react';
 
-import Toast from 'components/dashboard/Toast/Toast';
+import { useInvite } from 'hooks/use-invite';
 
-import { UPDATE_USERS_TEAM } from 'data/actions/type';
-import { GET_TEAM_INFO } from 'data/gql/team';
-import { JOIN_TEAM } from 'data/gql/user';
+import Toast from 'components/dashboard/Toast/Toast';
 
 const InviteLayout = props => (
   <VStack spacing={4} align="left">
@@ -21,7 +18,12 @@ const InviteLayout = props => (
   </VStack>
 );
 
-function Invite(props) {
+/**
+ * This page renders only if the user follows an invite link and they are already signed in (have a cookie)
+ * Otherwise, the user will see invite context on the login page,
+ * and will automatically join the team after signing in — skipping this page entirely
+ */
+function Invite() {
   const dispatch = useDispatch();
   const toast = useToast();
   const [shouldRedirect, setShouldRedirect] = useState(false);
@@ -29,16 +31,14 @@ function Invite(props) {
   const { teamId } = useParams();
   const { userId } = useSelector(state => state.auth.user);
 
-  const [joinTeam, { loading: joinTeamLoading, data: joinTeamData }] = useMutation(JOIN_TEAM);
+  const { joinTeamMutation, getTeamInfoQuery } = useInvite(teamId);
 
-  const { loading: teamLoading, error: teamError, data: teamData } = useQuery(GET_TEAM_INFO, {
-    variables: { id: teamId },
-  });
+  const [joinTeam, { loading: joinTeamLoading, data: joinTeamData }] = joinTeamMutation;
+  const { loading: teamLoading, error: teamError, data: teamData } = getTeamInfoQuery;
 
   // React to the result of the join team mutation: on joining team successfully, redirect to homepage
   useEffect(() => {
     if (joinTeamData) {
-      const { teamId } = joinTeamData.joinTeam;
       const { name, organization } = teamData.getTeam;
 
       setShouldRedirect(true);
@@ -52,7 +52,6 @@ function Invite(props) {
           />
         ),
       });
-      dispatch({ type: UPDATE_USERS_TEAM, payload: teamId });
     }
   }, [joinTeamData, teamData, dispatch, toast]);
 
@@ -61,7 +60,7 @@ function Invite(props) {
   };
 
   return teamLoading ? (
-    <Center h="100%">
+    <Center h="100%" w="100%">
       <Spinner size="xl" />
     </Center>
   ) : shouldRedirect ? (

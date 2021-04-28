@@ -69,3 +69,13 @@ export const GET_LATEST_ORDERS = gql`
     }
   }
 `;
+
+export const UPDATE_TEAM_NAME_ORG = gql`
+  mutation updateTeamNameOrg($id: String!, $name: String, $organization: String) {
+    updateTeamNameOrg(id: $id, name: $name, organization: $organization) {
+      id
+      name
+      organization
+    }
+  }
+`;

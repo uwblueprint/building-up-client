@@ -1,5 +1,16 @@
 import React, { useEffect, useRef } from 'react';
-import { Heading, Flex, Image, useNumberInput, IconButton, VStack, Link, chakra } from '@chakra-ui/react';
+import {
+  Heading,
+  Flex,
+  Image,
+  useNumberInput,
+  IconButton,
+  VStack,
+  Link,
+  chakra,
+  HStack,
+  Stack,
+} from '@chakra-ui/react';
 import QuantityPicker from '../ProductDetails/QuantityPicker';
 import { CloseIcon } from '@chakra-ui/icons';
 import { useShopify } from 'hooks/useShopify';
@@ -35,14 +46,18 @@ const CartItem = ({ title, sku, image, price, quantity, lineItemId, checkoutId }
   }, [quantityPickerProps.valueAsNumber]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <Flex justifyContent="space-between">
+    <HStack justifyContent="space-between" align="flex-start" spacing={[2, 6]}>
       <Flex>
-        <Flex direction="column">
-          <Link as={PreserveQueryParamsLink} to={`products/${slug}`}>
-            <Image boxSize="200" objectFit="cover" border="1px solid black" src={image} alt={title} />
-          </Link>
-        </Flex>
-        <VStack alignItems="flex-start" w={64} pl={6}>
+        <Link as={PreserveQueryParamsLink} to={`products/${slug}`} flexShrink={0}>
+          <Image
+            boxSize={{ base: '75px', sm: '125px', md: '150px', xl: '200px' }}
+            objectFit="cover"
+            border="1px solid black"
+            src={image}
+            alt={title}
+          />
+        </Link>
+        <VStack alignItems="flex-start" minW="100px" pl={6}>
           <chakra.h4 textStyles="lightCaption" color="brand.gray">
             {`Item #${sku}`}
           </chakra.h4>
@@ -55,16 +70,24 @@ const CartItem = ({ title, sku, image, price, quantity, lineItemId, checkoutId }
           {/* Does not show colour + variant at the moment */}
         </VStack>
       </Flex>
-      <QuantityPicker size="checkout" {...quantityPickerProps} />
-      <IconButton
-        size="xs"
-        color="brand.gray"
-        variant="unstyled"
-        aria-label="Remove from cart"
-        icon={<CloseIcon />}
-        onClick={removeFromCart}
-      />
-    </Flex>
+      <Stack
+        justifyContent="space-between"
+        align={{ base: 'flex-end', lg: 'flex-start' }}
+        direction={{ base: 'column-reverse', lg: 'row' }}
+        spacing={[2, 6]}
+        h="100%"
+      >
+        <QuantityPicker size="checkout" {...quantityPickerProps} />
+        <IconButton
+          size="xs"
+          color="brand.gray"
+          variant="ghost"
+          aria-label="Remove from cart"
+          icon={<CloseIcon />}
+          onClick={removeFromCart}
+        />
+      </Stack>
+    </HStack>
   );
 };
 

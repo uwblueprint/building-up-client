@@ -11,7 +11,7 @@ import {
 import smallLogo from 'assets/images/building_up_footer_small_icon.png';
 
 const PADDING_X = { base: 10, md: 14, lg: 16, xl: '105px' };
-const PADDING_Y = { base: 8, md: 12, lg: 14, xl: '80px' };
+const PADDING_Y = { base: 8, md: 12, lg: 14, xl: '60px' };
 
 const GetInTouch = () => {
   return (
@@ -67,7 +67,13 @@ const StayConnected = () => {
       <Text fontWeight="extrabold" letterSpacing="wider" fontFamily="Jost">
         STAY CONNECTED
       </Text>
-      <Input placeholder="YOUR EMAIL ADDRESS*" onChange={handleSubscriptionEmailChange} />
+      <Input
+        borderColor="brand.gray"
+        _hover={{ borderColor: 'brand.lightgray' }}
+        _focus={{ borderColor: 'brand.lightgray' }}
+        placeholder="YOUR EMAIL ADDRESS*"
+        onChange={handleSubscriptionEmailChange}
+      />
       <Text letterSpacing="wider" color="brand.gray">
         In case you want to join the list of recipients of our news and updates, please fill in your email.
       </Text>
