@@ -10,8 +10,8 @@ const SalesLogTable = ({ loading, data }) => {
       data?.getLatestOrders?.map(order => ({
         order: order.orderNumber,
         qty: order.numberOfItems,
-        price: '$' + order.price.toFixed(2),
-        donation: '$' + order.donationAmount.toFixed(2),
+        price: `$${order.price.toFixed(2)}`,
+        donation: `$${order.donationAmount.toFixed(2)}`,
         date: new Date(parseInt(order.createdAt, 10)).toDateString().substring(4),
       })) ?? [],
     [data],
