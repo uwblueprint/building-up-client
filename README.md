@@ -1,6 +1,6 @@
 ### Deployment
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/fa07f900-9e33-4794-a960-b011b811c89f/deploy-status)](https://app.netlify.com/sites/building-up/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/6b4ac32c-123e-452e-8003-6afda2941c14/deploy-status)](https://app.netlify.com/sites/building-up/deploys)
 
 The master branch of this repository is continually deployed at https://building-up.netlify.app.
 
