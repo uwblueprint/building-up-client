@@ -58,7 +58,7 @@ const CartItem = ({ title, sku, image, price, quantity, lineItemId, checkoutId }
           />
         </Link>
         <VStack alignItems="flex-start" minW="100px" pl={6}>
-          <chakra.h4 textStyles="lightCaption" color="brand.gray">
+          <chakra.h4 textStyle="lightCaption" color="brand.gray">
             {`Item #${sku}`}
           </chakra.h4>
           <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.darkgray">

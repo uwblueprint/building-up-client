@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useApolloClient } from '@apollo/client';
 import { useDispatch, useSelector } from 'react-redux';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 
 import { Box, Center, ChakraProvider, Grid, Spinner } from '@chakra-ui/react';
 
@@ -20,6 +20,8 @@ import ResetPassword from 'pages/ResetPassword/ResetPassword';
 import PageContainer from '../PageContainer/PageContainer';
 import Navbar, { NAVBAR_WIDTH } from '../Navbar/Navbar';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+
+export const DASHBOARD_ROOT_PATH = '/dashboard';
 
 const DashboardRouter = () => {
   const dispatch = useDispatch();
@@ -54,13 +56,13 @@ const DashboardRouter = () => {
           It also sets location.state.from
           After signing in, redirect to the original path 
           */}
-          <Route exact path="/login">
+          <Route exact path={`${DASHBOARD_ROOT_PATH}/login`}>
             <LoginRegister />
           </Route>
-          <Route exact path="/resetPassword/:token">
+          <Route exact path={`${DASHBOARD_ROOT_PATH}/resetPassword/:token`}>
             <ResetPassword />
           </Route>
-          <ProtectedRoute disableEmailVerify path="/">
+          <ProtectedRoute disableEmailVerify path={`${DASHBOARD_ROOT_PATH}`}>
             <Grid templateColumns={`${NAVBAR_WIDTH} 1fr`} templateRows="100vh" h="100vh">
               <Box borderRight="2px solid black" w="100%" h="100%">
                 {/** Navbar width is set manually to keep the position fixed */}
@@ -73,31 +75,7 @@ const DashboardRouter = () => {
                   </Center>
                 ) : (
                   <PageContainer>
-                    <Switch>
-                      <ProtectedRoute exact path="/home">
-                        <Dashboard team={teamData} />
-                      </ProtectedRoute>
-                      <ProtectedRoute disableEmailVerify exact path="/verify/:hash">
-                        <EmailVerify />
-                      </ProtectedRoute>
-                      <ProtectedRoute exact path="/invite/:teamId">
-                        <Invite />
-                      </ProtectedRoute>
-                      {teamData && (
-                        <ProtectedRoute exact path="/leaderboard">
-                          <Leaderboard team={teamData} />
-                        </ProtectedRoute>
-                      )}
-                      {teamData && (
-                        <ProtectedRoute exact path="/team">
-                          <TeamOverview team={teamData} />
-                        </ProtectedRoute>
-                      )}
-
-                      <Route path="/">
-                        <Redirect to="/home" />;
-                      </Route>
-                    </Switch>
+                    <InnerRouter teamData={teamData} />
                   </PageContainer>
                 )}
               </Box>
@@ -106,6 +84,41 @@ const DashboardRouter = () => {
         </Switch>
       )}
     </ChakraProvider>
+  );
+};
+
+export const InnerRouter = ({ teamData }) => {
+  const { path } = useRouteMatch();
+  return (
+    <Switch>
+      <ProtectedRoute disableEmailVerify exact path={`${path}/verify/:hash`}>
+        <EmailVerify />
+      </ProtectedRoute>
+      <ProtectedRoute exact path={`${path}/invite/:teamId`}>
+        <Invite />
+      </ProtectedRoute>
+      <ProtectedRoute path={`${path}`}>
+        <Switch>
+          <ProtectedRoute exact path={`${path}/home`}>
+            <Dashboard team={teamData} />
+          </ProtectedRoute>
+          {teamData && (
+            <ProtectedRoute exact path={`${path}/leaderboard`}>
+              <Leaderboard team={teamData} />
+            </ProtectedRoute>
+          )}
+          {teamData && (
+            <ProtectedRoute exact path={`${path}/team`}>
+              <TeamOverview team={teamData} />
+            </ProtectedRoute>
+          )}
+          {/* /dashboard/** that's doesn't match redirect to /dashboard/home */}
+          <Route path="/">
+            <Redirect to={`${path}/home`} />
+          </Route>
+        </Switch>
+      </ProtectedRoute>
+    </Switch>
   );
 };
 

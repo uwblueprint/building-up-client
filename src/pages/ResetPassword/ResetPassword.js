@@ -18,6 +18,7 @@ import {
 import logo from 'assets/images/logo-black.png';
 import { Link as RouterLink, useParams } from 'react-router-dom';
 import { RESET_PASSWORD_MUTATION } from '../../data/gql/user';
+import { DASHBOARD_ROOT_PATH } from 'components/dashboard/DashboardRouter/DashboardRouter';
 
 const InputPassword = props => {
   const { token } = useParams();
@@ -103,7 +104,7 @@ const ConfirmPage = () => {
         </Heading>
       </Box>
       <Text mb="40px">You've successfully updated your password!</Text>
-      <Button as={RouterLink} mb="50px" to="/login">
+      <Button as={RouterLink} mb="50px" to={`${DASHBOARD_ROOT_PATH}/login`}>
         Return to Login
       </Button>
     </Flex>
