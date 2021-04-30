@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useShopify } from 'hooks/useShopify';
 import { CartItem } from 'components/storefront';
 import {
@@ -20,13 +20,23 @@ import PreserveQueryParamsLink from 'components/storefront/PreserveQueryParamsLi
 import { PageContainer } from 'components/storefront/PageContainer/PageContainer';
 import CartSkeleton from 'components/storefront/Cart/Layout/CartSkeleton';
 
-const CartItems = ({ checkoutData }) => {
+const CartItems = ({ checkoutData, discount, setDiscount }) => {
   const { id: checkoutId, lineItems } = checkoutData;
+  const { addDiscount } = useShopify();
   const cartItemsCount = lineItems.reduce((acc, cur) => acc + cur.quantity, 0);
+  const [discountCode, setDiscountCode] = useState('');
 
-  // TO DO: May remove coupon & just let Shopify handle
-  const applyCoupon = () => {
-    alert('To be implemented');
+  const onChangeCoupon = e => {
+    // Assuming that all discounts are strictly uppercase
+    setDiscountCode(e.target.value.toUpperCase());
+  };
+
+  const applyCoupon = async () => {
+    const discountApplied = await addDiscount(checkoutId, discountCode);
+    // probably should say if it is successful or not successful
+    // determine if we can stack discounts or not
+    // if successful setDiscount()
+    console.log(discountApplied);
   };
 
   return (
@@ -73,12 +83,7 @@ const CartItems = ({ checkoutData }) => {
       {lineItems.length > 0 && (
         <Flex justifyContent="space-between">
           <FormControl w="50%">
-            <Input
-              type="text"
-              name="coupon"
-              placeholder="COUPON CODE"
-              // onChange={e => handleInputChange(e, i)}
-            />
+            <Input type="text" name="coupon" placeholder="COUPON CODE" onChange={onChangeCoupon} />
           </FormControl>
           <Button size="sm" onClick={applyCoupon} textTransform="uppercase">
             Apply Coupon
@@ -89,9 +94,8 @@ const CartItems = ({ checkoutData }) => {
   );
 };
 
-const OrderSummary = ({ checkoutData }) => {
+const OrderSummary = ({ checkoutData, discount }) => {
   const { totalPrice, subtotalPrice, webUrl } = checkoutData;
-  const couponVal = 0; // Temp placeholder for coupon/discount value
 
   return (
     <Flex
@@ -111,13 +115,13 @@ const OrderSummary = ({ checkoutData }) => {
             <chakra.h4 textStyle="lightCaption">Subtotal</chakra.h4>
             <chakra.h4 textStyle="lightCaption" fontWeight="semibold">{`$${subtotalPrice}`}</chakra.h4>
           </Flex>
-          {couponVal && (
+          {discount && (
             <Flex w="100%" justifyContent="space-between">
               <chakra.h4 textStyle="lightCaption">Coupon Discount</chakra.h4>
               <chakra.h4 textStyle="lightCaption" fontWeight="semibold">
-                -${couponVal}
+                -${discount}
+                {/* need to fix this up */}
               </chakra.h4>
-              {/* TO DO: Coupon discount to be implemented in next PR */}
             </Flex>
           )}
           <chakra.h4 textStyles="lightCaption" fontStyle="italic">
@@ -147,6 +151,7 @@ const Cart = () => {
     checkout: { loading: checkoutLoading, data: checkoutData },
     products: { loading: productsLoading },
   } = useShopify();
+  const [discount, setDiscount] = useState(0);
 
   return (
     <PageContainer>
@@ -162,8 +167,8 @@ const Cart = () => {
           <CartSkeleton />
         ) : (
           <>
-            <CartItems checkoutData={checkoutData} />
-            {checkoutData.lineItems.length > 0 && <OrderSummary checkoutData={checkoutData} />}
+            <CartItems checkoutData={checkoutData} setDiscount={setDiscount} />
+            {checkoutData.lineItems.length > 0 && <OrderSummary checkoutData={checkoutData} discount={discount} />}
           </>
         )}
       </Stack>
