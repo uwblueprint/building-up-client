@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useApolloClient } from '@apollo/client';
 import { useDispatch, useSelector } from 'react-redux';
-import { Switch, Route, Redirect, useLocation, useRouteMatch } from 'react-router-dom';
+import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 
 import { Box, Center, ChakraProvider, Grid, Spinner } from '@chakra-ui/react';
 
@@ -26,9 +26,6 @@ export const DASHBOARD_ROOT_PATH = '/dashboard';
 const DashboardRouter = () => {
   const dispatch = useDispatch();
   const client = useApolloClient();
-  const locaiton = useLocation();
-  console.log('locaiton:', locaiton);
-  console.log('locaiton:', locaiton.state, locaiton.state?.from);
 
   const { authenticating, user, team } = useSelector(state => state.auth);
   const { loading: teamLoading, data: teamData } = team;
