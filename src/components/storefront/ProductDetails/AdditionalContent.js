@@ -6,7 +6,7 @@ const content = [
   {
     title: 'Shipping Fees, Delivery & Returns',
     panel:
-      'Shipping Fees: \n\n1-25 items = $5 baseline +$2 for each additional item for shipping \n25-50 items = $30 flat rate for shipping \n50-75 items = $40 flat rate for shipping \n75-100 items = $50 flat rate for shipping \n\nFor orders of 100+ items, please email Sonja@raisingtheroof.org \n\nDelivery: 2-3 weeks from ordering (location dependent). \n\nReturn Policy: All sales final',
+      'Shipping is calculated at checkout. \n\nDelivery: 2-3 weeks from ordering (location dependent). \n\nReturn Policy: All sales final',
   },
   {
     title: 'Tax Return Information',
