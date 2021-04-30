@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Image, Box, Center, Flex, Text, Link, Button, HStack, Stack, VStack, Icon, Input } from '@chakra-ui/react';
 import {
   FaFacebookSquare,
@@ -50,29 +50,27 @@ const GetInTouch = () => {
 };
 
 const StayConnected = () => {
-  const [subscriptionEmail, setSubscriptionEmail] = useState('');
-
-  const handleSubscriptionEmailChange = e => {
-    e.preventDefault();
-    setSubscriptionEmail(e.target.value);
-  };
-
-  const handleSubscriptionEmailSubmit = e => {
-    e.preventDefault();
-    alert(subscriptionEmail);
-  };
-
   return (
-    <VStack as="form" alignItems="flex-start" onSubmit={handleSubscriptionEmailSubmit} spacing="26px" flex="1">
+    <VStack
+      as="form"
+      method="post"
+      action="https://raisingtheroof.us11.list-manage.com/subscribe/post?u=c7e45eb4c541276bf4631afa0&id=2e7f46f409"
+      target="_blank"
+      noValidate=""
+      alignItems="flex-start"
+      spacing="26px"
+      flex="1"
+    >
       <Text fontWeight="extrabold" letterSpacing="wider" fontFamily="Jost">
         STAY CONNECTED
       </Text>
       <Input
+        name="EMAIL"
+        type="email"
         borderColor="brand.gray"
         _hover={{ borderColor: 'brand.lightgray' }}
         _focus={{ borderColor: 'brand.lightgray' }}
         placeholder="YOUR EMAIL ADDRESS*"
-        onChange={handleSubscriptionEmailChange}
       />
       <Text letterSpacing="wider" color="brand.gray">
         In case you want to join the list of recipients of our news and updates, please fill in your email.
