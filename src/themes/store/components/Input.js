@@ -18,7 +18,7 @@ const Input = {
     },
     quantity: {
       field: {
-        width: '90px',
+        width: '70px',
         height: '52px',
         borderRadius: 'none',
       },

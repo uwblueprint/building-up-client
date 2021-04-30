@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useTable, useSortBy } from 'react-table';
 
@@ -24,8 +24,9 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 
-const LeaveTeamModal = ({ isOpen, onClose, onLeave, teamName, isLoading }) => {
+const LeaveTeamModal = ({ isOpen, onClose, onLeave, teamName, userName, userIdToRemove, userId, isLoading }) => {
   const cancelRef = React.useRef();
+  const isUser = userId === userIdToRemove;
   return (
     <AlertDialog
       motionPreset="slideInBottom"
@@ -37,9 +38,15 @@ const LeaveTeamModal = ({ isOpen, onClose, onLeave, teamName, isLoading }) => {
     >
       <AlertDialogOverlay />
       <AlertDialogContent px={4} py={8}>
-        <AlertDialogHeader>Are you sure you want to leave Team {teamName}?</AlertDialogHeader>
+        <AlertDialogHeader>
+          {`${
+            isUser ? `Are you sure you want to leave Team ${teamName}` : `Are you sure you want to remove ${userName}`
+          }`}
+        </AlertDialogHeader>
         <AlertDialogBody>
-          You will no longer be able to see information associated with this team’s fundraising.
+          {`${
+            isUser ? 'You' : userName
+          } will no longer be able to see information associated with this team’s fundraising.`}
         </AlertDialogBody>
         <AlertDialogFooter align="flex-start" justifyContent="flex-start">
           <Button
@@ -54,7 +61,7 @@ const LeaveTeamModal = ({ isOpen, onClose, onLeave, teamName, isLoading }) => {
             Go Back
           </Button>
           <Button onClick={onLeave} ml={3} variant="black" isLoading={isLoading} size="lg">
-            Leave Team
+            {`${isUser ? 'Leave Team' : 'Confirm'}`}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -62,12 +69,37 @@ const LeaveTeamModal = ({ isOpen, onClose, onLeave, teamName, isLoading }) => {
   );
 };
 
-const TeamMembersTable = ({ members, teamName, loadingMembers, handleRemove, loadingRemove }) => {
+const TeamMembersTable = ({ members, teamName, loadingMembers, handleRemove, loadingRemove, removeData }) => {
   const {
     user: { userId },
   } = useSelector(state => state.auth);
 
   const { isOpen: isLeaveDialogueOpen, onOpen: onLeaveDialogueOpen, onClose: onLeaveDialogueClose } = useDisclosure();
+  const [userIdToRemove, setUserIdToRemove] = useState('');
+  const [userNameToRemove, setUserNameToRemove] = useState('');
+
+  // Open modal after setting state
+  useEffect(() => {
+    if (userIdToRemove && userNameToRemove) {
+      onLeaveDialogueOpen();
+    } else {
+      onLeaveDialogueClose();
+    }
+  }, [userIdToRemove, userNameToRemove, onLeaveDialogueOpen, onLeaveDialogueClose]);
+
+  // Clear state on closing modal
+  useEffect(() => {
+    if (!isLeaveDialogueOpen) {
+      setUserIdToRemove('');
+      setUserNameToRemove('');
+    }
+  }, [isLeaveDialogueOpen]);
+
+  useEffect(() => {
+    if (removeData) {
+      onLeaveDialogueClose();
+    }
+  }, [removeData, onLeaveDialogueClose]);
 
   const data = useMemo(
     () =>
@@ -93,26 +125,24 @@ const TeamMembersTable = ({ members, teamName, loadingMembers, handleRemove, loa
       {
         accessor: 'id',
         disableSortBy: true,
-        Cell: props =>
-          props.value !== userId ? (
+        Cell: props => {
+          return (
             <Button
               variant="link"
               disabled={loadingRemove}
               color="#C70E0E"
               onClick={() => {
-                handleRemove(props.value);
+                setUserIdToRemove(props.value);
+                setUserNameToRemove(props.row.values.name);
               }}
             >
-              Remove
+              {`${props.value === userId ? 'Leave Team' : 'Remove'}`}
             </Button>
-          ) : (
-            <Button variant="link" disabled={loadingRemove} color="#C70E0E" onClick={onLeaveDialogueOpen}>
-              Leave Team
-            </Button>
-          ),
+          );
+        },
       },
     ],
-    [handleRemove, loadingRemove, userId, onLeaveDialogueOpen],
+    [loadingRemove, userId],
   );
 
   const renderSortIcon = column => {
@@ -166,8 +196,11 @@ const TeamMembersTable = ({ members, teamName, loadingMembers, handleRemove, loa
           isOpen={isLeaveDialogueOpen}
           isLoading={loadingRemove}
           onClose={onLeaveDialogueClose}
-          onLeave={() => handleRemove(userId)}
+          onLeave={() => handleRemove(userIdToRemove)}
           teamName={teamName}
+          userName={userNameToRemove}
+          userId={userId}
+          userIdToRemove={userIdToRemove}
         />
       </Box>
     </Skeleton>
