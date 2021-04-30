@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Image, Box, Center, Flex, Text, Link, Button, HStack, Stack, VStack, Icon, Input } from '@chakra-ui/react';
 import {
   FaFacebookSquare,
@@ -66,6 +66,7 @@ const StayConnected = () => {
       </Text>
       <Input
         name="EMAIL"
+        type="email"
         borderColor="brand.gray"
         _hover={{ borderColor: 'brand.lightgray' }}
         _focus={{ borderColor: 'brand.lightgray' }}
