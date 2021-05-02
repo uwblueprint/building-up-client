@@ -30,7 +30,7 @@ const TeamOverview = ({ team }) => {
 
   const [leaveTeam, { loading: loadingRemove, data: leaveTeamData }] = useMutation(LEAVE_TEAM);
   const handleRemove = id => {
-    leaveTeam({ variables: { id } });
+    leaveTeam({ variables: { id, sendNotifEmail: id !== userId } });
   };
 
   const [inviteUsersToTeam, { loading: loadingInvite, error, data }] = useMutation(SEND_INVITE_EMAILS);
