@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useShopify } from 'hooks/useShopify';
 import { CartItem } from 'components/storefront';
 import {
@@ -20,7 +20,7 @@ import PreserveQueryParamsLink from 'components/storefront/PreserveQueryParamsLi
 import { PageContainer } from 'components/storefront/PageContainer/PageContainer';
 import CartSkeleton from 'components/storefront/Cart/Layout/CartSkeleton';
 
-const CartItems = ({ checkoutData, discount, setDiscount }) => {
+const CartItems = ({ checkoutData }) => {
   const { id: checkoutId, lineItems } = checkoutData;
   const { addDiscount } = useShopify();
   const cartItemsCount = lineItems.reduce((acc, cur) => acc + cur.quantity, 0);
@@ -32,11 +32,7 @@ const CartItems = ({ checkoutData, discount, setDiscount }) => {
   };
 
   const applyCoupon = async () => {
-    const discountApplied = await addDiscount(checkoutId, discountCode);
-    // probably should say if it is successful or not successful
-    // determine if we can stack discounts or not
-    // if successful setDiscount()
-    console.log(discountApplied);
+    await addDiscount(checkoutId, discountCode);
   };
 
   return (
@@ -94,8 +90,36 @@ const CartItems = ({ checkoutData, discount, setDiscount }) => {
   );
 };
 
-const OrderSummary = ({ checkoutData, discount }) => {
-  const { totalPrice, subtotalPrice, webUrl } = checkoutData;
+const OrderSummary = ({ checkoutData }) => {
+  const {
+    totalPrice,
+    lineItemsSubtotalPrice: { amount: subtotalAmount },
+    webUrl,
+    discountApplications,
+  } = checkoutData;
+  const [discountVal, setDiscountVal] = useState(0);
+  const [shippingCost, setShippingCost] = useState('TBD');
+  const [discountType, setDiscountType] = useState('');
+  const parsedSubtotal = parseFloat(subtotalAmount).toFixed(2);
+
+  useEffect(() => {
+    if (discountApplications.length > 0) {
+      const appliedDiscount = discountApplications[0];
+      setDiscountType(appliedDiscount.targetType);
+      if (discountType === 'SHIPPING_LINE') {
+        setShippingCost('FREE');
+      } else if (discountType === 'LINE_ITEM') {
+        if (appliedDiscount.targetSelection === 'ENTITLED') {
+          // need to add logic for BOGO
+          console.log('BOGO');
+        } else if (appliedDiscount.value.percentage) {
+          setDiscountVal(((appliedDiscount.value.percentage / 100) * parsedSubtotal).toFixed(2));
+        } else if (appliedDiscount.value.amount) {
+          setDiscountVal(parseFloat(appliedDiscount.value.amount).toFixed(2));
+        }
+      }
+    }
+  }, [discountApplications, discountType, parsedSubtotal]);
 
   return (
     <Flex
@@ -113,20 +137,26 @@ const OrderSummary = ({ checkoutData, discount }) => {
         <VStack w="100%" alignItems="flex-start" spacing={8}>
           <Flex w="100%" justifyContent="space-between">
             <chakra.h4 textStyle="lightCaption">Subtotal</chakra.h4>
-            <chakra.h4 textStyle="lightCaption" fontWeight="semibold">{`$${subtotalPrice}`}</chakra.h4>
+            <chakra.h4 textStyle="lightCaption" fontWeight="semibold">{`$${parsedSubtotal}`}</chakra.h4>
           </Flex>
-          {discount && (
+          {discountType === 'LINE_ITEM' && (
             <Flex w="100%" justifyContent="space-between">
-              <chakra.h4 textStyle="lightCaption">Coupon Discount</chakra.h4>
+              <chakra.h4 textStyle="lightCaption">Discount Applied</chakra.h4>
               <chakra.h4 textStyle="lightCaption" fontWeight="semibold">
-                -${discount}
-                {/* need to fix this up */}
+                -${discountVal}
               </chakra.h4>
             </Flex>
           )}
-          <chakra.h4 textStyles="lightCaption" fontStyle="italic">
-            Shipping & taxes calculated at checkout.
-          </chakra.h4>
+          <Flex w="100%" justifyContent="space-between">
+            <chakra.h4 textStyle="lightCaption">Shipping</chakra.h4>
+            <chakra.h4 textStyle="lightCaption" fontWeight="semibold">{`${shippingCost}`}</chakra.h4>
+          </Flex>
+          <Flex w="100%" justifyContent="space-between">
+            <chakra.h4 textStyle="lightCaption">Taxes</chakra.h4>
+            <chakra.h4 textStyle="lightCaption" fontWeight="semibold">
+              TBD
+            </chakra.h4>
+          </Flex>
         </VStack>
         <Divider borderColor="brand.gray" />
         <HStack w="100%" justifyContent="space-between" spacing={4}>
@@ -151,7 +181,6 @@ const Cart = () => {
     checkout: { loading: checkoutLoading, data: checkoutData },
     products: { loading: productsLoading },
   } = useShopify();
-  const [discount, setDiscount] = useState(0);
 
   return (
     <PageContainer>
@@ -167,8 +196,8 @@ const Cart = () => {
           <CartSkeleton />
         ) : (
           <>
-            <CartItems checkoutData={checkoutData} setDiscount={setDiscount} />
-            {checkoutData.lineItems.length > 0 && <OrderSummary checkoutData={checkoutData} discount={discount} />}
+            <CartItems checkoutData={checkoutData} />
+            {checkoutData.lineItems.length > 0 && <OrderSummary checkoutData={checkoutData} />}
           </>
         )}
       </Stack>
