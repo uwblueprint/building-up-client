@@ -28,8 +28,8 @@ export const JOIN_TEAM = gql`
 `;
 
 export const LEAVE_TEAM = gql`
-  mutation leaveTeam($id: ID!) {
-    leaveTeam(id: $id) {
+  mutation leaveTeam($id: ID!, $sendNotifEmail: Boolean!) {
+    leaveTeam(id: $id, sendNotifEmail: $sendNotifEmail) {
       id
     }
   }
