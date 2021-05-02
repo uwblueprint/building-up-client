@@ -3,7 +3,7 @@ import { Heading, Flex, Image, Text, Button, Stack, VStack, useNumberInput } fro
 import AdditionalContent from './AdditionalContent';
 import QuantityPicker from './QuantityPicker';
 import { useShopify } from 'hooks/useShopify';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 
 const ProductDetails = ({ product, checkout }) => {
   const { id: checkoutId } = checkout;
@@ -11,6 +11,7 @@ const ProductDetails = ({ product, checkout }) => {
   const { id: variantId, sku: variantSku, price: variantPrice } = variants[0];
   const { addLineItems } = useShopify();
   const history = useHistory();
+  const { search } = useLocation();
 
   const handleAddToShoppingBag = async () => {
     const lineItemsToAdd = [
@@ -21,7 +22,7 @@ const ProductDetails = ({ product, checkout }) => {
     ];
     // TO DO: Consider adding error handling
     await addLineItems(checkoutId, lineItemsToAdd);
-    history.push('/store/cart');
+    history.push(`/store/cart${search}`);
   };
 
   const quantityPickerProps = useNumberInput({
