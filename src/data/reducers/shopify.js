@@ -64,6 +64,8 @@ const shopifyReducer = (state = initialState, action) => {
       return { ...state, checkout: { ...state.checkout, data: action.payload } };
     case REMOVE_LINE_ITEM_IN_CART:
       return { ...state, checkout: { ...state.checkout, data: action.payload } };
+    case ADD_DISCOUNT:
+      return { ...state, checkout: { ...state.checkout, data: action.payload } };
     default:
       return state;
   }
@@ -214,7 +216,7 @@ const addDiscountToCheckout = (checkoutId, discountCode) => {
     const res = await client.checkout.addDiscount(checkoutId, discountCode);
     dispatch({
       type: ADD_DISCOUNT,
-      paylod: res,
+      payload: res,
     });
     return res;
   };

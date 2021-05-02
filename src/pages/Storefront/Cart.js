@@ -33,6 +33,7 @@ const CartItems = ({ checkoutData }) => {
 
   const applyCoupon = async () => {
     await addDiscount(checkoutId, discountCode);
+    // need to display error or success message somehow
   };
 
   return (
@@ -85,6 +86,7 @@ const CartItems = ({ checkoutData }) => {
             Apply Coupon
           </Button>
         </Flex>
+        // add some success or error message
       )}
     </VStack>
   );
@@ -97,29 +99,29 @@ const OrderSummary = ({ checkoutData }) => {
     webUrl,
     discountApplications,
   } = checkoutData;
-  const [discountVal, setDiscountVal] = useState(0);
-  const [shippingCost, setShippingCost] = useState('TBD');
-  const [discountType, setDiscountType] = useState('');
   const parsedSubtotal = parseFloat(subtotalAmount).toFixed(2);
 
-  useEffect(() => {
-    if (discountApplications.length > 0) {
-      const appliedDiscount = discountApplications[0];
-      setDiscountType(appliedDiscount.targetType);
-      if (discountType === 'SHIPPING_LINE') {
-        setShippingCost('FREE');
-      } else if (discountType === 'LINE_ITEM') {
-        if (appliedDiscount.targetSelection === 'ENTITLED') {
-          // need to add logic for BOGO
-          console.log('BOGO');
-        } else if (appliedDiscount.value.percentage) {
-          setDiscountVal(((appliedDiscount.value.percentage / 100) * parsedSubtotal).toFixed(2));
-        } else if (appliedDiscount.value.amount) {
-          setDiscountVal(parseFloat(appliedDiscount.value.amount).toFixed(2));
-        }
+  // maybe turn these into consts, should be nicer?
+  let discountVal = 0;
+  let shippingCost = 'TBD';
+  let discountType = '';
+  if (discountApplications.length > 0) {
+    const appliedDiscount = discountApplications[0];
+    discountType = appliedDiscount.targetType;
+    if (discountType === 'SHIPPING_LINE') {
+      shippingCost = 'FREE';
+    } else if (discountType === 'LINE_ITEM') {
+      if (appliedDiscount.targetSelection === 'ENTITLED') {
+        // need to add logic for BOGO
+        // add item to lineItems, verify that it is free
+        console.log('BOGO');
+      } else if (appliedDiscount.value.percentage) {
+        discountVal = ((appliedDiscount.value.percentage / 100) * parsedSubtotal).toFixed(2);
+      } else if (appliedDiscount.value.amount) {
+        discountVal = parseFloat(appliedDiscount.value.amount).toFixed(2);
       }
     }
-  }, [discountApplications, discountType, parsedSubtotal]);
+  }
 
   return (
     <Flex
