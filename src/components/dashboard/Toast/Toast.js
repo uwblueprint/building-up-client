@@ -9,12 +9,12 @@ const Toast = props => {
   const { variant, id, isClosable, onClose, description, title } = props;
 
   return (
-    <Alert variant={variant} id={id} borderRadius="md" boxShadow="lg" paddingRight={8} textAlign="left" width="auto">
-      <Flex direction="column">
+    <Alert variant={variant} id={id} borderRadius="md" boxShadow="lg" textAlign="left" width="auto">
+      <Flex direction="column" flex={1}>
         {title && <AlertTitle>{title}</AlertTitle>}
         {description && <AlertDescription display="block">{description}</AlertDescription>}
       </Flex>
-      {isClosable && <CloseButton onClick={onClose} position="absolute" right={2} />}
+      {isClosable && <CloseButton onClick={onClose} pl={2} alignSelf="flex-end" />}
     </Alert>
   );
 };

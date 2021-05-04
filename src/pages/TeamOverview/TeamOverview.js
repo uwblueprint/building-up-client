@@ -30,7 +30,7 @@ const TeamOverview = ({ team }) => {
 
   const [leaveTeam, { loading: loadingRemove, data: leaveTeamData }] = useMutation(LEAVE_TEAM);
   const handleRemove = id => {
-    leaveTeam({ variables: { id } });
+    leaveTeam({ variables: { id, sendNotifEmail: id !== userId } });
   };
 
   const [inviteUsersToTeam, { loading: loadingInvite, error, data }] = useMutation(SEND_INVITE_EMAILS);
@@ -68,7 +68,7 @@ const TeamOverview = ({ team }) => {
         dispatch({ type: UPDATE_USER, payload: { teamId: null } });
         toast({
           position: 'top',
-          render: props => <Toast {...props} description="You have successfully left your team" isClosable />,
+          render: props => <Toast {...props} description="You have successfully left your team." isClosable />,
         });
       } else {
         updateQuery(previous => {
@@ -113,6 +113,7 @@ const TeamOverview = ({ team }) => {
                 loadingMembers={loadingMembers}
                 handleRemove={handleRemove}
                 loadingRemove={loadingRemove}
+                removeData={leaveTeamData}
               />
             )}
           </Box>

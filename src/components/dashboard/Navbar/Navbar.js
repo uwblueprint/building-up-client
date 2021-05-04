@@ -9,6 +9,7 @@ import { NavLink } from 'react-router-dom';
 import Logo from 'assets/images/logoWhite.png';
 import { logout } from 'data/actions/auth';
 import ShareStorefrontButton from 'components/dashboard/ShareStorefrontButton/ShareStorefrontButton';
+import { DASHBOARD_ROOT_PATH } from 'components/dashboard/DashboardRouter/DashboardRouter';
 
 export const NAVBAR_WIDTH = '280px';
 
@@ -59,23 +60,25 @@ const Navbar = props => {
       {...props}
     >
       <VStack color="gray.400" spacing={10} align="flex-start">
-        <Image src={Logo} alt="Raising The Roof Logo" w="100%" />
-        <NavItem to="/home" icon={IoHomeOutline}>
+        <Link href="https://raisingtheroof.org/" isExternal>
+          <Image src={Logo} alt="Raising The Roof Logo" w="100%" />
+        </Link>
+        <NavItem to={`${DASHBOARD_ROOT_PATH}/home`} icon={IoHomeOutline}>
           Home
         </NavItem>
         {hasTeam ? (
           <>
-            <NavItem to="/leaderboard" icon={IoPodiumOutline}>
+            <NavItem to={`${DASHBOARD_ROOT_PATH}/leaderboard`} icon={IoPodiumOutline}>
               Leaderboard
             </NavItem>
-            <NavItem to="/team" icon={FiUsers}>
+            <NavItem to={`${DASHBOARD_ROOT_PATH}/team`} icon={FiUsers}>
               Team
             </NavItem>
           </>
         ) : null}
         {hasTeam && <ShareStorefrontButton />}
       </VStack>
-      <Link onClick={() => dispatch(logout(client))}>
+      <Link onClick={() => dispatch(logout(client))} textDecoration="none" _hover={{ opacity: 0.5 }} w="fit-content">
         <Heading as="span" color="white" size="h4">
           Log Out
         </Heading>

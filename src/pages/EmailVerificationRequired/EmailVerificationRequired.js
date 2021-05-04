@@ -5,7 +5,6 @@ import { Flex, Text, Image, Button, Heading, useToast } from '@chakra-ui/react';
 
 import { SEND_VERIFICATION_EMAIL } from 'data/gql/user';
 import Toast from 'components/dashboard/Toast/Toast';
-import logo from 'assets/images/logo-black.png';
 import mailbox from 'assets/images/mailbox.png';
 
 const EmailVerificationRequired = props => {
@@ -44,8 +43,7 @@ const EmailVerificationRequired = props => {
   }, [data, toast]);
 
   return (
-    <Flex direction="column" h="100%" w="100%" align="center" textAlign="center">
-      <Image src={logo} w="350px" />
+    <Flex direction="column" w="100%" align="center" textAlign="center">
       <Heading size="h1" as="h1" mt="42px">
         Verify your email
       </Heading>

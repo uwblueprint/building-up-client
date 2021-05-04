@@ -5,6 +5,7 @@ import { Box, Button, ButtonGroup, Center, Heading, Spinner, Text, VStack, useTo
 
 import { useInvite } from 'hooks/use-invite';
 
+import { DASHBOARD_ROOT_PATH } from 'components/dashboard/DashboardRouter/DashboardRouter';
 import Toast from 'components/dashboard/Toast/Toast';
 
 const InviteLayout = props => (
@@ -64,7 +65,7 @@ function Invite() {
       <Spinner size="xl" />
     </Center>
   ) : shouldRedirect ? (
-    <Redirect to="/" />
+    <Redirect to={`${DASHBOARD_ROOT_PATH}`} />
   ) : (
     <InviteLayout>
       {teamError ? (
@@ -77,13 +78,13 @@ function Invite() {
             {teamData.getTeam.organization}
           </Text>
           <Text>If you join this team, you will leave your current team.</Text>
-          <ButtonGroup size="lg" spacing={2}>
+          <ButtonGroup size="lg" spacing={6} pt={5}>
             <Button isLoading={joinTeamLoading} variant="black" onClick={handleJoinTeam}>
               Accept
             </Button>
             <Button
               as={RouterLink}
-              to="/"
+              to={`${DASHBOARD_ROOT_PATH}`}
               isLoading={joinTeamLoading}
               variant="outline"
               colorScheme="gray"

@@ -5,6 +5,7 @@ import { useMutation } from '@apollo/client';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Center, Heading, Spinner, Text, Flex, Image, Button } from '@chakra-ui/react';
 import { UPDATE_USER_VERIFICATION } from 'data/actions/type';
+import { DASHBOARD_ROOT_PATH } from 'components/dashboard/DashboardRouter/DashboardRouter';
 import logo from 'assets/images/logo-black.png';
 
 function EmailVerify() {
@@ -50,7 +51,7 @@ function EmailVerify() {
           ? 'Your email has been verified successfully.'
           : 'Please check your email for the correct verification link.'}
       </Text>
-      <Button size="lg" variant="black" my="46px" as={RouterLink} to="/home">
+      <Button size="lg" variant="black" my="46px" as={RouterLink} to={`${DASHBOARD_ROOT_PATH}/home`}>
         Return to Home
       </Button>
     </Box>

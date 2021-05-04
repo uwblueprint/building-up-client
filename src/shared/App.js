@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import { Switch, Route, Redirect, BrowserRouter } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 import { __DEV__ } from '@chakra-ui/utils';
 
@@ -9,7 +9,7 @@ import storeTheme from '../themes/store';
 import ChakraExpoDashboard from '../themes/dashboard/ChakraExpoDashboard';
 import ChakraExpoStore from '../themes/store/ChakraExpoStore';
 import StorefrontRouter from '../components/storefront/StorefrontRouter/StorefrontRouter';
-import DashboardRouter from 'components/dashboard/DashboardRouter/DashboardRouter';
+import DashboardRouter, { DASHBOARD_ROOT_PATH } from 'components/dashboard/DashboardRouter/DashboardRouter';
 
 function App() {
   return (
@@ -33,8 +33,11 @@ function App() {
           <StorefrontRouter />
         </Route>
         {/* All dashboard pages are controlled by DashboardRouter */}
-        <Route path="/">
+        <Route path={`${DASHBOARD_ROOT_PATH}`}>
           <DashboardRouter />
+        </Route>
+        <Route path="/">
+          <Redirect to="/store" />
         </Route>
       </Switch>
     </BrowserRouter>

@@ -12,6 +12,8 @@ import RedirectContext from 'components/dashboard/LoginRegister/RedirectContext'
 import Toast from 'components/dashboard/Toast/Toast';
 import logo from 'assets/images/logo-black.png';
 
+import { DASHBOARD_ROOT_PATH } from 'components/dashboard/DashboardRouter/DashboardRouter';
+
 const TabButton = props => {
   return (
     <Button
@@ -38,7 +40,7 @@ const JoinTeamByInviteAfterLogin = ({ user, inviteTeamId, joinTeamMutation }) =>
   }, [inviteTeamId, joinTeam, user.userId]);
 
   return joinTeamData || joinTeamError ? (
-    <Redirect to={'/'} />
+    <Redirect to={`${DASHBOARD_ROOT_PATH}`} />
   ) : (
     <Center h="100vh">
       <Spinner size="xl" />
@@ -125,7 +127,7 @@ const LoginRegister = () => {
 
   // Check if the user came from an invite link
   const inviteTeamId = React.useMemo(
-    () => (fromPath && fromPath.startsWith('/invite') ? fromPath.split('/')[2] : undefined),
+    () => (fromPath && fromPath.startsWith(`${DASHBOARD_ROOT_PATH}/invite`) ? fromPath.split('/')[3] : undefined),
     [fromPath],
   );
 
@@ -172,7 +174,7 @@ const LoginRegister = () => {
       <JoinTeamByInviteAfterLogin user={user} inviteTeamId={inviteTeamId} joinTeamMutation={joinTeamMutation} />
     ) : (
       // If we go to this page while the user is already signed in (exists in Redux store), redirect to where the user navigated from
-      <Redirect to={location.state?.from?.pathname ?? '/'} />
+      <Redirect to={location.state?.from?.pathname ?? `${DASHBOARD_ROOT_PATH}`} />
     )
   ) : (
     // User is not signed in, show the login/register page
