@@ -45,12 +45,36 @@ const calculateDiscount = (discountApplications, lineItems) => {
   return { discountVal, shippingCost, discountType };
 };
 
+const DiscountMsg = ({ discountApplications, discountSuccess, removeCoupon }) => {
+  let msg;
+  if (discountSuccess === 'true') {
+    msg = (
+      <VStack alignItems="left">
+        <chakra.h4 display="inline" whiteSpace="nowrap" textStyle="lightCaption">
+          Success! Your code <b>{discountApplications[0].code}</b> has been applied.
+        </chakra.h4>
+        <chakra.h4 textDecoration="underline" cursor="pointer" textStyle="lightCaption" onClick={removeCoupon}>
+          REMOVE COUPON CODE
+        </chakra.h4>
+      </VStack>
+    );
+  } else if (discountSuccess === 'false') {
+    msg = (
+      <chakra.h4 color="brand.red" textStyle="lightCaption">
+        Sorry, that coupon code is not applicable.
+      </chakra.h4>
+    );
+  }
+  return <>{msg}</>;
+};
+
+// TO DO: add red line showing discount
 const CartItems = ({ checkoutData }) => {
-  const { id: checkoutId, lineItems } = checkoutData;
+  const { id: checkoutId, lineItems, discountApplications } = checkoutData;
   const { addDiscount, removeDiscount } = useShopify();
   const cartItemsCount = lineItems.reduce((acc, cur) => acc + cur.quantity, 0);
   const [discountCode, setDiscountCode] = useState('');
-  const [discountMsg, setDiscountMsg] = useState('');
+  const [discountSuccess, setDiscountSuccess] = useState('');
 
   const onChangeCoupon = e => {
     // Assuming that all discounts are strictly uppercase
@@ -60,8 +84,15 @@ const CartItems = ({ checkoutData }) => {
   const applyCoupon = async () => {
     const res = await addDiscount(checkoutId, discountCode);
     console.log('res', res);
-    // you set discountMsg here, and you also have to set the colour of the component
-    // TO DO: do proper error handling
+    // TO DO: proper error handling
+    // If the existing thing isn't the same as the current thing, then do error!
+    // set it to false as well, if it is the same as before
+    setDiscountSuccess((res.discountApplications.length > 0).toString());
+  };
+
+  const removeCoupon = async () => {
+    await removeDiscount(checkoutId);
+    setDiscountSuccess('');
   };
 
   return (
@@ -106,15 +137,21 @@ const CartItems = ({ checkoutData }) => {
         )}
       </VStack>
       {lineItems.length > 0 && (
-        <Flex justifyContent="space-between">
-          <FormControl w="50%">
-            <Input type="text" name="coupon" placeholder="COUPON CODE" onChange={onChangeCoupon} />
-          </FormControl>
-          <Button size="sm" onClick={applyCoupon} textTransform="uppercase">
-            Apply Coupon
-          </Button>
-        </Flex>
-        // add some success or error message
+        <>
+          <Flex justifyContent="space-between">
+            <FormControl w="50%">
+              <Input type="text" name="coupon" placeholder="COUPON CODE" onChange={onChangeCoupon} />
+            </FormControl>
+            <Button size="sm" onClick={applyCoupon} textTransform="uppercase">
+              Apply Coupon
+            </Button>
+          </Flex>
+          <DiscountMsg
+            discountApplications={discountApplications}
+            discountSuccess={discountSuccess}
+            removeCoupon={removeCoupon}
+          />
+        </>
       )}
     </VStack>
   );
