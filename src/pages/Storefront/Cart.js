@@ -117,7 +117,7 @@ const CartItems = ({ checkoutData }) => {
       <VStack w="100%" spacing={8}>
         <Divider borderColor="brand.gray" />
         {lineItems.length > 0 ? (
-          lineItems.map(({ id, title, quantity, variant: { sku, image, price } }) => (
+          lineItems.map(({ id, title, quantity, variant: { sku, image, price }, discountAllocations }) => (
             <Box w="100%" key={id}>
               <CartItem
                 title={title}
@@ -127,6 +127,7 @@ const CartItems = ({ checkoutData }) => {
                 price={price}
                 lineItemId={id}
                 checkoutId={checkoutId}
+                discountAllocations={discountAllocations}
               />
               <Divider borderColor="brand.gray" pb={8} />
             </Box>
