@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useShopify } from 'hooks/useShopify';
 import { CartItem } from 'components/storefront';
+import PreserveQueryParamsLink from 'components/storefront/PreserveQueryParamsLink/PreserveQueryParamsLink';
+import { PageContainer } from 'components/storefront/PageContainer/PageContainer';
+import CartSkeleton from 'components/storefront/Cart/Layout/CartSkeleton';
 import {
   Box,
   Stack,
@@ -16,15 +19,38 @@ import {
   Link,
   chakra,
 } from '@chakra-ui/react';
-import PreserveQueryParamsLink from 'components/storefront/PreserveQueryParamsLink/PreserveQueryParamsLink';
-import { PageContainer } from 'components/storefront/PageContainer/PageContainer';
-import CartSkeleton from 'components/storefront/Cart/Layout/CartSkeleton';
+
+const calculateDiscount = (discountApplications, lineItems) => {
+  let discountVal = 0;
+  let shippingCost = 'TBD';
+  let discountType = '';
+  if (discountApplications.length > 0) {
+    const appliedDiscount = discountApplications[0];
+    discountType = appliedDiscount.targetType;
+    if (discountType === 'SHIPPING_LINE') {
+      shippingCost = 'FREE';
+    } else if (discountType === 'LINE_ITEM') {
+      discountVal = lineItems
+        .reduce((acc, lineItem) => {
+          return lineItem.discountAllocations
+            ? acc +
+                lineItem.discountAllocations.reduce((acc2, discAlloc) => {
+                  return acc2 + parseFloat(discAlloc.allocatedAmount.amount);
+                }, 0)
+            : acc;
+        }, 0)
+        .toFixed(2);
+    }
+  }
+  return { discountVal, shippingCost, discountType };
+};
 
 const CartItems = ({ checkoutData }) => {
   const { id: checkoutId, lineItems } = checkoutData;
-  const { addDiscount } = useShopify();
+  const { addDiscount, removeDiscount } = useShopify();
   const cartItemsCount = lineItems.reduce((acc, cur) => acc + cur.quantity, 0);
   const [discountCode, setDiscountCode] = useState('');
+  const [discountMsg, setDiscountMsg] = useState('');
 
   const onChangeCoupon = e => {
     // Assuming that all discounts are strictly uppercase
@@ -32,8 +58,10 @@ const CartItems = ({ checkoutData }) => {
   };
 
   const applyCoupon = async () => {
-    await addDiscount(checkoutId, discountCode);
-    // need to display error or success message somehow
+    const res = await addDiscount(checkoutId, discountCode);
+    console.log('res', res);
+    // you set discountMsg here, and you also have to set the colour of the component
+    // TO DO: do proper error handling
   };
 
   return (
@@ -95,33 +123,13 @@ const CartItems = ({ checkoutData }) => {
 const OrderSummary = ({ checkoutData }) => {
   const {
     totalPrice,
+    lineItems,
     lineItemsSubtotalPrice: { amount: subtotalAmount },
     webUrl,
     discountApplications,
   } = checkoutData;
   const parsedSubtotal = parseFloat(subtotalAmount).toFixed(2);
-
-  // maybe turn these into consts, should be nicer?
-  let discountVal = 0;
-  let shippingCost = 'TBD';
-  let discountType = '';
-  if (discountApplications.length > 0) {
-    const appliedDiscount = discountApplications[0];
-    discountType = appliedDiscount.targetType;
-    if (discountType === 'SHIPPING_LINE') {
-      shippingCost = 'FREE';
-    } else if (discountType === 'LINE_ITEM') {
-      if (appliedDiscount.targetSelection === 'ENTITLED') {
-        // need to add logic for BOGO
-        // add item to lineItems, verify that it is free
-        console.log('BOGO');
-      } else if (appliedDiscount.value.percentage) {
-        discountVal = ((appliedDiscount.value.percentage / 100) * parsedSubtotal).toFixed(2);
-      } else if (appliedDiscount.value.amount) {
-        discountVal = parseFloat(appliedDiscount.value.amount).toFixed(2);
-      }
-    }
-  }
+  const { discountVal, shippingCost, discountType } = calculateDiscount(discountApplications, lineItems);
 
   return (
     <Flex
