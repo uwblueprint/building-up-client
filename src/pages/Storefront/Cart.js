@@ -68,7 +68,6 @@ const DiscountMsg = ({ discountApplications, discountSuccess, removeCoupon }) =>
   return <>{msg}</>;
 };
 
-// TO DO: add red line showing discount
 const CartItems = ({ checkoutData }) => {
   const { id: checkoutId, lineItems, discountApplications } = checkoutData;
   const { addDiscount, removeDiscount } = useShopify();
@@ -83,11 +82,19 @@ const CartItems = ({ checkoutData }) => {
 
   const applyCoupon = async () => {
     const res = await addDiscount(checkoutId, discountCode);
-    console.log('res', res);
-    // TO DO: proper error handling
-    // If the existing thing isn't the same as the current thing, then do error!
-    // set it to false as well, if it is the same as before
-    setDiscountSuccess((res.discountApplications.length > 0).toString());
+
+    // TO DO: Proper error handling (catch error in reducer?)
+    if (res.discountApplications.length > 0) {
+      // Handling case where there is an existing coupon + user enters invalid coupon
+      if (discountCode !== res.discountApplications[0].code) {
+        removeCoupon();
+        setDiscountSuccess('false');
+      } else {
+        setDiscountSuccess('true');
+      }
+    } else {
+      setDiscountSuccess('false');
+    }
   };
 
   const removeCoupon = async () => {
