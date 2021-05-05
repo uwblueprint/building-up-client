@@ -63,7 +63,7 @@ const DiscountMsg = ({ discountApplications, discountSuccess, removeCoupon }) =>
     ) : null;
 
   return (
-    <Box pt="5">
+    <Box pt="4">
       {msg}
       {discountApplications && discountApplications[0] && (
         <Tag size="lg" mt="2">
@@ -112,7 +112,7 @@ const CartItems = ({ checkoutData }) => {
   };
 
   return (
-    <VStack flex={1} alignItems="flex-start" spacing={8} w="100%">
+    <Flex direction="column" flex={1} w="100%">
       <Flex w="100%" justifyContent="space-between">
         <Heading size="subtitle">
           <Link as={PreserveQueryParamsLink} to={`/store`}>
@@ -123,7 +123,7 @@ const CartItems = ({ checkoutData }) => {
           {`${cartItemsCount} ITEMS`}
         </Heading>
       </Flex>
-      <VStack w="100%" spacing={8}>
+      <VStack w="100%" spacing={8} mt={8}>
         <Divider borderColor="brand.gray" />
         {lineItems.length > 0 ? (
           lineItems.map(({ id, title, quantity, variant: { sku, image, price }, discountAllocations }) => (
@@ -142,7 +142,7 @@ const CartItems = ({ checkoutData }) => {
             </Box>
           ))
         ) : (
-          <VStack spacing={8}>
+          <VStack spacing={8} py={20} minH="500px" justify="center">
             <Heading size="h3" color="black" py={0}>
               YOUR BAG IS EMPTY
             </Heading>
@@ -154,8 +154,8 @@ const CartItems = ({ checkoutData }) => {
         )}
       </VStack>
       {lineItems.length > 0 && (
-        <Box>
-          <HStack justifyContent="space-between" as="form" onSubmit={applyCoupon}>
+        <Box mt={8} maxW="500px">
+          <HStack as="form" onSubmit={applyCoupon}>
             <FormControl w="50%">
               <Input type="text" name="coupon" placeholder="COUPON CODE" onChange={onChangeCoupon} />
             </FormControl>
@@ -170,7 +170,7 @@ const CartItems = ({ checkoutData }) => {
           />
         </Box>
       )}
-    </VStack>
+    </Flex>
   );
 };
 
