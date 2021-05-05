@@ -74,7 +74,6 @@ const CartItem = ({ title, sku, image, price, quantity, lineItemId, checkoutId, 
               })`}
             </Heading>
           )}
-          {/* Does not show colour + variant at the moment */}
         </VStack>
       </Flex>
       <Stack

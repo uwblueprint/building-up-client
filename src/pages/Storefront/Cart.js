@@ -29,12 +29,15 @@ const calculateDiscount = (discountApplications, lineItems) => {
   let discountVal = 0;
   let shippingCost = 'TBD';
   let discountType = '';
+  // If there is a discount applied
   if (discountApplications.length > 0) {
     const appliedDiscount = discountApplications[0];
     discountType = appliedDiscount.targetType;
     if (discountType === 'SHIPPING_LINE') {
       shippingCost = 'FREE';
     } else if (discountType === 'LINE_ITEM') {
+      // If the discount affects the price of any line items, the discountVal is the
+      // sum of the individual discounts to each item
       discountVal = lineItems
         .reduce((acc, lineItem) => {
           return lineItem.discountAllocations
@@ -93,7 +96,6 @@ const CartItems = ({ checkoutData }) => {
     e.preventDefault();
     const res = await addDiscount(checkoutId, discountCode);
 
-    // TO DO: Proper error handling (catch error in reducer?)
     if (res.discountApplications.length > 0) {
       // Handling case where there is an existing coupon + user enters invalid coupon
       if (discountCode !== res.discountApplications[0].code) {
