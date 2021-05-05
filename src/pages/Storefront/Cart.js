@@ -17,8 +17,13 @@ import {
   Button,
   Input,
   Link,
+  Tag,
+  TagLabel,
+  TagLeftIcon,
+  TagCloseButton,
   chakra,
 } from '@chakra-ui/react';
+import { ImPriceTags } from 'react-icons/im';
 
 const calculateDiscount = (discountApplications, lineItems) => {
   let discountVal = 0;
@@ -46,26 +51,29 @@ const calculateDiscount = (discountApplications, lineItems) => {
 };
 
 const DiscountMsg = ({ discountApplications, discountSuccess, removeCoupon }) => {
-  let msg;
-  if (discountSuccess === 'true') {
-    msg = (
-      <VStack alignItems="left">
-        <chakra.h4 display="inline" whiteSpace="nowrap" textStyle="lightCaption">
-          Success! Your code <b>{discountApplications[0].code}</b> has been applied.
-        </chakra.h4>
-        <chakra.h4 textDecoration="underline" cursor="pointer" textStyle="lightCaption" onClick={removeCoupon}>
-          REMOVE COUPON CODE
-        </chakra.h4>
-      </VStack>
-    );
-  } else if (discountSuccess === 'false') {
-    msg = (
+  const msg =
+    discountSuccess === 'SUCCESS' ? (
+      <chakra.h4 whiteSpace="nowrap" textStyle="lightCaption">
+        Success! Your code <b>{discountApplications[0].code}</b> has been applied.
+      </chakra.h4>
+    ) : discountSuccess === 'INVALID' ? (
       <chakra.h4 color="brand.red" textStyle="lightCaption">
         Sorry, that coupon code is not applicable.
       </chakra.h4>
-    );
-  }
-  return <>{msg}</>;
+    ) : null;
+
+  return (
+    <Box pt="5">
+      {msg}
+      {discountApplications && discountApplications[0] && (
+        <Tag size="lg" mt="2">
+          <TagLeftIcon boxSize="12px" as={ImPriceTags} />
+          <TagLabel>{discountApplications[0].code}</TagLabel>
+          <TagCloseButton onClick={removeCoupon} />
+        </Tag>
+      )}
+    </Box>
+  );
 };
 
 const CartItems = ({ checkoutData }) => {
@@ -73,33 +81,34 @@ const CartItems = ({ checkoutData }) => {
   const { addDiscount, removeDiscount } = useShopify();
   const cartItemsCount = lineItems.reduce((acc, cur) => acc + cur.quantity, 0);
   const [discountCode, setDiscountCode] = useState('');
-  const [discountSuccess, setDiscountSuccess] = useState('');
+  // discountSuccess is enum "INITIAL" | "INVALID" | "SUCCESS"
+  const [discountSuccess, setDiscountSuccess] = useState('INITIAL');
 
   const onChangeCoupon = e => {
     // Assuming that all discounts are strictly uppercase
     setDiscountCode(e.target.value.toUpperCase());
   };
 
-  const applyCoupon = async () => {
+  const applyCoupon = async e => {
+    e.preventDefault();
     const res = await addDiscount(checkoutId, discountCode);
 
     // TO DO: Proper error handling (catch error in reducer?)
     if (res.discountApplications.length > 0) {
       // Handling case where there is an existing coupon + user enters invalid coupon
       if (discountCode !== res.discountApplications[0].code) {
-        removeCoupon();
-        setDiscountSuccess('false');
+        setDiscountSuccess('INVALID');
       } else {
-        setDiscountSuccess('true');
+        setDiscountSuccess('SUCCESS');
       }
     } else {
-      setDiscountSuccess('false');
+      setDiscountSuccess('INVALID');
     }
   };
 
   const removeCoupon = async () => {
     await removeDiscount(checkoutId);
-    setDiscountSuccess('');
+    setDiscountSuccess('INITIAL');
   };
 
   return (
@@ -145,21 +154,21 @@ const CartItems = ({ checkoutData }) => {
         )}
       </VStack>
       {lineItems.length > 0 && (
-        <>
-          <Flex justifyContent="space-between">
+        <Box>
+          <HStack justifyContent="space-between" as="form" onSubmit={applyCoupon}>
             <FormControl w="50%">
               <Input type="text" name="coupon" placeholder="COUPON CODE" onChange={onChangeCoupon} />
             </FormControl>
-            <Button size="sm" onClick={applyCoupon} textTransform="uppercase">
+            <Button size="sm" type="submit" textTransform="uppercase">
               Apply Coupon
             </Button>
-          </Flex>
+          </HStack>
           <DiscountMsg
             discountApplications={discountApplications}
             discountSuccess={discountSuccess}
             removeCoupon={removeCoupon}
           />
-        </>
+        </Box>
       )}
     </VStack>
   );
@@ -182,7 +191,7 @@ const OrderSummary = ({ checkoutData }) => {
       alignItems="flex-start"
       pt={{ base: 0, md: '52px' }}
       maxW={{ base: '100%', md: '30%' }}
-      minW="250px"
+      minW={{ base: '250px', lg: '350px' }}
       w={{ base: '100%', md: 'auto' }}
     >
       <VStack alignItems="flex-start" bg="brand.lightgray" spacing={[4, 6, 8, 10]} p={8} w="100%" mb={6}>
