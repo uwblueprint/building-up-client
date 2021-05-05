@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useShopify } from 'hooks/useShopify';
 import { CartItem } from 'components/storefront';
+import PreserveQueryParamsLink from 'components/storefront/PreserveQueryParamsLink/PreserveQueryParamsLink';
+import { PageContainer } from 'components/storefront/PageContainer/PageContainer';
+import CartSkeleton from 'components/storefront/Cart/Layout/CartSkeleton';
 import {
   Box,
   Stack,
@@ -14,23 +17,104 @@ import {
   Button,
   Input,
   Link,
+  Tag,
+  TagLabel,
+  TagLeftIcon,
+  TagCloseButton,
   chakra,
 } from '@chakra-ui/react';
-import PreserveQueryParamsLink from 'components/storefront/PreserveQueryParamsLink/PreserveQueryParamsLink';
-import { PageContainer } from 'components/storefront/PageContainer/PageContainer';
-import CartSkeleton from 'components/storefront/Cart/Layout/CartSkeleton';
+import { ImPriceTags } from 'react-icons/im';
+
+const calculateDiscount = (discountApplications, lineItems) => {
+  let discountVal = 0;
+  let shippingCost = 'TBD';
+  let discountType = '';
+  // If there is a discount applied
+  if (discountApplications.length > 0) {
+    const appliedDiscount = discountApplications[0];
+    discountType = appliedDiscount.targetType;
+    if (discountType === 'SHIPPING_LINE') {
+      shippingCost = 'FREE';
+    } else if (discountType === 'LINE_ITEM') {
+      // If the discount affects the price of any line items, the discountVal is the
+      // sum of the individual discounts to each item
+      discountVal = lineItems
+        .reduce((acc, lineItem) => {
+          return lineItem.discountAllocations
+            ? acc +
+                lineItem.discountAllocations.reduce((acc2, discAlloc) => {
+                  return acc2 + parseFloat(discAlloc.allocatedAmount.amount);
+                }, 0)
+            : acc;
+        }, 0)
+        .toFixed(2);
+    }
+  }
+  return { discountVal, shippingCost, discountType };
+};
+
+const DiscountMsg = ({ discountApplications, discountSuccess, removeCoupon }) => {
+  const msg =
+    discountSuccess === 'SUCCESS' ? (
+      <chakra.h4 whiteSpace="nowrap" textStyle="lightCaption">
+        Success! Your code <b>{discountApplications[0].code}</b> has been applied.
+      </chakra.h4>
+    ) : discountSuccess === 'INVALID' ? (
+      <chakra.h4 color="brand.red" textStyle="lightCaption">
+        Sorry, that coupon code is not applicable.
+      </chakra.h4>
+    ) : null;
+
+  return (
+    <Box pt="4">
+      {msg}
+      {discountApplications && discountApplications[0] && (
+        <Tag size="lg" mt="2">
+          <TagLeftIcon boxSize="12px" as={ImPriceTags} />
+          <TagLabel>{discountApplications[0].code}</TagLabel>
+          <TagCloseButton onClick={removeCoupon} />
+        </Tag>
+      )}
+    </Box>
+  );
+};
 
 const CartItems = ({ checkoutData }) => {
-  const { id: checkoutId, lineItems } = checkoutData;
+  const { id: checkoutId, lineItems, discountApplications } = checkoutData;
+  const { addDiscount, removeDiscount } = useShopify();
   const cartItemsCount = lineItems.reduce((acc, cur) => acc + cur.quantity, 0);
+  const [discountCode, setDiscountCode] = useState('');
+  // discountSuccess is enum "INITIAL" | "INVALID" | "SUCCESS"
+  const [discountSuccess, setDiscountSuccess] = useState('INITIAL');
 
-  // TO DO: May remove coupon & just let Shopify handle
-  const applyCoupon = () => {
-    alert('To be implemented');
+  const onChangeCoupon = e => {
+    // Assuming that all discounts are strictly uppercase
+    setDiscountCode(e.target.value.toUpperCase());
+  };
+
+  const applyCoupon = async e => {
+    e.preventDefault();
+    const res = await addDiscount(checkoutId, discountCode);
+
+    if (res.discountApplications.length > 0) {
+      // Handling case where there is an existing coupon + user enters invalid coupon
+      if (discountCode !== res.discountApplications[0].code) {
+        setDiscountSuccess('INVALID');
+      } else {
+        setDiscountSuccess('SUCCESS');
+      }
+    } else {
+      setDiscountSuccess('INVALID');
+    }
+  };
+
+  const removeCoupon = async () => {
+    await removeDiscount(checkoutId);
+    setDiscountSuccess('INITIAL');
   };
 
   return (
-    <VStack flex={1} alignItems="flex-start" spacing={8} w="100%">
+    <Flex direction="column" flex={1} w="100%">
       <Flex w="100%" justifyContent="space-between">
         <Heading size="subtitle">
           <Link as={PreserveQueryParamsLink} to={`/store`}>
@@ -41,10 +125,10 @@ const CartItems = ({ checkoutData }) => {
           {`${cartItemsCount} ITEMS`}
         </Heading>
       </Flex>
-      <VStack w="100%" spacing={8}>
+      <VStack w="100%" spacing={8} mt={8}>
         <Divider borderColor="brand.gray" />
         {lineItems.length > 0 ? (
-          lineItems.map(({ id, title, quantity, variant: { sku, image, price } }) => (
+          lineItems.map(({ id, title, quantity, variant: { sku, image, price }, discountAllocations }) => (
             <Box w="100%" key={id}>
               <CartItem
                 title={title}
@@ -54,12 +138,13 @@ const CartItems = ({ checkoutData }) => {
                 price={price}
                 lineItemId={id}
                 checkoutId={checkoutId}
+                discountAllocations={discountAllocations}
               />
               <Divider borderColor="brand.gray" pb={8} />
             </Box>
           ))
         ) : (
-          <VStack spacing={8}>
+          <VStack spacing={8} py={20} minH="500px" justify="center">
             <Heading size="h3" color="black" py={0}>
               YOUR BAG IS EMPTY
             </Heading>
@@ -71,27 +156,36 @@ const CartItems = ({ checkoutData }) => {
         )}
       </VStack>
       {lineItems.length > 0 && (
-        <Flex justifyContent="space-between">
-          <FormControl w="50%">
-            <Input
-              type="text"
-              name="coupon"
-              placeholder="COUPON CODE"
-              // onChange={e => handleInputChange(e, i)}
-            />
-          </FormControl>
-          <Button size="sm" onClick={applyCoupon} textTransform="uppercase">
-            Apply Coupon
-          </Button>
-        </Flex>
+        <Box mt={8} maxW="500px">
+          <HStack as="form" onSubmit={applyCoupon}>
+            <FormControl w="50%">
+              <Input type="text" name="coupon" placeholder="COUPON CODE" onChange={onChangeCoupon} />
+            </FormControl>
+            <Button size="sm" type="submit" textTransform="uppercase">
+              Apply Coupon
+            </Button>
+          </HStack>
+          <DiscountMsg
+            discountApplications={discountApplications}
+            discountSuccess={discountSuccess}
+            removeCoupon={removeCoupon}
+          />
+        </Box>
       )}
-    </VStack>
+    </Flex>
   );
 };
 
 const OrderSummary = ({ checkoutData }) => {
-  const { totalPrice, subtotalPrice, webUrl } = checkoutData;
-  const couponVal = 0; // Temp placeholder for coupon/discount value
+  const {
+    totalPrice,
+    lineItems,
+    lineItemsSubtotalPrice: { amount: subtotalAmount },
+    webUrl,
+    discountApplications,
+  } = checkoutData;
+  const parsedSubtotal = parseFloat(subtotalAmount).toFixed(2);
+  const { discountVal, shippingCost, discountType } = calculateDiscount(discountApplications, lineItems);
 
   return (
     <Flex
@@ -99,7 +193,7 @@ const OrderSummary = ({ checkoutData }) => {
       alignItems="flex-start"
       pt={{ base: 0, md: '52px' }}
       maxW={{ base: '100%', md: '30%' }}
-      minW="250px"
+      minW={{ base: '250px', lg: '350px' }}
       w={{ base: '100%', md: 'auto' }}
     >
       <VStack alignItems="flex-start" bg="brand.lightgray" spacing={[4, 6, 8, 10]} p={8} w="100%" mb={6}>
@@ -109,20 +203,26 @@ const OrderSummary = ({ checkoutData }) => {
         <VStack w="100%" alignItems="flex-start" spacing={8}>
           <Flex w="100%" justifyContent="space-between">
             <chakra.h4 textStyle="lightCaption">Subtotal</chakra.h4>
-            <chakra.h4 textStyle="lightCaption" fontWeight="semibold">{`$${subtotalPrice}`}</chakra.h4>
+            <chakra.h4 textStyle="lightCaption" fontWeight="semibold">{`$${parsedSubtotal}`}</chakra.h4>
           </Flex>
-          {couponVal && (
+          {discountType === 'LINE_ITEM' && (
             <Flex w="100%" justifyContent="space-between">
-              <chakra.h4 textStyle="lightCaption">Coupon Discount</chakra.h4>
+              <chakra.h4 textStyle="lightCaption">Discount Applied</chakra.h4>
               <chakra.h4 textStyle="lightCaption" fontWeight="semibold">
-                -${couponVal}
+                -${discountVal}
               </chakra.h4>
-              {/* TO DO: Coupon discount to be implemented in next PR */}
             </Flex>
           )}
-          <chakra.h4 textStyle="lightCaption" fontStyle="italic">
-            Shipping & taxes calculated at checkout.
-          </chakra.h4>
+          <Flex w="100%" justifyContent="space-between">
+            <chakra.h4 textStyle="lightCaption">Shipping</chakra.h4>
+            <chakra.h4 textStyle="lightCaption" fontWeight="semibold">{`${shippingCost}`}</chakra.h4>
+          </Flex>
+          <Flex w="100%" justifyContent="space-between">
+            <chakra.h4 textStyle="lightCaption">Taxes</chakra.h4>
+            <chakra.h4 textStyle="lightCaption" fontWeight="semibold">
+              TBD
+            </chakra.h4>
+          </Flex>
         </VStack>
         <Divider borderColor="brand.gray" />
         <HStack w="100%" justifyContent="space-between" spacing={4}>

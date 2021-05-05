@@ -16,7 +16,7 @@ import { CloseIcon } from '@chakra-ui/icons';
 import { useShopify } from 'hooks/useShopify';
 import PreserveQueryParamsLink from 'components/storefront/PreserveQueryParamsLink/PreserveQueryParamsLink';
 
-const CartItem = ({ title, sku, image, price, quantity, lineItemId, checkoutId }) => {
+const CartItem = ({ title, sku, image, price, quantity, lineItemId, checkoutId, discountAllocations }) => {
   const {
     removeLineItem,
     updateQuantity,
@@ -59,7 +59,7 @@ const CartItem = ({ title, sku, image, price, quantity, lineItemId, checkoutId }
         </Link>
         <VStack alignItems="flex-start" minW="100px" pl={6}>
           <chakra.h4 textStyle="lightCaption" color="brand.gray">
-            {`Item #${sku}`}
+            {`ITEM #${sku}`}
           </chakra.h4>
           <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.darkgray">
             {title}
@@ -67,7 +67,13 @@ const CartItem = ({ title, sku, image, price, quantity, lineItemId, checkoutId }
           <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.darkgray">
             {`${quantity} X $${price}`}
           </Heading>
-          {/* Does not show colour + variant at the moment */}
+          {discountAllocations.length > 0 && (
+            <Heading as="h4" size="subtitle" textTransform="uppercase" color="brand.red">
+              {`— $${parseFloat(discountAllocations[0].allocatedAmount.amount).toFixed(2)} (${
+                discountAllocations[0].discountApplication.code
+              })`}
+            </Heading>
+          )}
         </VStack>
       </Flex>
       <Stack

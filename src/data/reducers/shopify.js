@@ -21,6 +21,8 @@ const UPDATE_CART_ATTRIBUTE = 'shopify/UPDATE_CART_ATTRIBUTE';
 const ADD_VARIANT_TO_CART = 'shopify/ADD_VARIANT_TO_CART';
 const UPDATE_QUANTITY_IN_CART = 'shopify/UPDATE_QUANTITY_IN_CART';
 const REMOVE_LINE_ITEM_IN_CART = 'shopify/REMOVE_LINE_ITEM_IN_CART';
+const ADD_DISCOUNT = 'shopify/ADD_DISCOUNT';
+const REMOVE_DISCOUNT = 'shopify/REMOVE_DISCOUNT';
 
 const CHECKOUT_ID_LOCAL_STORAGE_KEY = 'SHOPIFY_CHECKOUT_ID';
 const CHECKOUT_ID_FROM_LOCAL_STORAGE = window.localStorage.getItem(CHECKOUT_ID_LOCAL_STORAGE_KEY);
@@ -62,6 +64,10 @@ const shopifyReducer = (state = initialState, action) => {
     case UPDATE_QUANTITY_IN_CART:
       return { ...state, checkout: { ...state.checkout, data: action.payload } };
     case REMOVE_LINE_ITEM_IN_CART:
+      return { ...state, checkout: { ...state.checkout, data: action.payload } };
+    case ADD_DISCOUNT:
+      return { ...state, checkout: { ...state.checkout, data: action.payload } };
+    case REMOVE_DISCOUNT:
       return { ...state, checkout: { ...state.checkout, data: action.payload } };
     default:
       return state;
@@ -207,6 +213,30 @@ const removeLineItemInCart = (checkoutId, lineItemId) => {
   };
 };
 
+// Add discount code to checkout
+const addDiscountToCheckout = (checkoutId, discountCode) => {
+  return async dispatch => {
+    const res = await client.checkout.addDiscount(checkoutId, discountCode);
+    dispatch({
+      type: ADD_DISCOUNT,
+      payload: res,
+    });
+    return res;
+  };
+};
+
+// Remove discount code from checkout
+const removeDiscountFromCheckout = checkoutId => {
+  return dispatch => {
+    client.checkout.removeDiscount(checkoutId).then(res => {
+      dispatch({
+        type: REMOVE_DISCOUNT,
+        payload: res,
+      });
+    });
+  };
+};
+
 export const useShopify = () => {
   const dispatch = useDispatch();
   const cartStatus = useSelector(state => state.shopifyState.isCartOpen);
@@ -227,6 +257,8 @@ export const useShopify = () => {
   const updateQuantity = (lineItemId, quantity, checkoutID) =>
     dispatch(updateQuantityInCart(lineItemId, quantity, checkoutID));
   const removeLineItem = (checkoutId, lineItemId) => dispatch(removeLineItemInCart(checkoutId, lineItemId));
+  const addDiscount = (checkoutId, discountCode) => dispatch(addDiscountToCheckout(checkoutId, discountCode));
+  const removeDiscount = checkoutId => dispatch(removeDiscountFromCheckout(checkoutId));
 
   return {
     products,
@@ -245,6 +277,8 @@ export const useShopify = () => {
     createShop,
     updateQuantity,
     removeLineItem,
+    addDiscount,
+    removeDiscount,
   };
 };
 
